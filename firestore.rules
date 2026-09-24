@@ -1,0 +1,112 @@
+rules_version = '2';
+
+// Role checks run on the server for every read and write (BR-01.3).
+// Deploy with: firebase deploy --only firestore:rules
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function profile() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
+    // Signed in, has a profile, and hasn't been deactivated (BR-01.4).
+    function isActive() {
+      return signedIn()
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && profile().active == true;
+    }
+
+    function hasRole(role) {
+      return isActive() && profile().role == role;
+    }
+
+    match /users/{uid} {
+      // Everyone can read their own profile, even when deactivated, so the
+      // app can notice and sign them out. Coordinators read inspectors to
+      // assign jobs; admins read everyone.
+      allow read: if (signedIn() && request.auth.uid == uid)
+        || hasRole('admin')
+        || (hasRole('coordinator') && resource.data.role == 'inspector');
+
+      // A user may only stamp their own lastLogin with the server time.
+      allow update: if hasRole('admin')
+        || (isActive()
+            && request.auth.uid == uid
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['lastLogin'])
+            && request.resource.data.lastLogin == request.time);
+
+      allow create, delete: if hasRole('admin');
+    }
+
+    match /requests/{id} {
+      // Feature 02's inbox is the supervisor's; other roles only get a
+      // read-only view once a job is further along (00-overview.md's
+      // permissions matrix — "View any job (read-only)").
+      allow read: if hasRole('supervisor')
+        || hasRole('coordinator')
+        || hasRole('technical_manager')
+        || hasRole('admin');
+
+      // BR-02.9: only supervisors edit request details.
+      allow create, update, delete: if hasRole('supervisor');
+    }
+
+    match /requests/{id}/events/{eventId} {
+      // 00-overview.md §8: every status change is logged and can't be
+      // edited — append-only, same readers as the request itself.
+      allow read: if hasRole('supervisor')
+        || hasRole('coordinator')
+        || hasRole('technical_manager')
+        || hasRole('admin');
+      allow create: if hasRole('supervisor');
+      allow update, delete: if false;
+    }
+
+    match /clients/{id} {
+      // Same readers as requests/quotations (00-overview.md's
+      // permissions matrix — clients are shared reference data, not
+      // supervisor-owned).
+      allow read: if hasRole('supervisor')
+        || hasRole('coordinator')
+        || hasRole('technical_manager')
+        || hasRole('admin');
+
+      // Only supervisors maintain the roster (BR-02.4/02.9's spirit —
+      // matching senders and keeping client records is their job).
+      allow create, update: if hasRole('supervisor');
+      allow delete: if false;
+    }
+
+    match /quotations/{id} {
+      // Same readers as the request it belongs to (Feature 03 §5).
+      allow read: if hasRole('supervisor')
+        || hasRole('coordinator')
+        || hasRole('technical_manager')
+        || hasRole('admin');
+
+      // BR-03.4: a sent quotation's price/items/type are immutable.
+      // Creating is always allowed. Updating is allowed either while the
+      // doc is still a draft (covers the draft→sent transition, which
+      // can touch any field), or — once sent — only for the narrow set
+      // of fields BR-03.6's client-response logging and a reminder
+      // timestamp touch; nothing else may change after sending.
+      allow create: if hasRole('supervisor');
+      allow update: if hasRole('supervisor')
+        && (resource.data.status == 'draft'
+            || request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+                 'status', 'clientResponseOutcome', 'clientCounterPricePiastres',
+                 'clientResponseNote', 'clientRespondedAt', 'lastReminderAt', 'updatedAt',
+               ]));
+      allow delete: if false;
+    }
+
+    // Deny everything else until each feature adds its own rules.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

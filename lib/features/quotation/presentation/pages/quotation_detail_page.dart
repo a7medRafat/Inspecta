@@ -1,0 +1,239 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../core/consts/app_colors.dart';
+import '../../../../core/consts/app_text_styles.dart';
+import '../../../../core/framework/mtoast.dart';
+import '../../../../core/shared/loading.dart';
+import '../../../../core/shared/m_back_button.dart';
+import '../../../../core/shared/m_notice.dart';
+import '../../../../injection.dart';
+import '../../../../l10n/app_localizations.dart';
+import '../../../requests/domain/entities/inspection_request.dart';
+import '../../../requests/domain/entities/requests_failure.dart';
+import '../../../requests/domain/usecases/get_request_detail.dart';
+import '../../../requests/presentation/pages/request_detail_page.dart';
+import '../../../requests/presentation/widgets/requests_labels.dart';
+import '../../domain/entities/client_response_outcome.dart';
+import '../../domain/entities/quotation_status.dart';
+import '../bloc/quotation_detail_cubit.dart';
+import '../widgets/log_client_reply_sheet.dart';
+import '../widgets/quote_board_status_chip.dart';
+import '../widgets/quote_detail_info_card.dart';
+import '../widgets/quote_history_timeline.dart';
+import '../widgets/quote_respond_section.dart';
+import '../widgets/quotation_labels.dart';
+
+/// The quote detail screen: quote + client identity up top, the full
+/// negotiation history as a timeline, and — while there's something to
+/// respond to — the actions that move it forward (BR-03.6/03.7).
+///
+/// No PDF viewer: generating one needs the same backend job this app
+/// can't run for emailing it (BR-03.5). The timeline shows every price
+/// and date the PDF would contain instead.
+class QuotationDetailPage extends StatelessWidget {
+  final String requestId;
+
+  const QuotationDetailPage({super.key, required this.requestId});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => getIt<QuotationDetailCubit>(param1: requestId)..start(),
+      child: const _QuotationDetailView(),
+    );
+  }
+}
+
+class _QuotationDetailView extends StatefulWidget {
+  const _QuotationDetailView();
+
+  @override
+  State<_QuotationDetailView> createState() => _QuotationDetailViewState();
+}
+
+class _QuotationDetailViewState extends State<_QuotationDetailView> {
+  bool _openingRequest = false;
+
+  Future<void> _openRequest(InspectionRequest? loaded) async {
+    if (_openingRequest) return;
+    setState(() => _openingRequest = true);
+    final t = AppLocalizations.of(context)!;
+    final requestId = context.read<QuotationDetailCubit>().requestId;
+    try {
+      final request = loaded ?? await getIt<GetRequestDetail>()(requestId);
+      if (!mounted) return;
+      if (request == null) {
+        MToast.showError(message: t.requestNoLongerAvailable);
+        return;
+      }
+      await Navigator.of(context).push(
+        MaterialPageRoute<void>(builder: (_) => RequestDetailPage(request: request)),
+      );
+    } catch (e) {
+      if (mounted) {
+        MToast.showError(message: e is RequestsFailure ? e.code.message(t) : t.actionFailed);
+      }
+    } finally {
+      if (mounted) setState(() => _openingRequest = false);
+    }
+  }
+
+  void _logOtherReply(QuotationDetailCubit cubit) {
+    LogClientReplySheet.show(
+      context,
+      onSubmit: ({required outcome, clientPricePiastres, note}) => cubit.logResponse(
+        outcome: outcome,
+        clientPricePiastres: clientPricePiastres,
+        note: note,
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
+    return BlocListener<QuotationDetailCubit, QuotationDetailState>(
+      listenWhen: (previous, current) => current.actionSeq != previous.actionSeq,
+      listener: (context, state) {
+        if (state.lastActionSuccess) {
+          MToast.showSuccess(message: t.replyLogged);
+        } else {
+          MToast.showError(message: state.lastActionFailure!.message(t));
+        }
+      },
+      child: Scaffold(
+        backgroundColor: AppColours.background,
+        body: SafeArea(
+          child: BlocBuilder<QuotationDetailCubit, QuotationDetailState>(
+            builder: (context, state) {
+              final cubit = context.read<QuotationDetailCubit>();
+              final current = state.current;
+
+              return Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      border: Border(bottom: BorderSide(color: AppColours.border)),
+                    ),
+                    child: Row(
+                      children: [
+                        const MBackButton(),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                current?.id ?? t.quoteDetailTitle,
+                                style: const TextStyle(
+                                  fontFamily: 'monospace',
+                                  fontSize: 12,
+                                  color: AppColours.inkMuted,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              Text(
+                                current?.clientName ?? '',
+                                style: AppTextStyles.cardTitle.copyWith(fontSize: 18),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                        ),
+                        if (current != null) ...[
+                          const SizedBox(width: 8),
+                          current.status == QuotationStatus.countered
+                              ? _YourTurnChip(label: t.yourTurnBadge)
+                              : QuoteBoardStatusChip(quotation: current),
+                        ],
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Builder(
+                      builder: (context) {
+                        if (state.status == QuotationDetailStatus.loading) {
+                          return Loading.loader(context);
+                        }
+                        if (state.status == QuotationDetailStatus.error) {
+                          return Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(24),
+                              child: MNotice(
+                                type: MNoticeType.error,
+                                message: state.failure!.message(t),
+                              ),
+                            ),
+                          );
+                        }
+                        if (current == null) {
+                          return const SizedBox.shrink();
+                        }
+
+                        return ListView(
+                          padding: const EdgeInsets.fromLTRB(20, 14, 20, 20),
+                          children: [
+                            QuoteDetailInfoCard(
+                              current: current,
+                              onOpenRequest: () => _openRequest(state.request),
+                            ),
+                            const SizedBox(height: 14),
+                            QuoteHistoryTimeline(request: state.request, versions: state.versions),
+                            const SizedBox(height: 14),
+                            if (current.status == QuotationStatus.accepted)
+                              MNotice(
+                                type: MNoticeType.success,
+                                message: t.readOnlyAcceptedNotice,
+                                title: t.acceptedVersionLabel(t.quoteVersionLabel(current.version ?? 0)),
+                              )
+                            else
+                              QuoteRespondSection(
+                                current: current,
+                                onSendNewPrice: () => _openRequest(state.request),
+                                onAcceptClientPrice: current.clientCounterPricePiastres == null
+                                    ? null
+                                    : () => cubit.logResponse(
+                                        outcome: ClientResponseOutcome.accepted,
+                                        clientPricePiastres: current.clientCounterPricePiastres,
+                                      ),
+                                onLogOtherReply: () => _logOtherReply(cubit),
+                                onMarkDeclined: () =>
+                                    cubit.logResponse(outcome: ClientResponseOutcome.declined),
+                              ),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _YourTurnChip extends StatelessWidget {
+  final String label;
+
+  const _YourTurnChip({required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
+      decoration: BoxDecoration(
+        color: AppColours.chipBlueBackground,
+        borderRadius: BorderRadius.circular(999),
+      ),
+      child: Text(label, style: AppTextStyles.badge.copyWith(color: AppColours.chipBlueText)),
+    );
+  }
+}

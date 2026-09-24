@@ -1,0 +1,71 @@
+import 'dart:async';
+
+import 'package:inspecta/core/enums/job_status.dart';
+import 'package:inspecta/features/requests/domain/entities/inspection_request.dart';
+import 'package:inspecta/features/requests/domain/entities/request_item.dart';
+import 'package:inspecta/features/requests/domain/entities/request_source.dart';
+import 'package:inspecta/features/requests/domain/entities/requests_failure.dart';
+import 'package:inspecta/features/requests/domain/repositories/requests_repository.dart';
+
+InspectionRequest sampleRequest({
+  String id = 'REQ-2026-0001',
+  JobStatus status = JobStatus.requestReceived,
+  String clientName = 'Delta Steel Co.',
+  String? clientId = 'client-1',
+  DateTime? receivedAt,
+  bool hasUnreadClientReply = false,
+  List<RequestItem>? items,
+}) {
+  return InspectionRequest(
+    id: id,
+    source: RequestSource.email,
+    clientId: clientId,
+    clientName: clientName,
+    receivedAt: receivedAt ?? DateTime.now(),
+    location: '10th of Ramadan',
+    status: status,
+    items:
+        items ??
+        const [
+          RequestItem(
+            id: 'item-1',
+            type: 'Overhead crane',
+            capacity: '10 t',
+            quantity: 2,
+          ),
+        ],
+    hasUnreadClientReply: hasUnreadClientReply,
+  );
+}
+
+class FakeRequestsRepository implements RequestsRepository {
+  final controller = StreamController<List<InspectionRequest>>.broadcast();
+
+  InspectionRequest? requestToReturn;
+  RequestsFailure? rejectFailure;
+  final statusUpdates = <(String requestId, JobStatus status, String? note)>[];
+  final rejections = <(String requestId, String reason)>[];
+  final clientAssignments = <(String requestId, String clientId)>[];
+
+  @override
+  Stream<List<InspectionRequest>> watchRequests() => controller.stream;
+
+  @override
+  Future<InspectionRequest?> getById(String id) async => requestToReturn;
+
+  @override
+  Future<void> updateStatus(String requestId, JobStatus status, {String? note}) async {
+    statusUpdates.add((requestId, status, note));
+  }
+
+  @override
+  Future<void> rejectRequest({required String requestId, required String reason}) async {
+    if (rejectFailure != null) throw rejectFailure!;
+    rejections.add((requestId, reason));
+  }
+
+  @override
+  Future<void> assignClient(String requestId, String clientId) async {
+    clientAssignments.add((requestId, clientId));
+  }
+}
