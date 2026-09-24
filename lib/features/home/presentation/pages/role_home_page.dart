@@ -12,11 +12,28 @@ import '../../../auth/presentation/widgets/auth_labels.dart';
 
 /// Landing screen for the signed-in user's role (BR-01.2). Placeholder
 /// until each role's list is built in features 02–07.
-class RoleHomePage extends StatelessWidget {
+///
+/// This role has no bottom-nav shell yet (unlike the supervisor's — see
+/// `SupervisorRootPage`), so Profile isn't a tab here either; tapping the
+/// avatar swaps this screen's own content for [ProfilePage] in place
+/// instead of pushing a new route, and [ProfilePage]'s own close button
+/// swaps back.
+class RoleHomePage extends StatefulWidget {
   const RoleHomePage({super.key});
 
   @override
+  State<RoleHomePage> createState() => _RoleHomePageState();
+}
+
+class _RoleHomePageState extends State<RoleHomePage> {
+  bool _showProfile = false;
+
+  @override
   Widget build(BuildContext context) {
+    if (_showProfile) {
+      return ProfilePage(onClose: () => setState(() => _showProfile = false));
+    }
+
     final t = AppLocalizations.of(context)!;
     final user = context.select((AuthCubit cubit) => cubit.user);
     if (user == null) return const SizedBox.shrink();
@@ -53,11 +70,7 @@ class RoleHomePage extends StatelessWidget {
                           shape: const CircleBorder(),
                           child: InkWell(
                             customBorder: const CircleBorder(),
-                            onTap: () => Navigator.of(context).push(
-                              MaterialPageRoute<void>(
-                                builder: (_) => const ProfilePage(),
-                              ),
-                            ),
+                            onTap: () => setState(() => _showProfile = true),
                             child: SizedBox.square(
                               dimension: 44,
                               child: Center(

@@ -14,19 +14,23 @@ import 'request_detail_page.dart';
 /// itself. Content only — the bottom nav belongs to whichever role shell
 /// hosts this screen (see `SupervisorRootPage`).
 class RequestsInboxPage extends StatelessWidget {
-  const RequestsInboxPage({super.key});
+  final VoidCallback onOpenProfile;
+
+  const RequestsInboxPage({super.key, required this.onOpenProfile});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => getIt<RequestsListCubit>()..start(),
-      child: const _RequestsInboxView(),
+      child: _RequestsInboxView(onOpenProfile: onOpenProfile),
     );
   }
 }
 
 class _RequestsInboxView extends StatefulWidget {
-  const _RequestsInboxView();
+  final VoidCallback onOpenProfile;
+
+  const _RequestsInboxView({required this.onOpenProfile});
 
   @override
   State<_RequestsInboxView> createState() => _RequestsInboxViewState();
@@ -57,7 +61,10 @@ class _RequestsInboxViewState extends State<_RequestsInboxView> {
         backgroundColor: AppColours.background,
         body: Column(
           children: [
-            RequestsInboxHeader(searchController: _searchController),
+            RequestsInboxHeader(
+              searchController: _searchController,
+              onOpenProfile: widget.onOpenProfile,
+            ),
             Expanded(child: RequestsListView(onOpen: _openDetail)),
           ],
         ),

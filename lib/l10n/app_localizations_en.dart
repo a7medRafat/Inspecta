@@ -140,6 +140,120 @@ class AppLocalizationsEn extends AppLocalizations {
       'You\'ll need your email and password to sign in again.';
 
   @override
+  String get profileThisMonth => 'This month';
+
+  @override
+  String get profileStatQuotesSent => 'Quotes sent';
+
+  @override
+  String get profileStatAccepted => 'Accepted';
+
+  @override
+  String get profileStatClients => 'Clients';
+
+  @override
+  String get profileStatJobsAssigned => 'Jobs assigned';
+
+  @override
+  String get profileStatReassigned => 'Reassigned';
+
+  @override
+  String get profileStatInspectors => 'Inspectors';
+
+  @override
+  String get profileStatInspections => 'Inspections';
+
+  @override
+  String get profileStatCertificates => 'Certificates';
+
+  @override
+  String get profileStatReturned => 'Returned';
+
+  @override
+  String get profileStatReviewed => 'Reviewed';
+
+  @override
+  String get profileStatSent => 'Sent';
+
+  @override
+  String get editAction => 'Edit';
+
+  @override
+  String get changePhotoAction => 'Change photo';
+
+  @override
+  String get quotationDefaultsTitle => 'Quotation defaults';
+
+  @override
+  String get quoteValidForLabel => 'Quote valid for';
+
+  @override
+  String get standardPriceListLabel => 'Standard price list';
+
+  @override
+  String get viewAction => 'View';
+
+  @override
+  String get emailSignatureLabel => 'Email signature';
+
+  @override
+  String get myAreasTitle => 'My areas';
+
+  @override
+  String get areasNotTrackedYet =>
+      'Assigned areas and team aren\'t tracked yet.';
+
+  @override
+  String get myWorkTitle => 'My work';
+
+  @override
+  String get qualifiedForLabel => 'Qualified for';
+
+  @override
+  String get availableForTasksLabel => 'Available for new tasks';
+
+  @override
+  String get requestLeaveAction => 'Request leave';
+
+  @override
+  String get mySignatureTitle => 'My signature';
+
+  @override
+  String get updateAction => 'Update';
+
+  @override
+  String get signatureOnFileLabel => 'Signature on file';
+
+  @override
+  String get noSignatureLabel => 'No signature added yet';
+
+  @override
+  String get licenseNumberLabel => 'License no.';
+
+  @override
+  String get accountSectionTitle => 'Account';
+
+  @override
+  String get personalInfoLabel => 'Personal info';
+
+  @override
+  String get changePasswordLabel => 'Change password';
+
+  @override
+  String get languageLabel => 'Language';
+
+  @override
+  String get helpGuidesLabel => 'Help & guides';
+
+  @override
+  String get contactAdminLabel => 'Contact admin';
+
+  @override
+  String versionLabel(String version) {
+    return 'Version $version';
+  }
+
+  @override
   String get roleSupervisor => 'Supervisor';
 
   @override

@@ -338,6 +338,228 @@ abstract class AppLocalizations {
   /// **'You\'ll need your email and password to sign in again.'**
   String get signOutConfirmMessage;
 
+  /// No description provided for @profileThisMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'This month'**
+  String get profileThisMonth;
+
+  /// No description provided for @profileStatQuotesSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Quotes sent'**
+  String get profileStatQuotesSent;
+
+  /// No description provided for @profileStatAccepted.
+  ///
+  /// In en, this message translates to:
+  /// **'Accepted'**
+  String get profileStatAccepted;
+
+  /// No description provided for @profileStatClients.
+  ///
+  /// In en, this message translates to:
+  /// **'Clients'**
+  String get profileStatClients;
+
+  /// No description provided for @profileStatJobsAssigned.
+  ///
+  /// In en, this message translates to:
+  /// **'Jobs assigned'**
+  String get profileStatJobsAssigned;
+
+  /// No description provided for @profileStatReassigned.
+  ///
+  /// In en, this message translates to:
+  /// **'Reassigned'**
+  String get profileStatReassigned;
+
+  /// No description provided for @profileStatInspectors.
+  ///
+  /// In en, this message translates to:
+  /// **'Inspectors'**
+  String get profileStatInspectors;
+
+  /// No description provided for @profileStatInspections.
+  ///
+  /// In en, this message translates to:
+  /// **'Inspections'**
+  String get profileStatInspections;
+
+  /// No description provided for @profileStatCertificates.
+  ///
+  /// In en, this message translates to:
+  /// **'Certificates'**
+  String get profileStatCertificates;
+
+  /// No description provided for @profileStatReturned.
+  ///
+  /// In en, this message translates to:
+  /// **'Returned'**
+  String get profileStatReturned;
+
+  /// No description provided for @profileStatReviewed.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviewed'**
+  String get profileStatReviewed;
+
+  /// No description provided for @profileStatSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent'**
+  String get profileStatSent;
+
+  /// No description provided for @editAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get editAction;
+
+  /// No description provided for @changePhotoAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Change photo'**
+  String get changePhotoAction;
+
+  /// No description provided for @quotationDefaultsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Quotation defaults'**
+  String get quotationDefaultsTitle;
+
+  /// No description provided for @quoteValidForLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Quote valid for'**
+  String get quoteValidForLabel;
+
+  /// No description provided for @standardPriceListLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Standard price list'**
+  String get standardPriceListLabel;
+
+  /// No description provided for @viewAction.
+  ///
+  /// In en, this message translates to:
+  /// **'View'**
+  String get viewAction;
+
+  /// No description provided for @emailSignatureLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Email signature'**
+  String get emailSignatureLabel;
+
+  /// No description provided for @myAreasTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My areas'**
+  String get myAreasTitle;
+
+  /// No description provided for @areasNotTrackedYet.
+  ///
+  /// In en, this message translates to:
+  /// **'Assigned areas and team aren\'t tracked yet.'**
+  String get areasNotTrackedYet;
+
+  /// No description provided for @myWorkTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My work'**
+  String get myWorkTitle;
+
+  /// No description provided for @qualifiedForLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Qualified for'**
+  String get qualifiedForLabel;
+
+  /// No description provided for @availableForTasksLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Available for new tasks'**
+  String get availableForTasksLabel;
+
+  /// No description provided for @requestLeaveAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Request leave'**
+  String get requestLeaveAction;
+
+  /// No description provided for @mySignatureTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My signature'**
+  String get mySignatureTitle;
+
+  /// No description provided for @updateAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Update'**
+  String get updateAction;
+
+  /// No description provided for @signatureOnFileLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Signature on file'**
+  String get signatureOnFileLabel;
+
+  /// No description provided for @noSignatureLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'No signature added yet'**
+  String get noSignatureLabel;
+
+  /// No description provided for @licenseNumberLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'License no.'**
+  String get licenseNumberLabel;
+
+  /// No description provided for @accountSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get accountSectionTitle;
+
+  /// No description provided for @personalInfoLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal info'**
+  String get personalInfoLabel;
+
+  /// No description provided for @changePasswordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Change password'**
+  String get changePasswordLabel;
+
+  /// No description provided for @languageLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get languageLabel;
+
+  /// No description provided for @helpGuidesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Help & guides'**
+  String get helpGuidesLabel;
+
+  /// No description provided for @contactAdminLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact admin'**
+  String get contactAdminLabel;
+
+  /// No description provided for @versionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version}'**
+  String versionLabel(String version);
+
   /// No description provided for @roleSupervisor.
   ///
   /// In en, this message translates to:

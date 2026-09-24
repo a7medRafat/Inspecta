@@ -46,6 +46,52 @@
   "signOutConfirmTitle": "Sign out?",
   "signOutConfirmMessage": "You'll need your email and password to sign in again.",
 
+  "profileThisMonth": "This month",
+  "profileStatQuotesSent": "Quotes sent",
+  "profileStatAccepted": "Accepted",
+  "profileStatClients": "Clients",
+  "profileStatJobsAssigned": "Jobs assigned",
+  "profileStatReassigned": "Reassigned",
+  "profileStatInspectors": "Inspectors",
+  "profileStatInspections": "Inspections",
+  "profileStatCertificates": "Certificates",
+  "profileStatReturned": "Returned",
+  "profileStatReviewed": "Reviewed",
+  "profileStatSent": "Sent",
+
+  "editAction": "Edit",
+  "changePhotoAction": "Change photo",
+
+  "quotationDefaultsTitle": "Quotation defaults",
+  "quoteValidForLabel": "Quote valid for",
+  "standardPriceListLabel": "Standard price list",
+  "viewAction": "View",
+  "emailSignatureLabel": "Email signature",
+
+  "myAreasTitle": "My areas",
+  "areasNotTrackedYet": "Assigned areas and team aren't tracked yet.",
+
+  "myWorkTitle": "My work",
+  "qualifiedForLabel": "Qualified for",
+  "availableForTasksLabel": "Available for new tasks",
+  "requestLeaveAction": "Request leave",
+
+  "mySignatureTitle": "My signature",
+  "updateAction": "Update",
+  "signatureOnFileLabel": "Signature on file",
+  "noSignatureLabel": "No signature added yet",
+  "licenseNumberLabel": "License no.",
+
+  "accountSectionTitle": "Account",
+  "personalInfoLabel": "Personal info",
+  "changePasswordLabel": "Change password",
+  "languageLabel": "Language",
+  "helpGuidesLabel": "Help & guides",
+  "contactAdminLabel": "Contact admin",
+
+  "versionLabel": "Version {version}",
+  "@versionLabel": { "placeholders": { "version": { "type": "String" } } },
+
   "roleSupervisor": "Supervisor",
   "roleCoordinator": "Coordinator",
   "roleInspector": "Inspector",

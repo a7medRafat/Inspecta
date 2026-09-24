@@ -46,6 +46,51 @@
   "signOutConfirmTitle": "تسجيل الخروج؟",
   "signOutConfirmMessage": "ستحتاج إلى بريدك الإلكتروني وكلمة المرور لتسجيل الدخول مرة أخرى.",
 
+  "profileThisMonth": "هذا الشهر",
+  "profileStatQuotesSent": "عروض الأسعار المرسلة",
+  "profileStatAccepted": "مقبولة",
+  "profileStatClients": "العملاء",
+  "profileStatJobsAssigned": "المهام الموزعة",
+  "profileStatReassigned": "أعيد توزيعها",
+  "profileStatInspectors": "المفتشون",
+  "profileStatInspections": "التفتيشات",
+  "profileStatCertificates": "الشهادات",
+  "profileStatReturned": "مُعادة",
+  "profileStatReviewed": "تمت مراجعتها",
+  "profileStatSent": "مُرسلة",
+
+  "editAction": "تعديل",
+  "changePhotoAction": "تغيير الصورة",
+
+  "quotationDefaultsTitle": "إعدادات عروض الأسعار",
+  "quoteValidForLabel": "صلاحية العرض",
+  "standardPriceListLabel": "قائمة الأسعار القياسية",
+  "viewAction": "عرض",
+  "emailSignatureLabel": "توقيع البريد الإلكتروني",
+
+  "myAreasTitle": "مناطقي",
+  "areasNotTrackedYet": "لم يتم بعد تتبّع المناطق المخصّصة والفريق.",
+
+  "myWorkTitle": "عملي",
+  "qualifiedForLabel": "مؤهل لـ",
+  "availableForTasksLabel": "متاح لمهام جديدة",
+  "requestLeaveAction": "طلب إجازة",
+
+  "mySignatureTitle": "توقيعي",
+  "updateAction": "تحديث",
+  "signatureOnFileLabel": "التوقيع مسجّل",
+  "noSignatureLabel": "لم تتم إضافة توقيع بعد",
+  "licenseNumberLabel": "رقم الرخصة",
+
+  "accountSectionTitle": "الحساب",
+  "personalInfoLabel": "المعلومات الشخصية",
+  "changePasswordLabel": "تغيير كلمة المرور",
+  "languageLabel": "اللغة",
+  "helpGuidesLabel": "المساعدة والأدلة",
+  "contactAdminLabel": "التواصل مع المسؤول",
+
+  "versionLabel": "الإصدار {version}",
+
   "roleSupervisor": "مشرف",
   "roleCoordinator": "منسق",
   "roleInspector": "مفتش",

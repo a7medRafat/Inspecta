@@ -4,26 +4,18 @@ import '../../../../core/consts/app_colors.dart';
 import '../../../../core/consts/app_text_styles.dart';
 import '../../../../l10n/app_localizations.dart';
 
-/// The three real tabs this bar switches between in place. Profile is a
-/// push, not a tab — see [RequestsBottomNav].
-enum SupervisorTab { requests, quotations, clients }
+/// The four real tabs this bar switches between in place.
+enum SupervisorTab { requests, quotations, clients, profile }
 
-/// The Requests / Quotations / Clients / Profile bar. Requests,
-/// Quotations and Clients are real tabs — tapping one switches the
-/// root's body in place, the same Scaffold and bar staying put, exactly
-/// like tapping between them should feel. Profile pushes its own screen
-/// since it isn't a tab.
+/// The Requests / Quotations / Clients / Profile bar. Every tab is a
+/// real one — tapping one switches the root's body in place, the same
+/// Scaffold and bar staying put, exactly like tapping between them
+/// should feel.
 class RequestsBottomNav extends StatelessWidget {
   final SupervisorTab selected;
   final ValueChanged<SupervisorTab> onSelectTab;
-  final VoidCallback onProfile;
 
-  const RequestsBottomNav({
-    super.key,
-    required this.selected,
-    required this.onSelectTab,
-    required this.onProfile,
-  });
+  const RequestsBottomNav({super.key, required this.selected, required this.onSelectTab});
 
   @override
   Widget build(BuildContext context) {
@@ -68,8 +60,8 @@ class RequestsBottomNav extends StatelessWidget {
                 child: _NavItem(
                   icon: Icons.person_outline_rounded,
                   label: t.profile,
-                  selected: false,
-                  onTap: onProfile,
+                  selected: selected == SupervisorTab.profile,
+                  onTap: () => onSelectTab(SupervisorTab.profile),
                 ),
               ),
             ],

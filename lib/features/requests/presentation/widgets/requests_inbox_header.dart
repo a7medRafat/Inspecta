@@ -6,7 +6,6 @@ import '../../../../core/consts/app_text_styles.dart';
 import '../../../../core/shared/m_search_field.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/presentation/bloc/auth_cubit.dart';
-import '../../../auth/presentation/pages/profile_page.dart';
 import '../../../auth/presentation/widgets/auth_labels.dart';
 import '../bloc/requests_list_cubit.dart';
 
@@ -16,8 +15,13 @@ import '../bloc/requests_list_cubit.dart';
 /// row).
 class RequestsInboxHeader extends StatelessWidget {
   final TextEditingController searchController;
+  final VoidCallback onOpenProfile;
 
-  const RequestsInboxHeader({super.key, required this.searchController});
+  const RequestsInboxHeader({
+    super.key,
+    required this.searchController,
+    required this.onOpenProfile,
+  });
 
   static String _greeting(AppLocalizations t) {
     final hour = DateTime.now().hour;
@@ -53,9 +57,7 @@ class RequestsInboxHeader extends StatelessWidget {
                 shape: const CircleBorder(),
                 child: InkWell(
                   customBorder: const CircleBorder(),
-                  onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute<void>(builder: (_) => const ProfilePage()),
-                  ),
+                  onTap: onOpenProfile,
                   child: SizedBox.square(
                     dimension: 44,
                     child: Center(

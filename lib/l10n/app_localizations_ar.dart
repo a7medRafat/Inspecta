@@ -137,6 +137,119 @@ class AppLocalizationsAr extends AppLocalizations {
       'ستحتاج إلى بريدك الإلكتروني وكلمة المرور لتسجيل الدخول مرة أخرى.';
 
   @override
+  String get profileThisMonth => 'هذا الشهر';
+
+  @override
+  String get profileStatQuotesSent => 'عروض الأسعار المرسلة';
+
+  @override
+  String get profileStatAccepted => 'مقبولة';
+
+  @override
+  String get profileStatClients => 'العملاء';
+
+  @override
+  String get profileStatJobsAssigned => 'المهام الموزعة';
+
+  @override
+  String get profileStatReassigned => 'أعيد توزيعها';
+
+  @override
+  String get profileStatInspectors => 'المفتشون';
+
+  @override
+  String get profileStatInspections => 'التفتيشات';
+
+  @override
+  String get profileStatCertificates => 'الشهادات';
+
+  @override
+  String get profileStatReturned => 'مُعادة';
+
+  @override
+  String get profileStatReviewed => 'تمت مراجعتها';
+
+  @override
+  String get profileStatSent => 'مُرسلة';
+
+  @override
+  String get editAction => 'تعديل';
+
+  @override
+  String get changePhotoAction => 'تغيير الصورة';
+
+  @override
+  String get quotationDefaultsTitle => 'إعدادات عروض الأسعار';
+
+  @override
+  String get quoteValidForLabel => 'صلاحية العرض';
+
+  @override
+  String get standardPriceListLabel => 'قائمة الأسعار القياسية';
+
+  @override
+  String get viewAction => 'عرض';
+
+  @override
+  String get emailSignatureLabel => 'توقيع البريد الإلكتروني';
+
+  @override
+  String get myAreasTitle => 'مناطقي';
+
+  @override
+  String get areasNotTrackedYet => 'لم يتم بعد تتبّع المناطق المخصّصة والفريق.';
+
+  @override
+  String get myWorkTitle => 'عملي';
+
+  @override
+  String get qualifiedForLabel => 'مؤهل لـ';
+
+  @override
+  String get availableForTasksLabel => 'متاح لمهام جديدة';
+
+  @override
+  String get requestLeaveAction => 'طلب إجازة';
+
+  @override
+  String get mySignatureTitle => 'توقيعي';
+
+  @override
+  String get updateAction => 'تحديث';
+
+  @override
+  String get signatureOnFileLabel => 'التوقيع مسجّل';
+
+  @override
+  String get noSignatureLabel => 'لم تتم إضافة توقيع بعد';
+
+  @override
+  String get licenseNumberLabel => 'رقم الرخصة';
+
+  @override
+  String get accountSectionTitle => 'الحساب';
+
+  @override
+  String get personalInfoLabel => 'المعلومات الشخصية';
+
+  @override
+  String get changePasswordLabel => 'تغيير كلمة المرور';
+
+  @override
+  String get languageLabel => 'اللغة';
+
+  @override
+  String get helpGuidesLabel => 'المساعدة والأدلة';
+
+  @override
+  String get contactAdminLabel => 'التواصل مع المسؤول';
+
+  @override
+  String versionLabel(String version) {
+    return 'الإصدار $version';
+  }
+
+  @override
   String get roleSupervisor => 'مشرف';
 
   @override

@@ -13,6 +13,7 @@ import 'features/auth/domain/usecases/sign_in.dart';
 import 'features/auth/domain/usecases/sign_out.dart';
 import 'features/auth/presentation/bloc/auth_cubit.dart';
 import 'features/auth/presentation/bloc/forgot_password_cubit.dart';
+import 'features/auth/presentation/bloc/profile_stats_cubit.dart';
 import 'features/auth/presentation/bloc/sign_in_cubit.dart';
 import 'features/clients/data/datasources/clients_remote_datasource.dart';
 import 'features/clients/data/repositories/clients_repository_impl.dart';
@@ -60,6 +61,7 @@ Future<void> setupDependencies() async {
   _registerRequests();
   _registerQuotation();
   _registerClients();
+  _registerProfile();
 }
 
 void _registerAuth(FlutterSecureStorage storage) {
@@ -138,4 +140,8 @@ void _registerClients() {
         getRequests: getIt(),
       ),
     );
+}
+
+void _registerProfile() {
+  getIt.registerFactory(() => ProfileStatsCubit(getIt(), getIt()));
 }
