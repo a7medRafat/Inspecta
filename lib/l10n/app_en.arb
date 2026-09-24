@@ -188,6 +188,11 @@
   "quantityLabel": "Quantity",
   "readFullEmail": "Read full email",
   "notReadyToQuote": "Add the client, at least one equipment item and the location before quoting.",
+  "requestMovedOnMessage": "A quote already exists for this request — current status: {status}. Manage it from Quotations.",
+  "@requestMovedOnMessage": { "placeholders": { "status": { "type": "String" } } },
+  "requestRejectedReasonMessage": "You rejected this request: {reason}",
+  "@requestRejectedReasonMessage": { "placeholders": { "reason": { "type": "String" } } },
+  "viewInQuotationsAction": "View in Quotations",
   "quotationBackendNotBuiltYet": "Saving and sending aren't connected to a server yet.",
   "comingSoon": "This isn't built yet.",
 

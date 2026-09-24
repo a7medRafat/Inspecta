@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/consts/app_colors.dart';
 import '../../../../core/consts/app_text_styles.dart';
+import '../../../../core/enums/job_status.dart';
 import '../../../../core/framework/mtoast.dart';
 import '../../../../core/shared/m_back_button.dart';
 import '../../../../core/shared/m_card.dart';
@@ -10,19 +11,30 @@ import '../../../../core/shared/m_notice.dart';
 import '../../../../injection.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../quotation/presentation/bloc/quotation_form_cubit.dart';
+import '../../../quotation/presentation/pages/quotation_detail_page.dart';
 import '../../../quotation/presentation/widgets/quotation_footer.dart';
 import '../../../quotation/presentation/widgets/quotation_reply_card.dart';
 import '../../domain/entities/inspection_request.dart';
 import '../widgets/email_summary_card.dart';
 import '../widgets/equipment_grid.dart';
 import '../widgets/job_stepper.dart';
+import '../widgets/status_chip.dart';
 
 /// Feature 02 §5's "Request detail" screen: the six-step progress bar,
-/// the intake email, the equipment, and Feature 03's reply panel.
+/// the intake email, the equipment, and — only while the request is
+/// still New/a draft — Feature 03's reply panel. Once a quote has gone
+/// out (any [JobStatus] beyond `requestReceived`/`quoteDraft`), the
+/// request's story continues in Quotations (see `requests_tab.dart`),
+/// so this screen shows a read-only status instead of repeating the
+/// same reply picker.
 class RequestDetailPage extends StatelessWidget {
   final InspectionRequest request;
 
   const RequestDetailPage({super.key, required this.request});
+
+  /// Whether this request can still receive a first reply here — it
+  /// hasn't been quoted yet (BR-02.5) and has enough data to quote.
+  bool get _quotable => request.isNew && request.isReadyToQuote;
 
   @override
   Widget build(BuildContext context) {
@@ -34,16 +46,18 @@ class RequestDetailPage extends StatelessWidget {
           child: Column(
             children: [
               _Header(request: request),
-              Expanded(child: _Body(request: request)),
-              if (request.isReadyToQuote)
+              Expanded(child: _Body(request: request, quotable: _quotable)),
+              if (_quotable)
                 QuotationFooter(
                   unitsLabel: AppLocalizations.of(context)!.unitsCount(request.totalUnits),
                   // The request has left New/Negotiating for the supervisor
                   // once sent or rejected — back to the inbox.
                   onSent: () => Navigator.of(context).pop(),
                 )
+              else if (request.isNew)
+                const _NotReadyNotice()
               else
-                const _NotReadyNotice(),
+                _MovedOnNotice(request: request),
             ],
           ),
         ),
@@ -54,8 +68,9 @@ class RequestDetailPage extends StatelessWidget {
 
 class _Body extends StatelessWidget {
   final InspectionRequest request;
+  final bool quotable;
 
-  const _Body({required this.request});
+  const _Body({required this.request, required this.quotable});
 
   void _notBuiltYet(BuildContext context) {
     MToast.showError(message: AppLocalizations.of(context)!.quotationBackendNotBuiltYet);
@@ -80,7 +95,7 @@ class _Body extends StatelessWidget {
           const SizedBox(height: 14),
           _NotesCard(notes: request.accessNotes!),
         ],
-        if (request.isReadyToQuote) ...[
+        if (quotable) ...[
           const SizedBox(height: 14),
           const QuotationReplyCard(),
         ],
@@ -103,6 +118,67 @@ class _NotReadyNotice extends StatelessWidget {
       child: MNotice(
         type: MNoticeType.info,
         message: AppLocalizations.of(context)!.notReadyToQuote,
+      ),
+    );
+  }
+}
+
+/// Shown once the request has left New/draft: a quote already exists
+/// for it, so replying again here would just regress its status —
+/// point the supervisor at Quotations instead of repeating the picker.
+class _MovedOnNotice extends StatelessWidget {
+  final InspectionRequest request;
+
+  const _MovedOnNotice({required this.request});
+
+  static MNoticeType _typeFor(JobStatus status) => switch (status) {
+    JobStatus.quoteRejected ||
+    JobStatus.clientDeclined ||
+    JobStatus.certificateReturned => MNoticeType.error,
+    JobStatus.quoteSent || JobStatus.clientCountered => MNoticeType.info,
+    _ => MNoticeType.success,
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+    final status = request.status;
+    final reason = request.rejectReason;
+    final message = status == JobStatus.quoteRejected && reason != null && reason.isNotEmpty
+        ? t.requestRejectedReasonMessage(reason)
+        : t.requestMovedOnMessage(status.label(t));
+
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        border: Border(top: BorderSide(color: AppColours.border)),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          MNotice(type: _typeFor(status), title: status.label(t), message: message),
+          const SizedBox(height: 12),
+          SizedBox(
+            height: 48,
+            child: OutlinedButton.icon(
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (_) => QuotationDetailPage(requestId: request.id),
+                ),
+              ),
+              icon: const Icon(Icons.description_outlined, size: 18),
+              label: Text(t.viewInQuotationsAction),
+              style: OutlinedButton.styleFrom(
+                foregroundColor: AppColours.primaryDark,
+                side: const BorderSide(color: AppColours.primaryTint, width: 1.5),
+                textStyle: AppTextStyles.buttonLabel.copyWith(fontSize: 14, color: AppColours.primaryDark),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

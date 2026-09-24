@@ -521,6 +521,19 @@ class AppLocalizationsEn extends AppLocalizations {
       'Add the client, at least one equipment item and the location before quoting.';
 
   @override
+  String requestMovedOnMessage(String status) {
+    return 'A quote already exists for this request — current status: $status. Manage it from Quotations.';
+  }
+
+  @override
+  String requestRejectedReasonMessage(String reason) {
+    return 'You rejected this request: $reason';
+  }
+
+  @override
+  String get viewInQuotationsAction => 'View in Quotations';
+
+  @override
   String get quotationBackendNotBuiltYet =>
       'Saving and sending aren\'t connected to a server yet.';
 

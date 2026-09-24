@@ -528,6 +528,19 @@ class AppLocalizationsAr extends AppLocalizations {
       'أضف العميل وعنصر معدات واحدًا على الأقل والموقع قبل التسعير.';
 
   @override
+  String requestMovedOnMessage(String status) {
+    return 'توجد بالفعل عروض أسعار لهذا الطلب — الحالة الحالية: $status. يمكنك متابعته من صفحة عروض الأسعار.';
+  }
+
+  @override
+  String requestRejectedReasonMessage(String reason) {
+    return 'لقد رفضت هذا الطلب: $reason';
+  }
+
+  @override
+  String get viewInQuotationsAction => 'عرض في عروض الأسعار';
+
+  @override
   String get quotationBackendNotBuiltYet =>
       'الحفظ والإرسال غير متصلين بخادم بعد.';
 

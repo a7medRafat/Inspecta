@@ -170,6 +170,9 @@
   "quantityLabel": "الكمية",
   "readFullEmail": "قراءة البريد الكامل",
   "notReadyToQuote": "أضف العميل وعنصر معدات واحدًا على الأقل والموقع قبل التسعير.",
+  "requestMovedOnMessage": "توجد بالفعل عروض أسعار لهذا الطلب — الحالة الحالية: {status}. يمكنك متابعته من صفحة عروض الأسعار.",
+  "requestRejectedReasonMessage": "لقد رفضت هذا الطلب: {reason}",
+  "viewInQuotationsAction": "عرض في عروض الأسعار",
   "quotationBackendNotBuiltYet": "الحفظ والإرسال غير متصلين بخادم بعد.",
   "comingSoon": "لم يُبنَ بعد.",
 

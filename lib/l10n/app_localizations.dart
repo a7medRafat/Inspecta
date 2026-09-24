@@ -1004,6 +1004,24 @@ abstract class AppLocalizations {
   /// **'Add the client, at least one equipment item and the location before quoting.'**
   String get notReadyToQuote;
 
+  /// No description provided for @requestMovedOnMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'A quote already exists for this request — current status: {status}. Manage it from Quotations.'**
+  String requestMovedOnMessage(String status);
+
+  /// No description provided for @requestRejectedReasonMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'You rejected this request: {reason}'**
+  String requestRejectedReasonMessage(String reason);
+
+  /// No description provided for @viewInQuotationsAction.
+  ///
+  /// In en, this message translates to:
+  /// **'View in Quotations'**
+  String get viewInQuotationsAction;
+
   /// No description provided for @quotationBackendNotBuiltYet.
   ///
   /// In en, this message translates to:
