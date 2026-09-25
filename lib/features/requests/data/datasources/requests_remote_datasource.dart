@@ -39,6 +39,21 @@ class RequestsRemoteDataSource {
         );
   }
 
+  /// Feature 05: scoped to one inspector's own jobs — matches
+  /// firestore.rules' `resource.data.inspectorId == request.auth.uid`
+  /// read condition, which only a query with this exact filter satisfies.
+  Stream<List<InspectionRequestModel>> watchAssignedRequests(String inspectorId) {
+    return _firestore
+        .collection(collection)
+        .where('inspectorId', isEqualTo: inspectorId)
+        .snapshots()
+        .map(
+          (snapshot) => snapshot.docs
+              .map((doc) => InspectionRequestModel.fromJson(doc.id, doc.data()))
+              .toList(),
+        );
+  }
+
   Future<InspectionRequestModel?> getById(String id) async {
     final snapshot = await _doc(id).get();
     final data = snapshot.data();
@@ -83,6 +98,16 @@ class RequestsRemoteDataSource {
       'scheduledAt': Timestamp.fromDate(scheduledAt),
       'assignmentNote': note,
     },
+  );
+
+  /// Feature 05: turning down a job hands it back to the coordinator's
+  /// queue — status reverts to [JobStatus.quoteAccepted] and the
+  /// assignment fields clear, matching the paired firestore.rules check.
+  Future<void> declineAssignment(String requestId, {String? reason}) => updateStatus(
+    requestId,
+    JobStatus.quoteAccepted,
+    note: reason,
+    extra: {'inspectorId': null, 'scheduledAt': null},
   );
 
   /// Just `location`/`items` — filling in intake data doesn't change the

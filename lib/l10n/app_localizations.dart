@@ -2455,6 +2455,408 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Next day'**
   String get nextDayTooltip;
+
+  /// No description provided for @navTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'Tasks'**
+  String get navTasks;
+
+  /// No description provided for @navCertificates.
+  ///
+  /// In en, this message translates to:
+  /// **'Certificates'**
+  String get navCertificates;
+
+  /// No description provided for @navMap.
+  ///
+  /// In en, this message translates to:
+  /// **'Map'**
+  String get navMap;
+
+  /// No description provided for @tasksTodayTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} tasks today'**
+  String tasksTodayTitle(int count);
+
+  /// No description provided for @tasksOnDayTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} tasks on {day}'**
+  String tasksOnDayTitle(int count, String day);
+
+  /// No description provided for @newTaskLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'New task'**
+  String get newTaskLabel;
+
+  /// No description provided for @fromYourCoordinatorLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'from your coordinator'**
+  String get fromYourCoordinatorLabel;
+
+  /// No description provided for @openAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get openAction;
+
+  /// No description provided for @needsResponseBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Needs response'**
+  String get needsResponseBadge;
+
+  /// No description provided for @taskInProgressBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'In progress'**
+  String get taskInProgressBadge;
+
+  /// No description provided for @continueCertificateAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue certificate'**
+  String get continueCertificateAction;
+
+  /// No description provided for @acceptAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept'**
+  String get acceptAction;
+
+  /// No description provided for @declineAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Decline'**
+  String get declineAction;
+
+  /// No description provided for @declineTaskTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Decline this task?'**
+  String get declineTaskTitle;
+
+  /// No description provided for @declineReasonHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason (optional)'**
+  String get declineReasonHint;
+
+  /// No description provided for @taskAcceptedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Task accepted.'**
+  String get taskAcceptedMessage;
+
+  /// No description provided for @taskDeclinedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Task declined.'**
+  String get taskDeclinedMessage;
+
+  /// No description provided for @emptyTasksForDay.
+  ///
+  /// In en, this message translates to:
+  /// **'No tasks on this day.'**
+  String get emptyTasksForDay;
+
+  /// No description provided for @certificateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Inspection certificate'**
+  String get certificateTitle;
+
+  /// No description provided for @templateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Template {id}'**
+  String templateLabel(String id);
+
+  /// No description provided for @savedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get savedLabel;
+
+  /// No description provided for @savingLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving…'**
+  String get savingLabel;
+
+  /// No description provided for @stepOfTotalLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Step {step} of {total}'**
+  String stepOfTotalLabel(int step, int total);
+
+  /// No description provided for @equipmentDetailsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Equipment details'**
+  String get equipmentDetailsTitle;
+
+  /// No description provided for @inspectionChecklistTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Inspection checklist'**
+  String get inspectionChecklistTitle;
+
+  /// No description provided for @itemsAnsweredLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{answered} of {total} items answered'**
+  String itemsAnsweredLabel(int answered, int total);
+
+  /// No description provided for @passOption.
+  ///
+  /// In en, this message translates to:
+  /// **'Pass'**
+  String get passOption;
+
+  /// No description provided for @failOption.
+  ///
+  /// In en, this message translates to:
+  /// **'Fail'**
+  String get failOption;
+
+  /// No description provided for @naOption.
+  ///
+  /// In en, this message translates to:
+  /// **'N/A'**
+  String get naOption;
+
+  /// No description provided for @describeDefectRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Describe the defect (required)'**
+  String get describeDefectRequired;
+
+  /// No description provided for @addPhotoOfDefectAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Add photo of defect'**
+  String get addPhotoOfDefectAction;
+
+  /// No description provided for @loadTestTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Load test'**
+  String get loadTestTitle;
+
+  /// No description provided for @testLoadKgLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Test load (kg)'**
+  String get testLoadKgLabel;
+
+  /// No description provided for @durationMinLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration (min)'**
+  String get durationMinLabel;
+
+  /// No description provided for @photosTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Photos'**
+  String get photosTitle;
+
+  /// No description provided for @addAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get addAction;
+
+  /// No description provided for @finalResultTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Final result'**
+  String get finalResultTitle;
+
+  /// No description provided for @safeToOperateOption.
+  ///
+  /// In en, this message translates to:
+  /// **'Safe to operate'**
+  String get safeToOperateOption;
+
+  /// No description provided for @safeWithConditionsOption.
+  ///
+  /// In en, this message translates to:
+  /// **'Safe with conditions (fix in 14 days)'**
+  String get safeWithConditionsOption;
+
+  /// No description provided for @notSafeOption.
+  ///
+  /// In en, this message translates to:
+  /// **'Not safe — out of service'**
+  String get notSafeOption;
+
+  /// No description provided for @previewAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview'**
+  String get previewAction;
+
+  /// No description provided for @submitToTechnicalManagerAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit to technical manager'**
+  String get submitToTechnicalManagerAction;
+
+  /// No description provided for @confirmSubmitCertificateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit this certificate?'**
+  String get confirmSubmitCertificateTitle;
+
+  /// No description provided for @confirmSubmitCertificateMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Once submitted, you won\'t be able to make further changes.'**
+  String get confirmSubmitCertificateMessage;
+
+  /// No description provided for @submitAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit'**
+  String get submitAction;
+
+  /// No description provided for @certificateSubmittedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Certificate submitted.'**
+  String get certificateSubmittedMessage;
+
+  /// No description provided for @upcomingBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming'**
+  String get upcomingBadge;
+
+  /// No description provided for @doneBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get doneBadge;
+
+  /// No description provided for @returnedBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Returned'**
+  String get returnedBadge;
+
+  /// No description provided for @directionsAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Directions'**
+  String get directionsAction;
+
+  /// No description provided for @routeSummaryLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{km} km · ~{minutes} min drive'**
+  String routeSummaryLabel(String km, int minutes);
+
+  /// No description provided for @routeEstimateCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'Straight-line estimate — not real traffic or roads'**
+  String get routeEstimateCaption;
+
+  /// No description provided for @myCertificatesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My certificates'**
+  String get myCertificatesTitle;
+
+  /// No description provided for @statNeedsAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Needs action'**
+  String get statNeedsAction;
+
+  /// No description provided for @statAwaitingReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting review'**
+  String get statAwaitingReview;
+
+  /// No description provided for @statSentThisMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent this month'**
+  String get statSentThisMonth;
+
+  /// No description provided for @searchCertificatesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search client, equipment or cert no.'**
+  String get searchCertificatesHint;
+
+  /// No description provided for @filterActionTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Action'**
+  String get filterActionTab;
+
+  /// No description provided for @filterSubmittedTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Submitted'**
+  String get filterSubmittedTab;
+
+  /// No description provided for @filterSentTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent'**
+  String get filterSentTab;
+
+  /// No description provided for @notYetSubmittedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Not yet submitted'**
+  String get notYetSubmittedLabel;
+
+  /// No description provided for @draftPercentLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft · {percent}%'**
+  String draftPercentLabel(int percent);
+
+  /// No description provided for @fixAndResubmitAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Fix & resubmit'**
+  String get fixAndResubmitAction;
+
+  /// No description provided for @viewPdfAction.
+  ///
+  /// In en, this message translates to:
+  /// **'View PDF'**
+  String get viewPdfAction;
+
+  /// No description provided for @submittedRelativeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Submitted {relative}'**
+  String submittedRelativeLabel(String relative);
+
+  /// No description provided for @emptyCertificatesList.
+  ///
+  /// In en, this message translates to:
+  /// **'No certificates match.'**
+  String get emptyCertificatesList;
+
+  /// No description provided for @certificateNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Certificate details aren\'t available.'**
+  String get certificateNotFound;
 }
 
 class _AppLocalizationsDelegate

@@ -54,7 +54,10 @@ service cloud.firestore {
       allow read: if hasRole('supervisor')
         || hasRole('coordinator')
         || hasRole('technical_manager')
-        || hasRole('admin');
+        || hasRole('admin')
+        // Feature 05: an inspector reads only jobs assigned to them —
+        // the app always queries `where inspectorId == uid` to match.
+        || (hasRole('inspector') && resource.data.inspectorId == request.auth.uid);
 
       // BR-02.9: only supervisors edit request details.
       allow create, delete: if hasRole('supervisor');
@@ -69,7 +72,66 @@ service cloud.firestore {
             && request.resource.data.status == 'assigned'
             && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
                  'status', 'inspectorId', 'scheduledAt', 'assignmentNote',
-               ]));
+               ]))
+        // Feature 05: the assigned inspector accepts, declines (handing
+        // the job back to the coordinator's queue) or starts their own
+        // job — each move touches only the fields it needs.
+        || (hasRole('inspector') && resource.data.inspectorId == request.auth.uid
+            && (
+                 (resource.data.status == 'assigned'
+                   && request.resource.data.status == 'task_accepted'
+                   && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status']))
+                 || (resource.data.status == 'assigned'
+                   && request.resource.data.status == 'quote_accepted'
+                   && request.resource.data.inspectorId == null
+                   && request.resource.data.scheduledAt == null
+                   && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+                        'status', 'inspectorId', 'scheduledAt',
+                      ]))
+                 || (resource.data.status == 'task_accepted'
+                   && request.resource.data.status == 'in_progress'
+                   && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status']))
+                 || (resource.data.status == 'in_progress'
+                   && request.resource.data.status == 'certificate_submitted'
+                   && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status']))
+                 // Feature 05: resubmitting after a technical manager
+                 // sends a certificate back for changes.
+                 || (resource.data.status == 'certificate_returned'
+                   && request.resource.data.status == 'certificate_submitted'
+                   && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status']))
+               ));
+    }
+
+    match /certificates/{id} {
+      // Feature 05: one certificate per job (doc id == the request's id),
+      // owned by the inspector it's assigned to. Ownership is checked
+      // against the *request* doc, not the certificate doc itself — the
+      // certificate doesn't exist yet the first time the inspector opens
+      // the screen (`resource` is null for a read of a nonexistent doc,
+      // so checking `resource.data` directly would fail closed).
+      function ownsJob() {
+        return get(/databases/$(database)/documents/requests/$(id)).data.inspectorId == request.auth.uid;
+      }
+
+      allow read: if hasRole('supervisor')
+        || hasRole('coordinator')
+        || hasRole('technical_manager')
+        || hasRole('admin')
+        || (hasRole('inspector') && ownsJob());
+
+      allow create: if hasRole('inspector')
+        && ownsJob()
+        && request.resource.data.inspectorId == request.auth.uid;
+
+      // Editable while drafting, and again after a technical manager
+      // sends it back — locked at every other point in the job's
+      // lifecycle. No separate flag on the certificate itself needed.
+      allow update: if hasRole('inspector')
+        && ownsJob()
+        && (get(/databases/$(database)/documents/requests/$(id)).data.status == 'in_progress'
+            || get(/databases/$(database)/documents/requests/$(id)).data.status == 'certificate_returned');
+
+      allow delete: if false;
     }
 
     match /requests/{id}/events/{eventId} {
@@ -79,9 +141,10 @@ service cloud.firestore {
         || hasRole('coordinator')
         || hasRole('technical_manager')
         || hasRole('admin');
-      // A coordinator's assignment write logs an event alongside it
-      // (see requests/{id}'s update rule above).
-      allow create: if hasRole('supervisor') || hasRole('coordinator');
+      // A coordinator's assignment write, or an inspector's own
+      // accept/decline/start write, logs an event alongside it (see
+      // requests/{id}'s update rule above).
+      allow create: if hasRole('supervisor') || hasRole('coordinator') || hasRole('inspector');
       allow update, delete: if false;
     }
 

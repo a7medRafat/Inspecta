@@ -97,4 +97,16 @@ class FakeRequestsRepository implements RequestsRepository {
     // TODO: implement completeIntake
     throw UnimplementedError();
   }
+
+  @override
+  Future<void> declineAssignment({required String requestId, String? reason}) {
+    // TODO: implement declineAssignment
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<List<InspectionRequest>> watchAssignedRequests(String inspectorId) {
+    // TODO: implement watchAssignedRequests
+    throw UnimplementedError();
+  }
 }

@@ -1332,4 +1332,224 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get nextDayTooltip => 'Next day';
+
+  @override
+  String get navTasks => 'Tasks';
+
+  @override
+  String get navCertificates => 'Certificates';
+
+  @override
+  String get navMap => 'Map';
+
+  @override
+  String tasksTodayTitle(int count) {
+    return '$count tasks today';
+  }
+
+  @override
+  String tasksOnDayTitle(int count, String day) {
+    return '$count tasks on $day';
+  }
+
+  @override
+  String get newTaskLabel => 'New task';
+
+  @override
+  String get fromYourCoordinatorLabel => 'from your coordinator';
+
+  @override
+  String get openAction => 'Open';
+
+  @override
+  String get needsResponseBadge => 'Needs response';
+
+  @override
+  String get taskInProgressBadge => 'In progress';
+
+  @override
+  String get continueCertificateAction => 'Continue certificate';
+
+  @override
+  String get acceptAction => 'Accept';
+
+  @override
+  String get declineAction => 'Decline';
+
+  @override
+  String get declineTaskTitle => 'Decline this task?';
+
+  @override
+  String get declineReasonHint => 'Reason (optional)';
+
+  @override
+  String get taskAcceptedMessage => 'Task accepted.';
+
+  @override
+  String get taskDeclinedMessage => 'Task declined.';
+
+  @override
+  String get emptyTasksForDay => 'No tasks on this day.';
+
+  @override
+  String get certificateTitle => 'Inspection certificate';
+
+  @override
+  String templateLabel(String id) {
+    return 'Template $id';
+  }
+
+  @override
+  String get savedLabel => 'Saved';
+
+  @override
+  String get savingLabel => 'Saving…';
+
+  @override
+  String stepOfTotalLabel(int step, int total) {
+    return 'Step $step of $total';
+  }
+
+  @override
+  String get equipmentDetailsTitle => 'Equipment details';
+
+  @override
+  String get inspectionChecklistTitle => 'Inspection checklist';
+
+  @override
+  String itemsAnsweredLabel(int answered, int total) {
+    return '$answered of $total items answered';
+  }
+
+  @override
+  String get passOption => 'Pass';
+
+  @override
+  String get failOption => 'Fail';
+
+  @override
+  String get naOption => 'N/A';
+
+  @override
+  String get describeDefectRequired => 'Describe the defect (required)';
+
+  @override
+  String get addPhotoOfDefectAction => 'Add photo of defect';
+
+  @override
+  String get loadTestTitle => 'Load test';
+
+  @override
+  String get testLoadKgLabel => 'Test load (kg)';
+
+  @override
+  String get durationMinLabel => 'Duration (min)';
+
+  @override
+  String get photosTitle => 'Photos';
+
+  @override
+  String get addAction => 'Add';
+
+  @override
+  String get finalResultTitle => 'Final result';
+
+  @override
+  String get safeToOperateOption => 'Safe to operate';
+
+  @override
+  String get safeWithConditionsOption =>
+      'Safe with conditions (fix in 14 days)';
+
+  @override
+  String get notSafeOption => 'Not safe — out of service';
+
+  @override
+  String get previewAction => 'Preview';
+
+  @override
+  String get submitToTechnicalManagerAction => 'Submit to technical manager';
+
+  @override
+  String get confirmSubmitCertificateTitle => 'Submit this certificate?';
+
+  @override
+  String get confirmSubmitCertificateMessage =>
+      'Once submitted, you won\'t be able to make further changes.';
+
+  @override
+  String get submitAction => 'Submit';
+
+  @override
+  String get certificateSubmittedMessage => 'Certificate submitted.';
+
+  @override
+  String get upcomingBadge => 'Upcoming';
+
+  @override
+  String get doneBadge => 'Done';
+
+  @override
+  String get returnedBadge => 'Returned';
+
+  @override
+  String get directionsAction => 'Directions';
+
+  @override
+  String routeSummaryLabel(String km, int minutes) {
+    return '$km km · ~$minutes min drive';
+  }
+
+  @override
+  String get routeEstimateCaption =>
+      'Straight-line estimate — not real traffic or roads';
+
+  @override
+  String get myCertificatesTitle => 'My certificates';
+
+  @override
+  String get statNeedsAction => 'Needs action';
+
+  @override
+  String get statAwaitingReview => 'Awaiting review';
+
+  @override
+  String get statSentThisMonth => 'Sent this month';
+
+  @override
+  String get searchCertificatesHint => 'Search client, equipment or cert no.';
+
+  @override
+  String get filterActionTab => 'Action';
+
+  @override
+  String get filterSubmittedTab => 'Submitted';
+
+  @override
+  String get filterSentTab => 'Sent';
+
+  @override
+  String get notYetSubmittedLabel => 'Not yet submitted';
+
+  @override
+  String draftPercentLabel(int percent) {
+    return 'Draft · $percent%';
+  }
+
+  @override
+  String get fixAndResubmitAction => 'Fix & resubmit';
+
+  @override
+  String get viewPdfAction => 'View PDF';
+
+  @override
+  String submittedRelativeLabel(String relative) {
+    return 'Submitted $relative';
+  }
+
+  @override
+  String get emptyCertificatesList => 'No certificates match.';
+
+  @override
+  String get certificateNotFound => 'Certificate details aren\'t available.';
 }

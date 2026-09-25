@@ -26,6 +26,13 @@ import 'features/clients/domain/usecases/set_certificates_email.dart';
 import 'features/clients/presentation/bloc/client_detail_cubit.dart';
 import 'features/clients/presentation/bloc/clients_list_cubit.dart';
 import 'features/auth/domain/entities/user.dart';
+import 'features/certificate/data/datasources/certificate_remote_datasource.dart';
+import 'features/certificate/data/repositories/certificate_repository_impl.dart';
+import 'features/certificate/domain/repositories/certificate_repository.dart';
+import 'features/certificate/domain/usecases/save_certificate_draft.dart';
+import 'features/certificate/domain/usecases/submit_certificate.dart';
+import 'features/certificate/domain/usecases/watch_certificate.dart';
+import 'features/certificate/presentation/bloc/certificate_cubit.dart';
 import 'features/coordinator/data/datasources/inspectors_remote_datasource.dart';
 import 'features/coordinator/data/repositories/coordinator_repository_impl.dart';
 import 'features/coordinator/domain/repositories/coordinator_repository.dart';
@@ -36,6 +43,9 @@ import 'features/coordinator/presentation/bloc/coordinator_queue_cubit.dart';
 import 'features/coordinator/presentation/bloc/inspector_detail_cubit.dart';
 import 'features/coordinator/presentation/bloc/inspectors_list_cubit.dart';
 import 'features/coordinator/presentation/bloc/schedule_cubit.dart';
+import 'features/inspector/domain/geocoding_service.dart';
+import 'features/inspector/presentation/bloc/certificates_list_cubit.dart';
+import 'features/inspector/presentation/bloc/inspector_tasks_cubit.dart';
 import 'features/quotation/data/datasources/quotation_remote_datasource.dart';
 import 'features/quotation/data/repositories/quotation_repository_impl.dart';
 import 'features/quotation/domain/repositories/quotation_repository.dart';
@@ -51,11 +61,15 @@ import 'features/requests/data/datasources/requests_remote_datasource.dart';
 import 'features/requests/data/repositories/requests_repository_impl.dart';
 import 'features/requests/domain/entities/inspection_request.dart';
 import 'features/requests/domain/repositories/requests_repository.dart';
+import 'features/requests/domain/usecases/accept_task.dart';
 import 'features/requests/domain/usecases/assign_client.dart';
 import 'features/requests/domain/usecases/assign_inspector.dart';
 import 'features/requests/domain/usecases/complete_intake.dart';
+import 'features/requests/domain/usecases/decline_task.dart';
+import 'features/requests/domain/usecases/get_my_tasks.dart';
 import 'features/requests/domain/usecases/get_request_detail.dart';
 import 'features/requests/domain/usecases/get_requests.dart';
+import 'features/requests/domain/usecases/start_inspection.dart';
 import 'features/requests/presentation/bloc/requests_list_cubit.dart';
 
 final getIt = GetIt.instance;
@@ -76,6 +90,8 @@ Future<void> setupDependencies() async {
   _registerClients();
   _registerCoordinator();
   _registerProfile();
+  _registerInspector();
+  _registerCertificate();
 }
 
 void _registerAuth(FlutterSecureStorage storage) {
@@ -105,6 +121,10 @@ void _registerRequests() {
     ..registerLazySingleton(() => AssignClient(getIt()))
     ..registerLazySingleton(() => AssignInspector(getIt()))
     ..registerLazySingleton(() => CompleteIntake(getIt()))
+    ..registerLazySingleton(() => GetMyTasks(getIt()))
+    ..registerLazySingleton(() => AcceptTask(getIt()))
+    ..registerLazySingleton(() => DeclineTask(getIt()))
+    ..registerLazySingleton(() => StartInspection(getIt()))
     ..registerFactory(() => RequestsListCubit(getIt()));
 }
 
@@ -188,4 +208,40 @@ void _registerCoordinator() {
 
 void _registerProfile() {
   getIt.registerFactory(() => ProfileStatsCubit(getIt(), getIt()));
+}
+
+void _registerInspector() {
+  getIt
+    ..registerLazySingleton(GeocodingService.new)
+    ..registerFactory(
+      () => InspectorTasksCubit(
+        inspectorId: getIt<AuthCubit>().user!.id,
+        getMyTasks: getIt(),
+        acceptTask: getIt(),
+        declineTask: getIt(),
+        startInspection: getIt(),
+      ),
+    )
+    ..registerFactory(
+      () => CertificatesListCubit(inspectorId: getIt<AuthCubit>().user!.id, getMyTasks: getIt()),
+    );
+}
+
+void _registerCertificate() {
+  getIt
+    ..registerLazySingleton(CertificateRemoteDataSource.new)
+    ..registerLazySingleton<CertificateRepository>(
+      () => CertificateRepositoryImpl(getIt(), getIt()),
+    )
+    ..registerLazySingleton(() => WatchCertificate(getIt()))
+    ..registerLazySingleton(() => SaveCertificateDraft(getIt()))
+    ..registerLazySingleton(() => SubmitCertificate(getIt()))
+    ..registerFactoryParam<CertificateCubit, InspectionRequest, void>(
+      (request, _) => CertificateCubit(
+        request: request,
+        watchCertificate: getIt(),
+        saveDraft: getIt(),
+        submitCertificate: getIt(),
+      ),
+    );
 }

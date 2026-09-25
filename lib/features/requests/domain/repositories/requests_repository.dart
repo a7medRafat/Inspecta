@@ -8,6 +8,10 @@ abstract interface class RequestsRepository {
   /// sees every request — there's no per-supervisor split.
   Stream<List<InspectionRequest>> watchRequests();
 
+  /// Feature 05: every job ever assigned to one inspector — the only
+  /// slice of `requests` their read access covers (see firestore.rules).
+  Stream<List<InspectionRequest>> watchAssignedRequests(String inspectorId);
+
   /// A single request, or `null` if it doesn't exist (or its status isn't
   /// one the app understands). Used when a screen only has a request's id
   /// (e.g. opening it from the quotations list).
@@ -31,6 +35,10 @@ abstract interface class RequestsRepository {
     required DateTime scheduledAt,
     String? note,
   });
+
+  /// Feature 05: the assigned inspector turns down a job, handing it
+  /// back to the coordinator's "ready to assign" queue.
+  Future<void> declineAssignment({required String requestId, String? reason});
 
   /// Fills in a request's equipment and location — the only way today to
   /// make an intake-only request (e.g. one created straight from an

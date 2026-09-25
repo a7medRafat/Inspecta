@@ -41,5 +41,22 @@
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>
         </intent>
+        <!-- Android 11 (API 30)'s package-visibility restrictions hide
+             other installed apps by default. Without these, url_launcher's
+             launchUrl(mode: externalApplication) — used to open Google
+             Maps directions from the inspector's tasks/map screens — fails
+             to resolve a handler even when Chrome/Maps is installed. -->
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <data android:scheme="https"/>
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <data android:scheme="http"/>
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <data android:scheme="geo"/>
+        </intent>
     </queries>
 </manifest>

@@ -35,6 +35,27 @@ class RequestsRepositoryImpl implements RequestsRepository {
   }
 
   @override
+  Stream<List<InspectionRequest>> watchAssignedRequests(String inspectorId) {
+    return _remote
+        .watchAssignedRequests(inspectorId)
+        .map((models) {
+          final requests = <InspectionRequest>[];
+          for (final model in models) {
+            final entity = model.toEntity();
+            if (entity != null) {
+              requests.add(entity);
+            } else {
+              debugPrint('Skipping requests/${model.id}: unknown status');
+            }
+          }
+          return requests;
+        })
+        .handleError((Object error) {
+          throw _mapError(error);
+        });
+  }
+
+  @override
   Future<InspectionRequest?> getById(String id) async {
     try {
       final model = await _remote.getById(id);
@@ -97,6 +118,15 @@ class RequestsRepositoryImpl implements RequestsRepository {
         scheduledAt: scheduledAt,
         note: note,
       );
+    } catch (e) {
+      throw _mapError(e);
+    }
+  }
+
+  @override
+  Future<void> declineAssignment({required String requestId, String? reason}) async {
+    try {
+      await _remote.declineAssignment(requestId, reason: reason);
     } catch (e) {
       throw _mapError(e);
     }

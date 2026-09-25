@@ -1329,4 +1329,223 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get nextDayTooltip => 'اليوم التالي';
+
+  @override
+  String get navTasks => 'المهام';
+
+  @override
+  String get navCertificates => 'الشهادات';
+
+  @override
+  String get navMap => 'الخريطة';
+
+  @override
+  String tasksTodayTitle(int count) {
+    return '$count مهام اليوم';
+  }
+
+  @override
+  String tasksOnDayTitle(int count, String day) {
+    return '$count مهام في $day';
+  }
+
+  @override
+  String get newTaskLabel => 'مهمة جديدة';
+
+  @override
+  String get fromYourCoordinatorLabel => 'من المنسق الخاص بك';
+
+  @override
+  String get openAction => 'فتح';
+
+  @override
+  String get needsResponseBadge => 'بانتظار الرد';
+
+  @override
+  String get taskInProgressBadge => 'قيد التنفيذ';
+
+  @override
+  String get continueCertificateAction => 'متابعة الشهادة';
+
+  @override
+  String get acceptAction => 'قبول';
+
+  @override
+  String get declineAction => 'رفض';
+
+  @override
+  String get declineTaskTitle => 'رفض هذه المهمة؟';
+
+  @override
+  String get declineReasonHint => 'السبب (اختياري)';
+
+  @override
+  String get taskAcceptedMessage => 'تم قبول المهمة.';
+
+  @override
+  String get taskDeclinedMessage => 'تم رفض المهمة.';
+
+  @override
+  String get emptyTasksForDay => 'لا توجد مهام في هذا اليوم.';
+
+  @override
+  String get certificateTitle => 'شهادة الفحص';
+
+  @override
+  String templateLabel(String id) {
+    return 'القالب $id';
+  }
+
+  @override
+  String get savedLabel => 'تم الحفظ';
+
+  @override
+  String get savingLabel => 'جارٍ الحفظ…';
+
+  @override
+  String stepOfTotalLabel(int step, int total) {
+    return 'الخطوة $step من $total';
+  }
+
+  @override
+  String get equipmentDetailsTitle => 'تفاصيل المعدة';
+
+  @override
+  String get inspectionChecklistTitle => 'قائمة الفحص';
+
+  @override
+  String itemsAnsweredLabel(int answered, int total) {
+    return 'تمت الإجابة عن $answered من $total';
+  }
+
+  @override
+  String get passOption => 'ناجح';
+
+  @override
+  String get failOption => 'راسب';
+
+  @override
+  String get naOption => 'غير منطبق';
+
+  @override
+  String get describeDefectRequired => 'صف العطل (مطلوب)';
+
+  @override
+  String get addPhotoOfDefectAction => 'إضافة صورة للعطل';
+
+  @override
+  String get loadTestTitle => 'اختبار الحمل';
+
+  @override
+  String get testLoadKgLabel => 'حمل الاختبار (كجم)';
+
+  @override
+  String get durationMinLabel => 'المدة (دقيقة)';
+
+  @override
+  String get photosTitle => 'الصور';
+
+  @override
+  String get addAction => 'إضافة';
+
+  @override
+  String get finalResultTitle => 'النتيجة النهائية';
+
+  @override
+  String get safeToOperateOption => 'آمن للتشغيل';
+
+  @override
+  String get safeWithConditionsOption => 'آمن بشروط (الإصلاح خلال 14 يومًا)';
+
+  @override
+  String get notSafeOption => 'غير آمن — خارج الخدمة';
+
+  @override
+  String get previewAction => 'معاينة';
+
+  @override
+  String get submitToTechnicalManagerAction => 'إرسال إلى المدير الفني';
+
+  @override
+  String get confirmSubmitCertificateTitle => 'إرسال هذه الشهادة؟';
+
+  @override
+  String get confirmSubmitCertificateMessage =>
+      'بعد الإرسال، لن تتمكن من إجراء أي تعديلات أخرى.';
+
+  @override
+  String get submitAction => 'إرسال';
+
+  @override
+  String get certificateSubmittedMessage => 'تم إرسال الشهادة.';
+
+  @override
+  String get upcomingBadge => 'قادم';
+
+  @override
+  String get doneBadge => 'مكتمل';
+
+  @override
+  String get returnedBadge => 'معاد';
+
+  @override
+  String get directionsAction => 'الاتجاهات';
+
+  @override
+  String routeSummaryLabel(String km, int minutes) {
+    return '$km كم · ~$minutes دقيقة قيادة';
+  }
+
+  @override
+  String get routeEstimateCaption =>
+      'تقدير بخط مستقيم — وليس حركة المرور أو الطرق الفعلية';
+
+  @override
+  String get myCertificatesTitle => 'شهاداتي';
+
+  @override
+  String get statNeedsAction => 'بحاجة لإجراء';
+
+  @override
+  String get statAwaitingReview => 'بانتظار المراجعة';
+
+  @override
+  String get statSentThisMonth => 'أُرسلت هذا الشهر';
+
+  @override
+  String get searchCertificatesHint => 'ابحث بالعميل أو المعدة أو رقم الشهادة';
+
+  @override
+  String get filterActionTab => 'إجراء';
+
+  @override
+  String get filterSubmittedTab => 'مُرسلة';
+
+  @override
+  String get filterSentTab => 'أُرسلت';
+
+  @override
+  String get notYetSubmittedLabel => 'لم تُرسل بعد';
+
+  @override
+  String draftPercentLabel(int percent) {
+    return 'مسودة · $percent%';
+  }
+
+  @override
+  String get fixAndResubmitAction => 'إصلاح وإعادة الإرسال';
+
+  @override
+  String get viewPdfAction => 'عرض PDF';
+
+  @override
+  String submittedRelativeLabel(String relative) {
+    return 'أُرسلت $relative';
+  }
+
+  @override
+  String get emptyCertificatesList => 'لا توجد شهادات مطابقة.';
+
+  @override
+  String get certificateNotFound => 'تفاصيل الشهادة غير متوفرة.';
 }
