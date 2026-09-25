@@ -178,7 +178,7 @@ class _MyWorkCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(999),
                         ),
                         child: Text(
-                          q,
+                          q.name,
                           style: AppTextStyles.badge.copyWith(color: AppColours.primaryDark),
                         ),
                       ),

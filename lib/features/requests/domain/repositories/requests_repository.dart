@@ -1,5 +1,6 @@
 import '../../../../core/enums/job_status.dart';
 import '../entities/inspection_request.dart';
+import '../entities/request_item.dart';
 
 /// Methods emit / throw [RequestsFailure] on expected errors.
 abstract interface class RequestsRepository {
@@ -21,4 +22,22 @@ abstract interface class RequestsRepository {
 
   /// BR-02.4: matches an unmatched sender to a known client.
   Future<void> assignClient(String requestId, String clientId);
+
+  /// Feature 04: a coordinator assigns an inspector and a time slot,
+  /// moving the job to [JobStatus.assigned].
+  Future<void> assignInspector({
+    required String requestId,
+    required String inspectorId,
+    required DateTime scheduledAt,
+    String? note,
+  });
+
+  /// Fills in a request's equipment and location — the only way today to
+  /// make an intake-only request (e.g. one created straight from an
+  /// email, before either is known) satisfy [InspectionRequest.isReadyToQuote].
+  Future<void> completeIntake({
+    required String requestId,
+    required String location,
+    required List<RequestItem> items,
+  });
 }

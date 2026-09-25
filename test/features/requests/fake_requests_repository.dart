@@ -46,6 +46,8 @@ class FakeRequestsRepository implements RequestsRepository {
   final statusUpdates = <(String requestId, JobStatus status, String? note)>[];
   final rejections = <(String requestId, String reason)>[];
   final clientAssignments = <(String requestId, String clientId)>[];
+  final inspectorAssignments =
+      <(String requestId, String inspectorId, DateTime scheduledAt, String? note)>[];
 
   @override
   Stream<List<InspectionRequest>> watchRequests() => controller.stream;
@@ -54,12 +56,19 @@ class FakeRequestsRepository implements RequestsRepository {
   Future<InspectionRequest?> getById(String id) async => requestToReturn;
 
   @override
-  Future<void> updateStatus(String requestId, JobStatus status, {String? note}) async {
+  Future<void> updateStatus(
+    String requestId,
+    JobStatus status, {
+    String? note,
+  }) async {
     statusUpdates.add((requestId, status, note));
   }
 
   @override
-  Future<void> rejectRequest({required String requestId, required String reason}) async {
+  Future<void> rejectRequest({
+    required String requestId,
+    required String reason,
+  }) async {
     if (rejectFailure != null) throw rejectFailure!;
     rejections.add((requestId, reason));
   }
@@ -67,5 +76,25 @@ class FakeRequestsRepository implements RequestsRepository {
   @override
   Future<void> assignClient(String requestId, String clientId) async {
     clientAssignments.add((requestId, clientId));
+  }
+
+  @override
+  Future<void> assignInspector({
+    required String requestId,
+    required String inspectorId,
+    required DateTime scheduledAt,
+    String? note,
+  }) async {
+    inspectorAssignments.add((requestId, inspectorId, scheduledAt, note));
+  }
+
+  @override
+  Future<void> completeIntake({
+    required String requestId,
+    required String location,
+    required List<RequestItem> items,
+  }) {
+    // TODO: implement completeIntake
+    throw UnimplementedError();
   }
 }

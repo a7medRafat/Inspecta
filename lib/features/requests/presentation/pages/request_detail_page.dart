@@ -15,9 +15,13 @@ import '../../../quotation/presentation/pages/quotation_detail_page.dart';
 import '../../../quotation/presentation/widgets/quotation_footer.dart';
 import '../../../quotation/presentation/widgets/quotation_reply_card.dart';
 import '../../domain/entities/inspection_request.dart';
+import '../../domain/entities/requests_failure.dart';
+import '../../domain/usecases/complete_intake.dart';
+import '../widgets/complete_request_sheet.dart';
 import '../widgets/email_summary_card.dart';
 import '../widgets/equipment_grid.dart';
 import '../widgets/job_stepper.dart';
+import '../widgets/requests_labels.dart';
 import '../widgets/status_chip.dart';
 
 /// Feature 02 §5's "Request detail" screen: the six-step progress bar,
@@ -55,7 +59,7 @@ class RequestDetailPage extends StatelessWidget {
                   onSent: () => Navigator.of(context).pop(),
                 )
               else if (request.isNew)
-                const _NotReadyNotice()
+                _NotReadyNotice(request: request)
               else
                 _MovedOnNotice(request: request),
             ],
@@ -105,19 +109,67 @@ class _Body extends StatelessWidget {
 }
 
 class _NotReadyNotice extends StatelessWidget {
-  const _NotReadyNotice();
+  final InspectionRequest request;
+
+  const _NotReadyNotice({required this.request});
+
+  Future<void> _complete(BuildContext context) async {
+    final t = AppLocalizations.of(context)!;
+    final completed = await CompleteRequestSheet.show(
+      context,
+      onSubmit: ({required location, required items}) async {
+        try {
+          await getIt<CompleteIntake>()(requestId: request.id, location: location, items: items);
+          if (context.mounted) MToast.showSuccess(message: t.requestCompleted);
+          return true;
+        } catch (e) {
+          if (context.mounted) {
+            MToast.showError(message: e is RequestsFailure ? e.code.message(t) : t.actionFailed);
+          }
+          return false;
+        }
+      },
+    );
+    // The request is a static snapshot on this page — back to the inbox
+    // (which streams live) rather than trying to refresh it in place.
+    if (completed == true && context.mounted) Navigator.of(context).pop();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+    // Only offer the fix this sheet can actually make — a missing client
+    // is matched from the Clients tab instead (see MatchClientSheet).
+    final canComplete = request.location.isEmpty || request.items.isEmpty;
+
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: const BoxDecoration(
         color: Colors.white,
         border: Border(top: BorderSide(color: AppColours.border)),
       ),
-      child: MNotice(
-        type: MNoticeType.info,
-        message: AppLocalizations.of(context)!.notReadyToQuote,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          MNotice(type: MNoticeType.info, message: t.notReadyToQuote),
+          if (canComplete) ...[
+            const SizedBox(height: 12),
+            SizedBox(
+              height: 48,
+              child: OutlinedButton(
+                onPressed: () => _complete(context),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: AppColours.primaryDark,
+                  side: const BorderSide(color: AppColours.primaryTint, width: 1.5),
+                  textStyle: AppTextStyles.buttonLabel.copyWith(fontSize: 14, color: AppColours.primaryDark),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                ),
+                child: Text(t.completeRequestAction),
+              ),
+            ),
+          ],
+        ],
       ),
     );
   }

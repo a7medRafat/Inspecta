@@ -17,7 +17,7 @@ void main() {
 
     final user = model.toEntity()!;
     expect(user.role, UserRole.technicalManager);
-    expect(user.qualifications, ['Lifts', 'Cranes']);
+    expect(user.qualifications.map((q) => q.name), ['Lifts', 'Cranes']);
     expect(user.active, isTrue);
     expect(user.lastLogin!.isAtSameMomentAs(lastLogin), isTrue);
     expect(user.initials, 'KA');

@@ -36,6 +36,12 @@ class InspectionRequest extends Equatable {
   /// Set when [status] is [JobStatus.quoteRejected] (BR-03.8).
   final String? rejectReason;
 
+  /// The inspector assigned to carry out the job, set together with
+  /// [scheduledAt] when a coordinator assigns it (Feature 04).
+  final String? inspectorId;
+  final DateTime? scheduledAt;
+  final String? assignmentNote;
+
   const InspectionRequest({
     required this.id,
     required this.source,
@@ -55,11 +61,26 @@ class InspectionRequest extends Equatable {
     this.hasUnreadClientReply = false,
     this.lastReplySnippet,
     this.rejectReason,
+    this.inspectorId,
+    this.scheduledAt,
+    this.assignmentNote,
   });
 
   bool get isNew => RequestsTabX.isNew(status);
 
   bool get isNewClient => clientId == null;
+
+  /// The client accepted a quote but no inspector has been assigned yet —
+  /// the coordinator's "ready to assign" queue (Feature 04 §5).
+  bool get isReadyToAssign => status == JobStatus.quoteAccepted;
+
+  /// An inspector has been assigned and the job hasn't been sent to the
+  /// client yet — still on the coordinator's radar as a scheduled/running
+  /// job.
+  bool get isAssignedOrLater =>
+      status == JobStatus.assigned ||
+      status == JobStatus.taskAccepted ||
+      status == JobStatus.inProgress;
 
   /// Card title: the first item's equipment, e.g. "Overhead crane — 10 t".
   /// A request always has at least one item once past intake, but a
@@ -97,5 +118,8 @@ class InspectionRequest extends Equatable {
     hasUnreadClientReply,
     lastReplySnippet,
     rejectReason,
+    inspectorId,
+    scheduledAt,
+    assignmentNote,
   ];
 }

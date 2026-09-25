@@ -1004,6 +1004,66 @@ abstract class AppLocalizations {
   /// **'Add the client, at least one equipment item and the location before quoting.'**
   String get notReadyToQuote;
 
+  /// No description provided for @completeRequestAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete request'**
+  String get completeRequestAction;
+
+  /// No description provided for @completeRequestSheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete this request'**
+  String get completeRequestSheetTitle;
+
+  /// No description provided for @completeRequestSheetSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add the equipment and location this request needs before it can be quoted.'**
+  String get completeRequestSheetSubtitle;
+
+  /// No description provided for @addEquipmentItemAction.
+  ///
+  /// In en, this message translates to:
+  /// **'+ Add equipment'**
+  String get addEquipmentItemAction;
+
+  /// No description provided for @removeItemAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get removeItemAction;
+
+  /// No description provided for @equipmentTypeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Equipment type'**
+  String get equipmentTypeLabel;
+
+  /// No description provided for @saveAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get saveAction;
+
+  /// No description provided for @errorEquipmentTypeRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the equipment type.'**
+  String get errorEquipmentTypeRequired;
+
+  /// No description provided for @errorEquipmentRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Add at least one equipment item.'**
+  String get errorEquipmentRequired;
+
+  /// No description provided for @requestCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Request completed.'**
+  String get requestCompleted;
+
   /// No description provided for @requestMovedOnMessage.
   ///
   /// In en, this message translates to:
@@ -1993,6 +2053,408 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Certificates email updated.'**
   String get certificatesEmailUpdated;
+
+  /// No description provided for @navQueue.
+  ///
+  /// In en, this message translates to:
+  /// **'Queue'**
+  String get navQueue;
+
+  /// No description provided for @navSchedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule'**
+  String get navSchedule;
+
+  /// No description provided for @navInspectors.
+  ///
+  /// In en, this message translates to:
+  /// **'Inspectors'**
+  String get navInspectors;
+
+  /// No description provided for @statUnassigned.
+  ///
+  /// In en, this message translates to:
+  /// **'Unassigned'**
+  String get statUnassigned;
+
+  /// No description provided for @statScheduled.
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled'**
+  String get statScheduled;
+
+  /// No description provided for @statInProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'In progress'**
+  String get statInProgress;
+
+  /// No description provided for @coordinatorQueueHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Accepted quotations'**
+  String get coordinatorQueueHeading;
+
+  /// No description provided for @byDueDate.
+  ///
+  /// In en, this message translates to:
+  /// **'By due date'**
+  String get byDueDate;
+
+  /// No description provided for @emptyCoordinatorQueue.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to assign or schedule right now.'**
+  String get emptyCoordinatorQueue;
+
+  /// No description provided for @assignInspectorAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Assign inspector'**
+  String get assignInspectorAction;
+
+  /// No description provided for @dueToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Due today'**
+  String get dueToday;
+
+  /// No description provided for @dueTomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Due tomorrow'**
+  String get dueTomorrow;
+
+  /// No description provided for @dueInDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Due in {days} days'**
+  String dueInDays(int days);
+
+  /// No description provided for @overdueByDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue by {days} days'**
+  String overdueByDays(int days);
+
+  /// No description provided for @assignInspectorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Assign inspector'**
+  String get assignInspectorTitle;
+
+  /// No description provided for @pickTimeStepLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'1. Pick a time'**
+  String get pickTimeStepLabel;
+
+  /// No description provided for @dateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get dateLabel;
+
+  /// No description provided for @startTimeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get startTimeLabel;
+
+  /// No description provided for @chooseInspectorStepLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'2. Choose inspector'**
+  String get chooseInspectorStepLabel;
+
+  /// No description provided for @assignNotesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'3. Notes (optional)'**
+  String get assignNotesLabel;
+
+  /// No description provided for @noQualificationsListed.
+  ///
+  /// In en, this message translates to:
+  /// **'No qualifications on file'**
+  String get noQualificationsListed;
+
+  /// No description provided for @bestMatchTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Best match'**
+  String get bestMatchTag;
+
+  /// No description provided for @emptyInspectors.
+  ///
+  /// In en, this message translates to:
+  /// **'No active inspectors yet.'**
+  String get emptyInspectors;
+
+  /// No description provided for @errorInspectorRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose an inspector.'**
+  String get errorInspectorRequired;
+
+  /// No description provided for @assignAndNotifyAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Assign & notify {name}'**
+  String assignAndNotifyAction(String name);
+
+  /// No description provided for @assignmentSuccessMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Inspector assigned.'**
+  String get assignmentSuccessMessage;
+
+  /// No description provided for @inspectorsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Inspectors'**
+  String get inspectorsTitle;
+
+  /// No description provided for @searchInspectorsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by name'**
+  String get searchInspectorsHint;
+
+  /// No description provided for @filterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get filterAll;
+
+  /// No description provided for @statFreeToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Free today'**
+  String get statFreeToday;
+
+  /// No description provided for @statBusy.
+  ///
+  /// In en, this message translates to:
+  /// **'Busy'**
+  String get statBusy;
+
+  /// No description provided for @statOnLeave.
+  ///
+  /// In en, this message translates to:
+  /// **'On leave'**
+  String get statOnLeave;
+
+  /// No description provided for @freeBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Free'**
+  String get freeBadge;
+
+  /// No description provided for @busyBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Busy'**
+  String get busyBadge;
+
+  /// No description provided for @onLeaveBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave'**
+  String get onLeaveBadge;
+
+  /// No description provided for @onLeaveUntilLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'On leave until {date}'**
+  String onLeaveUntilLabel(String date);
+
+  /// No description provided for @todayLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get todayLabel;
+
+  /// No description provided for @slotsOfCapacity.
+  ///
+  /// In en, this message translates to:
+  /// **'{used} of {capacity} slots'**
+  String slotsOfCapacity(int used, int capacity);
+
+  /// No description provided for @nowLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Now:'**
+  String get nowLabel;
+
+  /// No description provided for @nextLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Next:'**
+  String get nextLabel;
+
+  /// No description provided for @licenseExpiresInDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} license expires in {days} days'**
+  String licenseExpiresInDays(String name, int days);
+
+  /// No description provided for @emptyInspectorsRoster.
+  ///
+  /// In en, this message translates to:
+  /// **'No inspectors match.'**
+  String get emptyInspectorsRoster;
+
+  /// No description provided for @assignAJobAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Assign a job'**
+  String get assignAJobAction;
+
+  /// No description provided for @pickJobToAssignTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Assign a job'**
+  String get pickJobToAssignTitle;
+
+  /// No description provided for @chatAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Chat'**
+  String get chatAction;
+
+  /// No description provided for @doneThisMonthLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Done this month'**
+  String get doneThisMonthLabel;
+
+  /// No description provided for @onTimeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'On time'**
+  String get onTimeLabel;
+
+  /// No description provided for @returnedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Returned'**
+  String get returnedLabel;
+
+  /// No description provided for @thisWeekTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This week'**
+  String get thisWeekTitle;
+
+  /// No description provided for @tasksPerDayCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'Tasks per day · red = fully booked'**
+  String get tasksPerDayCaption;
+
+  /// No description provided for @offLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'off'**
+  String get offLabel;
+
+  /// No description provided for @qualificationsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Qualifications'**
+  String get qualificationsTitle;
+
+  /// No description provided for @validToLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Valid to {date}'**
+  String validToLabel(String date);
+
+  /// No description provided for @expiresOnLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Expires {date}'**
+  String expiresOnLabel(String date);
+
+  /// No description provided for @upcomingTasksTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming tasks'**
+  String get upcomingTasksTitle;
+
+  /// No description provided for @seeAllAction.
+  ///
+  /// In en, this message translates to:
+  /// **'See all'**
+  String get seeAllAction;
+
+  /// No description provided for @emptyUpcomingTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'No upcoming tasks.'**
+  String get emptyUpcomingTasks;
+
+  /// No description provided for @taskAcceptedBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Accepted'**
+  String get taskAcceptedBadge;
+
+  /// No description provided for @taskNotAcceptedBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Not accepted'**
+  String get taskNotAcceptedBadge;
+
+  /// No description provided for @allTasksTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'All tasks'**
+  String get allTasksTitle;
+
+  /// No description provided for @markLeaveAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark leave'**
+  String get markLeaveAction;
+
+  /// No description provided for @leaveMarkedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave marked.'**
+  String get leaveMarkedMessage;
+
+  /// No description provided for @onSiteNowBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'On site now'**
+  String get onSiteNowBadge;
+
+  /// No description provided for @scheduleFreeAllDayLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Free all day'**
+  String get scheduleFreeAllDayLabel;
+
+  /// No description provided for @scheduleEmptyRoster.
+  ///
+  /// In en, this message translates to:
+  /// **'No inspectors to schedule.'**
+  String get scheduleEmptyRoster;
+
+  /// No description provided for @previousDayTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous day'**
+  String get previousDayTooltip;
+
+  /// No description provided for @nextDayTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Next day'**
+  String get nextDayTooltip;
 }
 
 class _AppLocalizationsDelegate

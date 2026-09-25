@@ -33,11 +33,16 @@ service cloud.firestore {
         || (hasRole('coordinator') && resource.data.role == 'inspector');
 
       // A user may only stamp their own lastLogin with the server time.
+      // Feature 04: a coordinator may mark/clear an inspector's leave —
+      // only that one field, only on an inspector's profile.
       allow update: if hasRole('admin')
         || (isActive()
             && request.auth.uid == uid
             && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['lastLogin'])
-            && request.resource.data.lastLogin == request.time);
+            && request.resource.data.lastLogin == request.time)
+        || (hasRole('coordinator')
+            && resource.data.role == 'inspector'
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['onLeaveUntil']));
 
       allow create, delete: if hasRole('admin');
     }
@@ -52,7 +57,19 @@ service cloud.firestore {
         || hasRole('admin');
 
       // BR-02.9: only supervisors edit request details.
-      allow create, update, delete: if hasRole('supervisor');
+      allow create, delete: if hasRole('supervisor');
+
+      // Feature 04: a coordinator may only assign an inspector to a job
+      // that's already quote-accepted, and only by touching the
+      // assignment fields (plus the status/history write that goes with
+      // them) — everything else about a request stays supervisor-owned.
+      allow update: if hasRole('supervisor')
+        || (hasRole('coordinator')
+            && resource.data.status == 'quote_accepted'
+            && request.resource.data.status == 'assigned'
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+                 'status', 'inspectorId', 'scheduledAt', 'assignmentNote',
+               ]));
     }
 
     match /requests/{id}/events/{eventId} {
@@ -62,7 +79,9 @@ service cloud.firestore {
         || hasRole('coordinator')
         || hasRole('technical_manager')
         || hasRole('admin');
-      allow create: if hasRole('supervisor');
+      // A coordinator's assignment write logs an event alongside it
+      // (see requests/{id}'s update rule above).
+      allow create: if hasRole('supervisor') || hasRole('coordinator');
       allow update, delete: if false;
     }
 

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../features/auth/domain/entities/user_role.dart';
 import '../../features/auth/presentation/bloc/auth_cubit.dart';
 import '../../features/auth/presentation/pages/sign_in_page.dart';
+import '../../features/home/presentation/pages/coordinator_root_page.dart';
 import '../../features/home/presentation/pages/role_home_page.dart';
 import '../../features/home/presentation/pages/supervisor_root_page.dart';
 import '../../features/splash/presentation/views/splash_screen.dart';
@@ -37,9 +38,11 @@ class AuthGate extends StatelessWidget {
         Unauthenticated() => const SignInPage(),
         Authenticated(:final user) => KeyedSubtree(
           key: ValueKey((user.id, user.role)),
-          child: user.role == UserRole.supervisor
-              ? const SupervisorRootPage()
-              : const RoleHomePage(),
+          child: switch (user.role) {
+            UserRole.supervisor => const SupervisorRootPage(),
+            UserRole.coordinator => const CoordinatorRootPage(),
+            _ => const RoleHomePage(),
+          },
         ),
       },
     );

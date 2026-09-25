@@ -25,6 +25,9 @@ class InspectionRequestModel {
   final bool hasUnreadClientReply;
   final String? lastReplySnippet;
   final String? rejectReason;
+  final String? inspectorId;
+  final DateTime? scheduledAt;
+  final String? assignmentNote;
 
   const InspectionRequestModel({
     required this.id,
@@ -45,6 +48,9 @@ class InspectionRequestModel {
     this.hasUnreadClientReply = false,
     this.lastReplySnippet,
     this.rejectReason,
+    this.inspectorId,
+    this.scheduledAt,
+    this.assignmentNote,
   });
 
   factory InspectionRequestModel.fromJson(String id, Map<String, dynamic> json) {
@@ -71,6 +77,9 @@ class InspectionRequestModel {
       hasUnreadClientReply: json['hasUnreadClientReply'] as bool? ?? false,
       lastReplySnippet: json['lastReplySnippet'] as String?,
       rejectReason: json['rejectReason'] as String?,
+      inspectorId: json['inspectorId'] as String?,
+      scheduledAt: (json['scheduledAt'] as Timestamp?)?.toDate(),
+      assignmentNote: json['assignmentNote'] as String?,
     );
   }
 
@@ -98,6 +107,9 @@ class InspectionRequestModel {
       hasUnreadClientReply: hasUnreadClientReply,
       lastReplySnippet: lastReplySnippet,
       rejectReason: rejectReason,
+      inspectorId: inspectorId,
+      scheduledAt: scheduledAt,
+      assignmentNote: assignmentNote,
     );
   }
 }

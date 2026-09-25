@@ -528,6 +528,37 @@ class AppLocalizationsAr extends AppLocalizations {
       'أضف العميل وعنصر معدات واحدًا على الأقل والموقع قبل التسعير.';
 
   @override
+  String get completeRequestAction => 'استكمال الطلب';
+
+  @override
+  String get completeRequestSheetTitle => 'استكمال بيانات هذا الطلب';
+
+  @override
+  String get completeRequestSheetSubtitle =>
+      'أضف المعدات والموقع اللازمين لهذا الطلب قبل إمكانية تسعيره.';
+
+  @override
+  String get addEquipmentItemAction => '+ إضافة معدة';
+
+  @override
+  String get removeItemAction => 'إزالة';
+
+  @override
+  String get equipmentTypeLabel => 'نوع المعدة';
+
+  @override
+  String get saveAction => 'حفظ';
+
+  @override
+  String get errorEquipmentTypeRequired => 'أدخل نوع المعدة.';
+
+  @override
+  String get errorEquipmentRequired => 'أضف عنصر معدات واحدًا على الأقل.';
+
+  @override
+  String get requestCompleted => 'تم استكمال الطلب.';
+
+  @override
   String requestMovedOnMessage(String status) {
     return 'توجد بالفعل عروض أسعار لهذا الطلب — الحالة الحالية: $status. يمكنك متابعته من صفحة عروض الأسعار.';
   }
@@ -1079,4 +1110,223 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get certificatesEmailUpdated => 'تم تحديث بريد الشهادات.';
+
+  @override
+  String get navQueue => 'القائمة';
+
+  @override
+  String get navSchedule => 'الجدول';
+
+  @override
+  String get navInspectors => 'المفتشون';
+
+  @override
+  String get statUnassigned => 'غير معيّن';
+
+  @override
+  String get statScheduled => 'مجدول';
+
+  @override
+  String get statInProgress => 'قيد التنفيذ';
+
+  @override
+  String get coordinatorQueueHeading => 'عروض أسعار مقبولة';
+
+  @override
+  String get byDueDate => 'حسب تاريخ الاستحقاق';
+
+  @override
+  String get emptyCoordinatorQueue =>
+      'لا توجد مهام بحاجة إلى تعيين أو جدولة الآن.';
+
+  @override
+  String get assignInspectorAction => 'تعيين مفتش';
+
+  @override
+  String get dueToday => 'مستحق اليوم';
+
+  @override
+  String get dueTomorrow => 'مستحق غدًا';
+
+  @override
+  String dueInDays(int days) {
+    return 'مستحق خلال $days أيام';
+  }
+
+  @override
+  String overdueByDays(int days) {
+    return 'متأخر بـ $days أيام';
+  }
+
+  @override
+  String get assignInspectorTitle => 'تعيين مفتش';
+
+  @override
+  String get pickTimeStepLabel => '1. اختر الموعد';
+
+  @override
+  String get dateLabel => 'التاريخ';
+
+  @override
+  String get startTimeLabel => 'وقت البدء';
+
+  @override
+  String get chooseInspectorStepLabel => '2. اختر المفتش';
+
+  @override
+  String get assignNotesLabel => '3. ملاحظات (اختياري)';
+
+  @override
+  String get noQualificationsListed => 'لا توجد مؤهلات مسجلة';
+
+  @override
+  String get bestMatchTag => 'الأنسب';
+
+  @override
+  String get emptyInspectors => 'لا يوجد مفتشون نشطون بعد.';
+
+  @override
+  String get errorInspectorRequired => 'اختر مفتشًا.';
+
+  @override
+  String assignAndNotifyAction(String name) {
+    return 'تعيين وإشعار $name';
+  }
+
+  @override
+  String get assignmentSuccessMessage => 'تم تعيين المفتش.';
+
+  @override
+  String get inspectorsTitle => 'المفتشون';
+
+  @override
+  String get searchInspectorsHint => 'ابحث بالاسم';
+
+  @override
+  String get filterAll => 'الكل';
+
+  @override
+  String get statFreeToday => 'متاح اليوم';
+
+  @override
+  String get statBusy => 'مشغول';
+
+  @override
+  String get statOnLeave => 'في إجازة';
+
+  @override
+  String get freeBadge => 'متاح';
+
+  @override
+  String get busyBadge => 'مشغول';
+
+  @override
+  String get onLeaveBadge => 'إجازة';
+
+  @override
+  String onLeaveUntilLabel(String date) {
+    return 'في إجازة حتى $date';
+  }
+
+  @override
+  String get todayLabel => 'اليوم';
+
+  @override
+  String slotsOfCapacity(int used, int capacity) {
+    return '$used من $capacity مهام';
+  }
+
+  @override
+  String get nowLabel => 'الآن:';
+
+  @override
+  String get nextLabel => 'التالي:';
+
+  @override
+  String licenseExpiresInDays(String name, int days) {
+    return 'ترخيص $name ينتهي خلال $days أيام';
+  }
+
+  @override
+  String get emptyInspectorsRoster => 'لا يوجد مفتشون مطابقون.';
+
+  @override
+  String get assignAJobAction => 'تعيين مهمة';
+
+  @override
+  String get pickJobToAssignTitle => 'تعيين مهمة';
+
+  @override
+  String get chatAction => 'محادثة';
+
+  @override
+  String get doneThisMonthLabel => 'المنجز هذا الشهر';
+
+  @override
+  String get onTimeLabel => 'في الموعد';
+
+  @override
+  String get returnedLabel => 'مرتجع';
+
+  @override
+  String get thisWeekTitle => 'هذا الأسبوع';
+
+  @override
+  String get tasksPerDayCaption =>
+      'عدد المهام يوميًا · الأحمر يعني اكتمال الحجز';
+
+  @override
+  String get offLabel => 'إجازة';
+
+  @override
+  String get qualificationsTitle => 'المؤهلات';
+
+  @override
+  String validToLabel(String date) {
+    return 'ساري حتى $date';
+  }
+
+  @override
+  String expiresOnLabel(String date) {
+    return 'ينتهي في $date';
+  }
+
+  @override
+  String get upcomingTasksTitle => 'المهام القادمة';
+
+  @override
+  String get seeAllAction => 'عرض الكل';
+
+  @override
+  String get emptyUpcomingTasks => 'لا توجد مهام قادمة.';
+
+  @override
+  String get taskAcceptedBadge => 'مقبولة';
+
+  @override
+  String get taskNotAcceptedBadge => 'غير مقبولة';
+
+  @override
+  String get allTasksTitle => 'كل المهام';
+
+  @override
+  String get markLeaveAction => 'تسجيل إجازة';
+
+  @override
+  String get leaveMarkedMessage => 'تم تسجيل الإجازة.';
+
+  @override
+  String get onSiteNowBadge => 'في الموقع الآن';
+
+  @override
+  String get scheduleFreeAllDayLabel => 'متفرغ طوال اليوم';
+
+  @override
+  String get scheduleEmptyRoster => 'لا يوجد مفتشون لجدولتهم.';
+
+  @override
+  String get previousDayTooltip => 'اليوم السابق';
+
+  @override
+  String get nextDayTooltip => 'اليوم التالي';
 }

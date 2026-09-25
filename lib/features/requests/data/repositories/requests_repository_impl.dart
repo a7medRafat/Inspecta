@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 
 import '../../../../core/enums/job_status.dart';
 import '../../domain/entities/inspection_request.dart';
+import '../../domain/entities/request_item.dart';
 import '../../domain/entities/requests_failure.dart';
 import '../../domain/repositories/requests_repository.dart';
 import '../datasources/requests_remote_datasource.dart';
@@ -77,6 +78,55 @@ class RequestsRepositoryImpl implements RequestsRepository {
   Future<void> assignClient(String requestId, String clientId) async {
     try {
       await _remote.assignClient(requestId, clientId);
+    } catch (e) {
+      throw _mapError(e);
+    }
+  }
+
+  @override
+  Future<void> assignInspector({
+    required String requestId,
+    required String inspectorId,
+    required DateTime scheduledAt,
+    String? note,
+  }) async {
+    try {
+      await _remote.assignInspector(
+        requestId,
+        inspectorId: inspectorId,
+        scheduledAt: scheduledAt,
+        note: note,
+      );
+    } catch (e) {
+      throw _mapError(e);
+    }
+  }
+
+  @override
+  Future<void> completeIntake({
+    required String requestId,
+    required String location,
+    required List<RequestItem> items,
+  }) async {
+    try {
+      await _remote.completeIntake(
+        requestId,
+        location: location,
+        items: items
+            .map(
+              (item) => {
+                'id': item.id,
+                'type': item.type,
+                'category': item.category,
+                'manufacturer': item.manufacturer,
+                'model': item.model,
+                'serialNumber': item.serialNumber,
+                'capacity': item.capacity,
+                'quantity': item.quantity,
+              },
+            )
+            .toList(),
+      );
     } catch (e) {
       throw _mapError(e);
     }

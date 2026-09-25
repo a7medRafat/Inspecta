@@ -66,4 +66,30 @@ class RequestsRemoteDataSource {
   /// change the job's status, so it doesn't log a status-change event.
   Future<void> assignClient(String requestId, String clientId) =>
       _doc(requestId).update({'clientId': clientId});
+
+  /// Assigning an inspector moves the job to [JobStatus.assigned], so it
+  /// goes through [updateStatus] to log the event alongside the write.
+  Future<void> assignInspector(
+    String requestId, {
+    required String inspectorId,
+    required DateTime scheduledAt,
+    String? note,
+  }) => updateStatus(
+    requestId,
+    JobStatus.assigned,
+    note: note,
+    extra: {
+      'inspectorId': inspectorId,
+      'scheduledAt': Timestamp.fromDate(scheduledAt),
+      'assignmentNote': note,
+    },
+  );
+
+  /// Just `location`/`items` — filling in intake data doesn't change the
+  /// job's status either.
+  Future<void> completeIntake(
+    String requestId, {
+    required String location,
+    required List<Map<String, dynamic>> items,
+  }) => _doc(requestId).update({'location': location, 'items': items});
 }

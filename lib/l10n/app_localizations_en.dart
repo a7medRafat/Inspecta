@@ -521,6 +521,37 @@ class AppLocalizationsEn extends AppLocalizations {
       'Add the client, at least one equipment item and the location before quoting.';
 
   @override
+  String get completeRequestAction => 'Complete request';
+
+  @override
+  String get completeRequestSheetTitle => 'Complete this request';
+
+  @override
+  String get completeRequestSheetSubtitle =>
+      'Add the equipment and location this request needs before it can be quoted.';
+
+  @override
+  String get addEquipmentItemAction => '+ Add equipment';
+
+  @override
+  String get removeItemAction => 'Remove';
+
+  @override
+  String get equipmentTypeLabel => 'Equipment type';
+
+  @override
+  String get saveAction => 'Save';
+
+  @override
+  String get errorEquipmentTypeRequired => 'Enter the equipment type.';
+
+  @override
+  String get errorEquipmentRequired => 'Add at least one equipment item.';
+
+  @override
+  String get requestCompleted => 'Request completed.';
+
+  @override
   String requestMovedOnMessage(String status) {
     return 'A quote already exists for this request — current status: $status. Manage it from Quotations.';
   }
@@ -1083,4 +1114,222 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get certificatesEmailUpdated => 'Certificates email updated.';
+
+  @override
+  String get navQueue => 'Queue';
+
+  @override
+  String get navSchedule => 'Schedule';
+
+  @override
+  String get navInspectors => 'Inspectors';
+
+  @override
+  String get statUnassigned => 'Unassigned';
+
+  @override
+  String get statScheduled => 'Scheduled';
+
+  @override
+  String get statInProgress => 'In progress';
+
+  @override
+  String get coordinatorQueueHeading => 'Accepted quotations';
+
+  @override
+  String get byDueDate => 'By due date';
+
+  @override
+  String get emptyCoordinatorQueue =>
+      'Nothing to assign or schedule right now.';
+
+  @override
+  String get assignInspectorAction => 'Assign inspector';
+
+  @override
+  String get dueToday => 'Due today';
+
+  @override
+  String get dueTomorrow => 'Due tomorrow';
+
+  @override
+  String dueInDays(int days) {
+    return 'Due in $days days';
+  }
+
+  @override
+  String overdueByDays(int days) {
+    return 'Overdue by $days days';
+  }
+
+  @override
+  String get assignInspectorTitle => 'Assign inspector';
+
+  @override
+  String get pickTimeStepLabel => '1. Pick a time';
+
+  @override
+  String get dateLabel => 'Date';
+
+  @override
+  String get startTimeLabel => 'Start';
+
+  @override
+  String get chooseInspectorStepLabel => '2. Choose inspector';
+
+  @override
+  String get assignNotesLabel => '3. Notes (optional)';
+
+  @override
+  String get noQualificationsListed => 'No qualifications on file';
+
+  @override
+  String get bestMatchTag => 'Best match';
+
+  @override
+  String get emptyInspectors => 'No active inspectors yet.';
+
+  @override
+  String get errorInspectorRequired => 'Choose an inspector.';
+
+  @override
+  String assignAndNotifyAction(String name) {
+    return 'Assign & notify $name';
+  }
+
+  @override
+  String get assignmentSuccessMessage => 'Inspector assigned.';
+
+  @override
+  String get inspectorsTitle => 'Inspectors';
+
+  @override
+  String get searchInspectorsHint => 'Search by name';
+
+  @override
+  String get filterAll => 'All';
+
+  @override
+  String get statFreeToday => 'Free today';
+
+  @override
+  String get statBusy => 'Busy';
+
+  @override
+  String get statOnLeave => 'On leave';
+
+  @override
+  String get freeBadge => 'Free';
+
+  @override
+  String get busyBadge => 'Busy';
+
+  @override
+  String get onLeaveBadge => 'Leave';
+
+  @override
+  String onLeaveUntilLabel(String date) {
+    return 'On leave until $date';
+  }
+
+  @override
+  String get todayLabel => 'Today';
+
+  @override
+  String slotsOfCapacity(int used, int capacity) {
+    return '$used of $capacity slots';
+  }
+
+  @override
+  String get nowLabel => 'Now:';
+
+  @override
+  String get nextLabel => 'Next:';
+
+  @override
+  String licenseExpiresInDays(String name, int days) {
+    return '$name license expires in $days days';
+  }
+
+  @override
+  String get emptyInspectorsRoster => 'No inspectors match.';
+
+  @override
+  String get assignAJobAction => 'Assign a job';
+
+  @override
+  String get pickJobToAssignTitle => 'Assign a job';
+
+  @override
+  String get chatAction => 'Chat';
+
+  @override
+  String get doneThisMonthLabel => 'Done this month';
+
+  @override
+  String get onTimeLabel => 'On time';
+
+  @override
+  String get returnedLabel => 'Returned';
+
+  @override
+  String get thisWeekTitle => 'This week';
+
+  @override
+  String get tasksPerDayCaption => 'Tasks per day · red = fully booked';
+
+  @override
+  String get offLabel => 'off';
+
+  @override
+  String get qualificationsTitle => 'Qualifications';
+
+  @override
+  String validToLabel(String date) {
+    return 'Valid to $date';
+  }
+
+  @override
+  String expiresOnLabel(String date) {
+    return 'Expires $date';
+  }
+
+  @override
+  String get upcomingTasksTitle => 'Upcoming tasks';
+
+  @override
+  String get seeAllAction => 'See all';
+
+  @override
+  String get emptyUpcomingTasks => 'No upcoming tasks.';
+
+  @override
+  String get taskAcceptedBadge => 'Accepted';
+
+  @override
+  String get taskNotAcceptedBadge => 'Not accepted';
+
+  @override
+  String get allTasksTitle => 'All tasks';
+
+  @override
+  String get markLeaveAction => 'Mark leave';
+
+  @override
+  String get leaveMarkedMessage => 'Leave marked.';
+
+  @override
+  String get onSiteNowBadge => 'On site now';
+
+  @override
+  String get scheduleFreeAllDayLabel => 'Free all day';
+
+  @override
+  String get scheduleEmptyRoster => 'No inspectors to schedule.';
+
+  @override
+  String get previousDayTooltip => 'Previous day';
+
+  @override
+  String get nextDayTooltip => 'Next day';
 }

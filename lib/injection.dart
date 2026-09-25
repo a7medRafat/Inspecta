@@ -25,6 +25,17 @@ import 'features/clients/domain/usecases/get_clients.dart';
 import 'features/clients/domain/usecases/set_certificates_email.dart';
 import 'features/clients/presentation/bloc/client_detail_cubit.dart';
 import 'features/clients/presentation/bloc/clients_list_cubit.dart';
+import 'features/auth/domain/entities/user.dart';
+import 'features/coordinator/data/datasources/inspectors_remote_datasource.dart';
+import 'features/coordinator/data/repositories/coordinator_repository_impl.dart';
+import 'features/coordinator/domain/repositories/coordinator_repository.dart';
+import 'features/coordinator/domain/usecases/get_inspectors.dart';
+import 'features/coordinator/domain/usecases/mark_inspector_leave.dart';
+import 'features/coordinator/presentation/bloc/assign_inspector_cubit.dart';
+import 'features/coordinator/presentation/bloc/coordinator_queue_cubit.dart';
+import 'features/coordinator/presentation/bloc/inspector_detail_cubit.dart';
+import 'features/coordinator/presentation/bloc/inspectors_list_cubit.dart';
+import 'features/coordinator/presentation/bloc/schedule_cubit.dart';
 import 'features/quotation/data/datasources/quotation_remote_datasource.dart';
 import 'features/quotation/data/repositories/quotation_repository_impl.dart';
 import 'features/quotation/domain/repositories/quotation_repository.dart';
@@ -41,6 +52,8 @@ import 'features/requests/data/repositories/requests_repository_impl.dart';
 import 'features/requests/domain/entities/inspection_request.dart';
 import 'features/requests/domain/repositories/requests_repository.dart';
 import 'features/requests/domain/usecases/assign_client.dart';
+import 'features/requests/domain/usecases/assign_inspector.dart';
+import 'features/requests/domain/usecases/complete_intake.dart';
 import 'features/requests/domain/usecases/get_request_detail.dart';
 import 'features/requests/domain/usecases/get_requests.dart';
 import 'features/requests/presentation/bloc/requests_list_cubit.dart';
@@ -61,6 +74,7 @@ Future<void> setupDependencies() async {
   _registerRequests();
   _registerQuotation();
   _registerClients();
+  _registerCoordinator();
   _registerProfile();
 }
 
@@ -89,6 +103,8 @@ void _registerRequests() {
     ..registerLazySingleton(() => GetRequests(getIt()))
     ..registerLazySingleton(() => GetRequestDetail(getIt()))
     ..registerLazySingleton(() => AssignClient(getIt()))
+    ..registerLazySingleton(() => AssignInspector(getIt()))
+    ..registerLazySingleton(() => CompleteIntake(getIt()))
     ..registerFactory(() => RequestsListCubit(getIt()));
 }
 
@@ -138,6 +154,34 @@ void _registerClients() {
         clientId: clientId,
         getClientDetail: getIt(),
         getRequests: getIt(),
+      ),
+    );
+}
+
+void _registerCoordinator() {
+  getIt
+    ..registerLazySingleton(InspectorsRemoteDataSource.new)
+    ..registerLazySingleton<CoordinatorRepository>(
+      () => CoordinatorRepositoryImpl(getIt()),
+    )
+    ..registerLazySingleton(() => GetInspectors(getIt()))
+    ..registerFactory(() => CoordinatorQueueCubit(getIt(), getIt()))
+    ..registerFactoryParam<AssignInspectorCubit, InspectionRequest, String?>(
+      (request, preselectedInspectorId) => AssignInspectorCubit(
+        request: request,
+        preselectedInspectorId: preselectedInspectorId,
+        getInspectors: getIt(),
+        assignInspector: getIt(),
+      ),
+    )
+    ..registerFactory(() => InspectorsListCubit(getIt(), getIt()))
+    ..registerFactory(() => ScheduleCubit(getIt(), getIt()))
+    ..registerLazySingleton(() => MarkInspectorLeave(getIt()))
+    ..registerFactoryParam<InspectorDetailCubit, AppUser, void>(
+      (inspector, _) => InspectorDetailCubit(
+        inspector: inspector,
+        getRequests: getIt(),
+        markInspectorLeave: getIt(),
       ),
     );
 }

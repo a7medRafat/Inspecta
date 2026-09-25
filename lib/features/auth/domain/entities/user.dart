@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+import 'qualification.dart';
 import 'user_role.dart';
 
 /// An internal staff member. Named `AppUser` so it doesn't clash with
@@ -11,13 +12,18 @@ class AppUser extends Equatable {
   final String? phone;
   final UserRole role;
 
-  /// Equipment categories an inspector may inspect (e.g. Lifts, Cranes).
-  final List<String> qualifications;
+  /// Equipment categories an inspector may inspect (e.g. Lifts, Cranes),
+  /// each with its own certificate expiry.
+  final List<Qualification> qualifications;
 
   /// Stored signature image, for technical managers.
   final String? signatureImageId;
   final bool active;
   final DateTime? lastLogin;
+
+  /// Feature 04: an inspector a coordinator has marked as on leave until
+  /// this date. Null, or in the past, means not on leave.
+  final DateTime? onLeaveUntil;
 
   const AppUser({
     required this.id,
@@ -29,7 +35,11 @@ class AppUser extends Equatable {
     this.signatureImageId,
     this.active = true,
     this.lastLogin,
+    this.onLeaveUntil,
   });
+
+  bool isOnLeave({DateTime? now}) =>
+      onLeaveUntil != null && onLeaveUntil!.isAfter(now ?? DateTime.now());
 
   /// Up to two initials for an avatar ("Karim Adel" -> "KA").
   String get initials {
@@ -49,5 +59,6 @@ class AppUser extends Equatable {
     signatureImageId,
     active,
     lastLogin,
+    onLeaveUntil,
   ];
 }

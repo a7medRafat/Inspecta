@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:inspecta/features/auth/domain/entities/auth_failure.dart';
+import 'package:inspecta/features/auth/domain/entities/qualification.dart';
 import 'package:inspecta/features/auth/domain/entities/user.dart';
 import 'package:inspecta/features/auth/domain/entities/user_role.dart';
 import 'package:inspecta/features/auth/domain/repositories/auth_repository.dart';
@@ -10,7 +11,10 @@ const inspector = AppUser(
   name: 'Karim Adel',
   email: 'karim.adel@company.com',
   role: UserRole.inspector,
-  qualifications: ['Lifts', 'Cranes'],
+  qualifications: [
+    Qualification(name: 'Lifts'),
+    Qualification(name: 'Cranes'),
+  ],
 );
 
 class FakeAuthRepository implements AuthRepository {
