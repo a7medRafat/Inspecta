@@ -22,6 +22,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get cancel => 'إلغاء';
 
   @override
+  String get splashStart => 'ابدأ الآن';
+
+  @override
+  String get splashWelcome => 'مرحبًا بك في';
+
+  @override
+  String get splashHint => 'فحوصات رقمية وشهادات وطلبات — كل ذلك في مكان واحد.';
+
+  @override
   String get signInTitle => 'مرحبًا بعودتك';
 
   @override

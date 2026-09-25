@@ -72,6 +72,7 @@ class _AppState extends State<App> with WidgetsBindingObserver {
               },
               home: const AuthGate(),
             );
+            
           },
         ),
       ),

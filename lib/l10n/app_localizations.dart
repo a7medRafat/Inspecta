@@ -122,6 +122,24 @@ abstract class AppLocalizations {
   /// **'Cancel'**
   String get cancel;
 
+  /// No description provided for @splashStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Get started'**
+  String get splashStart;
+
+  /// No description provided for @splashWelcome.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to'**
+  String get splashWelcome;
+
+  /// No description provided for @splashHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Digital inspections, certificates and requests — all in one place.'**
+  String get splashHint;
+
   /// No description provided for @signInTitle.
   ///
   /// In en, this message translates to:

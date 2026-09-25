@@ -10,13 +10,14 @@ import '../../features/home/presentation/pages/role_home_page.dart';
 import '../../features/home/presentation/pages/supervisor_root_page.dart';
 import '../../features/splash/presentation/views/splash_screen.dart';
 
-/// Root route: splash while the session is unknown, sign in when signed
-/// out, the role home when signed in.
+/// Root route: splash (with a "Start" button once the session is known)
+/// while nothing has been shown yet, sign in when signed out, the role home
+/// when signed in.
 ///
 /// Any screens pushed on top (forgot password, profile, ...) are popped
 /// whenever the session changes, so signing out — or being signed out by a
 /// deactivation — always lands back on the sign-in screen.
-class AuthGate extends StatelessWidget {
+class AuthGate extends StatefulWidget {
   const AuthGate({super.key});
 
   static bool _sessionChanged(AuthState previous, AuthState current) {
@@ -28,24 +29,43 @@ class AuthGate extends StatelessWidget {
   }
 
   @override
+  State<AuthGate> createState() => _AuthGateState();
+}
+
+class _AuthGateState extends State<AuthGate> {
+  bool _started = false;
+
+  @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthState>(
-      listenWhen: _sessionChanged,
-      listener: (context, _) =>
-          Navigator.of(context).popUntil((route) => route.isFirst),
-      buildWhen: _sessionChanged,
-      builder: (context, state) => switch (state) {
-        AuthUnknown() => const SplashScreen(),
-        Unauthenticated() => const SignInPage(),
-        Authenticated(:final user) => KeyedSubtree(
-          key: ValueKey((user.id, user.role)),
-          child: switch (user.role) {
-            UserRole.supervisor => const SupervisorRootPage(),
-            UserRole.coordinator => const CoordinatorRootPage(),
-            UserRole.inspector => const InspectorRootPage(),
-            _ => const RoleHomePage(),
-          },
-        ),
+      listenWhen: AuthGate._sessionChanged,
+      listener: (context, state) {
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        if (state is Unauthenticated && _started) {
+          setState(() => _started = false);
+        }
+      },
+      buildWhen: AuthGate._sessionChanged,
+      builder: (context, state) {
+        if (!_started) {
+          return SplashScreen(
+            ready: state is! AuthUnknown,
+            onStart: () => setState(() => _started = true),
+          );
+        }
+        return switch (state) {
+          AuthUnknown() => const SplashScreen(),
+          Unauthenticated() => const SignInPage(),
+          Authenticated(:final user) => KeyedSubtree(
+            key: ValueKey((user.id, user.role)),
+            child: switch (user.role) {
+              UserRole.supervisor => const SupervisorRootPage(),
+              UserRole.coordinator => const CoordinatorRootPage(),
+              UserRole.inspector => const InspectorRootPage(),
+              _ => const RoleHomePage(),
+            },
+          ),
+        };
       },
     );
   }

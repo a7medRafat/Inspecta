@@ -5,6 +5,9 @@
   "hidePassword": "Hide password",
   "back": "Back",
   "cancel": "Cancel",
+  "splashStart": "Get started",
+  "splashWelcome": "Welcome to",
+  "splashHint": "Digital inspections, certificates and requests — all in one place.",
 
   "signInTitle": "Welcome back",
   "signInSubtitle": "Sign in to see your requests, tasks and certificates.",

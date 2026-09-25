@@ -1,5 +1,6 @@
 class Jsons {
   static const logo = 'app_logo_animation';
+  static const splash = 'splash';
   static const success = 'success';
   static const loading = 'loading';
   static const error = 'error';

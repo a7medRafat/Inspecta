@@ -22,6 +22,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cancel => 'Cancel';
 
   @override
+  String get splashStart => 'Get started';
+
+  @override
+  String get splashWelcome => 'Welcome to';
+
+  @override
+  String get splashHint =>
+      'Digital inspections, certificates and requests — all in one place.';
+
+  @override
   String get signInTitle => 'Welcome back';
 
   @override
