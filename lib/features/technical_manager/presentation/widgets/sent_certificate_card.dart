@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:printing/printing.dart';
 
 import '../../../../core/consts/app_colors.dart';
 import '../../../../core/consts/app_text_styles.dart';
@@ -9,7 +8,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../certificate/domain/certificate_number.dart';
 import '../../../certificate/domain/entities/certificate.dart';
 import '../../../certificate/domain/usecases/watch_certificate.dart';
-import '../../../certificate/presentation/pdf/certificate_pdf_builder.dart';
+import '../../../certificate/presentation/pdf/certificate_pdf_preview.dart';
 import '../../../requests/domain/entities/inspection_request.dart';
 import 'review_labels.dart';
 
@@ -26,9 +25,7 @@ class SentCertificateCard extends StatelessWidget {
       MToast.showError(message: t.certificateNotFound);
       return;
     }
-    await Printing.layoutPdf(
-      onLayout: (_) => buildCertificatePdf(request: request, certificate: certificate),
-    );
+    await previewCertificatePdf(context, request: request, certificate: certificate);
   }
 
   @override

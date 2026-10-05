@@ -7,10 +7,11 @@ import '../../../../core/framework/mtoast.dart';
 import '../../../../core/shared/m_primary_button.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../bloc/certificate_cubit.dart';
+import '../pdf/certificate_pdf_preview.dart';
 import 'certificate_labels.dart';
 
-/// "Preview" (stubbed) and "Submit to technical manager" — enabled only
-/// once every section of the report is filled in.
+/// "Preview" (the draft's PDF, full screen) and "Submit to technical
+/// manager" — enabled only once every section of the report is filled in.
 class CertificateFooter extends StatelessWidget {
   const CertificateFooter({super.key});
 
@@ -59,7 +60,13 @@ class CertificateFooter extends StatelessWidget {
                 child: SizedBox(
                   height: 52,
                   child: OutlinedButton(
-                    onPressed: () => showCertificateComingSoon(context),
+                    onPressed: state.certificate == null
+                        ? null
+                        : () => previewCertificatePdf(
+                            context,
+                            request: context.read<CertificateCubit>().request,
+                            certificate: state.certificate!,
+                          ),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: AppColours.inkBody,
                       backgroundColor: Colors.white,

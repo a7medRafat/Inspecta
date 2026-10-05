@@ -610,5 +610,9 @@
   "dateRangeReadyHint": "جاهز للتأكيد.",
   "previousMonthTooltip": "الشهر السابق",
   "nextMonthTooltip": "الشهر التالي",
-  "confirmAction": "تأكيد"
+  "confirmAction": "تأكيد",
+  "downloadPdfAction": "تحميل PDF",
+  "preparingPdfMessage": "جارٍ تجهيز ملف PDF…",
+  "pdfPreviewFailedMessage": "تعذّر تجهيز ملف PDF.",
+  "pdfDownloadFailedMessage": "تعذّر تحميل ملف PDF. حاول مرة أخرى."
 }

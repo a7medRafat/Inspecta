@@ -1851,4 +1851,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get confirmAction => 'Confirm';
+
+  @override
+  String get downloadPdfAction => 'Download PDF';
+
+  @override
+  String get preparingPdfMessage => 'Preparing your PDF…';
+
+  @override
+  String get pdfPreviewFailedMessage => 'Couldn\'t prepare the PDF.';
+
+  @override
+  String get pdfDownloadFailedMessage =>
+      'Couldn\'t download the PDF. Try again.';
 }

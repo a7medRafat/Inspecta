@@ -673,5 +673,9 @@
   "dateRangeReadyHint": "Ready to confirm.",
   "previousMonthTooltip": "Previous month",
   "nextMonthTooltip": "Next month",
-  "confirmAction": "Confirm"
+  "confirmAction": "Confirm",
+  "downloadPdfAction": "Download PDF",
+  "preparingPdfMessage": "Preparing your PDF…",
+  "pdfPreviewFailedMessage": "Couldn't prepare the PDF.",
+  "pdfDownloadFailedMessage": "Couldn't download the PDF. Try again."
 }

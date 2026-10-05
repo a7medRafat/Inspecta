@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:printing/printing.dart';
 
 import '../../../../core/consts/app_colors.dart';
 import '../../../../core/consts/app_text_styles.dart';
@@ -13,7 +12,7 @@ import '../../../../injection.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/presentation/bloc/auth_cubit.dart';
 import '../../../certificate/domain/entities/certificate.dart';
-import '../../../certificate/presentation/pdf/certificate_pdf_builder.dart';
+import '../../../certificate/presentation/pdf/certificate_pdf_preview.dart';
 import '../../../certificate/presentation/widgets/certificate_labels.dart';
 import '../../../requests/domain/entities/inspection_request.dart';
 import '../bloc/review_detail_cubit.dart';
@@ -76,10 +75,8 @@ class _ReviewViewState extends State<_ReviewView> {
     super.dispose();
   }
 
-  Future<void> _viewPdf(Certificate certificate) async {
-    await Printing.layoutPdf(
-      onLayout: (_) => buildCertificatePdf(request: widget.request, certificate: certificate),
-    );
+  Future<void> _viewPdf(Certificate certificate) {
+    return previewCertificatePdf(context, request: widget.request, certificate: certificate);
   }
 
   @override

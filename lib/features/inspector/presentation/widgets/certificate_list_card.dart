@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:printing/printing.dart';
 
 import '../../../../core/consts/app_colors.dart';
 import '../../../../core/consts/app_text_styles.dart';
@@ -14,7 +13,7 @@ import '../../../certificate/domain/entities/certificate.dart';
 import '../../../certificate/domain/usecases/watch_certificate.dart';
 import '../../../certificate/presentation/pages/certificate_page.dart';
 import '../../../certificate/presentation/pages/certificate_view_page.dart';
-import '../../../certificate/presentation/pdf/certificate_pdf_builder.dart';
+import '../../../certificate/presentation/pdf/certificate_pdf_preview.dart';
 import '../../../certificate/presentation/widgets/certificate_labels.dart';
 import '../../../requests/domain/entities/inspection_request.dart';
 import '../../../requests/presentation/widgets/status_chip.dart';
@@ -306,9 +305,7 @@ class _SentCard extends StatelessWidget {
       MToast.showError(message: t.certificateNotFound);
       return;
     }
-    await Printing.layoutPdf(
-      onLayout: (_) => buildCertificatePdf(request: request, certificate: certificate),
-    );
+    await previewCertificatePdf(context, request: request, certificate: certificate);
   }
 
   @override

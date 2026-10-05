@@ -3409,6 +3409,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Confirm'**
   String get confirmAction;
+
+  /// No description provided for @downloadPdfAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Download PDF'**
+  String get downloadPdfAction;
+
+  /// No description provided for @preparingPdfMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Preparing your PDF…'**
+  String get preparingPdfMessage;
+
+  /// No description provided for @pdfPreviewFailedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t prepare the PDF.'**
+  String get pdfPreviewFailedMessage;
+
+  /// No description provided for @pdfDownloadFailedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t download the PDF. Try again.'**
+  String get pdfDownloadFailedMessage;
 }
 
 class _AppLocalizationsDelegate

@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/certificate_failure.dart';
 import '../../domain/entities/certificate_result.dart';
@@ -29,14 +27,4 @@ extension ChecklistAnswerLabel on ChecklistAnswer {
     ChecklistAnswer.na => t.naOption,
     ChecklistAnswer.unanswered => '—',
   };
-}
-
-/// Previewing the certificate before submitting isn't built yet — that
-/// button shows this instead, same treatment as Call/Chat elsewhere in the
-/// app.
-void showCertificateComingSoon(BuildContext context) {
-  final t = AppLocalizations.of(context)!;
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(content: Text(t.comingSoon), behavior: SnackBarBehavior.floating),
-  );
 }

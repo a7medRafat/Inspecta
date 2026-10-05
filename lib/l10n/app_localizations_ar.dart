@@ -1839,4 +1839,16 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get confirmAction => 'تأكيد';
+
+  @override
+  String get downloadPdfAction => 'تحميل PDF';
+
+  @override
+  String get preparingPdfMessage => 'جارٍ تجهيز ملف PDF…';
+
+  @override
+  String get pdfPreviewFailedMessage => 'تعذّر تجهيز ملف PDF.';
+
+  @override
+  String get pdfDownloadFailedMessage => 'تعذّر تحميل ملف PDF. حاول مرة أخرى.';
 }
