@@ -664,5 +664,14 @@
   "returnReasonRequired": "Add a reason so the inspector knows what to fix.",
   "returnConfirmAction": "Return",
   "certificateApprovedMessage": "Certificate approved and signed.",
-  "certificateReturnedMessage": "Certificate returned to the inspector."
+  "certificateReturnedMessage": "Certificate returned to the inspector.",
+  "dateRangeTitle": "Select dates",
+  "dateRangeStartLabel": "Start",
+  "dateRangeEndLabel": "End",
+  "dateRangeSelectHint": "Tap a start date.",
+  "dateRangePickEndHint": "Tap an end date, or confirm for a single day.",
+  "dateRangeReadyHint": "Ready to confirm.",
+  "previousMonthTooltip": "Previous month",
+  "nextMonthTooltip": "Next month",
+  "confirmAction": "Confirm"
 }

@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/consts/app_colors.dart';
 import '../../../../core/consts/app_text_styles.dart';
+import '../../../../core/widgets/app_date_picker.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../bloc/certificate_cubit.dart';
 
@@ -124,8 +125,9 @@ class CertificateDateInput extends StatelessWidget {
 
   Future<void> _pick(BuildContext context, DateTime? current) async {
     final cubit = context.read<CertificateCubit>();
-    final picked = await showDatePicker(
-      context: context,
+    final picked = await AppDatePicker.pickDate(
+      context,
+      title: label,
       initialDate: current ?? DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),

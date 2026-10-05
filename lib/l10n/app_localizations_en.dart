@@ -1823,4 +1823,32 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get certificateReturnedMessage =>
       'Certificate returned to the inspector.';
+
+  @override
+  String get dateRangeTitle => 'Select dates';
+
+  @override
+  String get dateRangeStartLabel => 'Start';
+
+  @override
+  String get dateRangeEndLabel => 'End';
+
+  @override
+  String get dateRangeSelectHint => 'Tap a start date.';
+
+  @override
+  String get dateRangePickEndHint =>
+      'Tap an end date, or confirm for a single day.';
+
+  @override
+  String get dateRangeReadyHint => 'Ready to confirm.';
+
+  @override
+  String get previousMonthTooltip => 'Previous month';
+
+  @override
+  String get nextMonthTooltip => 'Next month';
+
+  @override
+  String get confirmAction => 'Confirm';
 }

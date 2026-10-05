@@ -5,6 +5,7 @@ import '../../../../core/consts/app_colors.dart';
 import '../../../../core/consts/app_text_styles.dart';
 import '../../../../core/framework/mtoast.dart';
 import '../../../../core/shared/m_back_button.dart';
+import '../../../../core/widgets/app_date_picker.dart';
 import '../../../../injection.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/domain/entities/user.dart';
@@ -47,12 +48,12 @@ class InspectorDetailPage extends StatelessWidget {
   Future<void> _markLeave(BuildContext context) async {
     final t = AppLocalizations.of(context)!;
     final cubit = context.read<InspectorDetailCubit>();
-    final picked = await showDatePicker(
-      context: context,
+    final picked = await AppDatePicker.pickDate(
+      context,
+      title: t.markLeaveAction,
       initialDate: DateTime.now().add(const Duration(days: 1)),
-      firstDate: DateTime(DateTime.now().year - 1),
+      firstDate: DateTime.now(),
       lastDate: DateTime(DateTime.now().year + 2),
-      helpText: t.markLeaveAction,
     );
     if (picked == null || !context.mounted) return;
     await cubit.markLeave(picked);

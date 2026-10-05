@@ -1811,4 +1811,32 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get certificateReturnedMessage => 'أُعيدت الشهادة إلى المفتش.';
+
+  @override
+  String get dateRangeTitle => 'اختر التواريخ';
+
+  @override
+  String get dateRangeStartLabel => 'البداية';
+
+  @override
+  String get dateRangeEndLabel => 'النهاية';
+
+  @override
+  String get dateRangeSelectHint => 'اضغط على تاريخ البداية.';
+
+  @override
+  String get dateRangePickEndHint =>
+      'اضغط على تاريخ النهاية، أو أكّد لاختيار يوم واحد.';
+
+  @override
+  String get dateRangeReadyHint => 'جاهز للتأكيد.';
+
+  @override
+  String get previousMonthTooltip => 'الشهر السابق';
+
+  @override
+  String get nextMonthTooltip => 'الشهر التالي';
+
+  @override
+  String get confirmAction => 'تأكيد';
 }

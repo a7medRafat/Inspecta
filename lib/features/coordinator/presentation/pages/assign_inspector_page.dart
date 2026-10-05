@@ -9,6 +9,7 @@ import '../../../../core/shared/loading.dart';
 import '../../../../core/shared/m_back_button.dart';
 import '../../../../core/shared/m_notice.dart';
 import '../../../../core/shared/m_primary_button.dart';
+import '../../../../core/widgets/app_date_picker.dart';
 import '../../../../injection.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../requests/domain/entities/inspection_request.dart';
@@ -150,8 +151,9 @@ class _Body extends StatelessWidget {
                       Localizations.localeOf(context).languageCode,
                     ).format(state.scheduledAt),
                     onTap: () async {
-                      final picked = await showDatePicker(
-                        context: context,
+                      final picked = await AppDatePicker.pickDate(
+                        context,
+                        title: t.dateLabel,
                         initialDate: state.scheduledAt,
                         // Wide enough to always include the initial date —
                         // a request's preferred date can already be in the

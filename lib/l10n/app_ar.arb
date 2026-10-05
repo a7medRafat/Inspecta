@@ -601,5 +601,14 @@
   "returnReasonRequired": "أضف سببًا ليعرف المفتش ما يجب إصلاحه.",
   "returnConfirmAction": "إعادة",
   "certificateApprovedMessage": "تم اعتماد الشهادة وتوقيعها.",
-  "certificateReturnedMessage": "أُعيدت الشهادة إلى المفتش."
+  "certificateReturnedMessage": "أُعيدت الشهادة إلى المفتش.",
+  "dateRangeTitle": "اختر التواريخ",
+  "dateRangeStartLabel": "البداية",
+  "dateRangeEndLabel": "النهاية",
+  "dateRangeSelectHint": "اضغط على تاريخ البداية.",
+  "dateRangePickEndHint": "اضغط على تاريخ النهاية، أو أكّد لاختيار يوم واحد.",
+  "dateRangeReadyHint": "جاهز للتأكيد.",
+  "previousMonthTooltip": "الشهر السابق",
+  "nextMonthTooltip": "الشهر التالي",
+  "confirmAction": "تأكيد"
 }

@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/consts/app_colors.dart';
 import '../../../../core/consts/app_text_styles.dart';
+import '../../../../core/widgets/app_date_picker.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../bloc/schedule_cubit.dart';
 
@@ -56,8 +57,9 @@ class _DateNav extends StatelessWidget {
 
   Future<void> _pickDate(BuildContext context) async {
     final cubit = context.read<ScheduleCubit>();
-    final picked = await showDatePicker(
-      context: context,
+    final picked = await AppDatePicker.pickDate(
+      context,
+      title: AppLocalizations.of(context)!.navSchedule,
       initialDate: cubit.state.selectedDate,
       firstDate: DateTime(DateTime.now().year - 1),
       lastDate: DateTime(DateTime.now().year + 2),

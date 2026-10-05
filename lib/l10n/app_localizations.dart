@@ -3355,6 +3355,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Certificate returned to the inspector.'**
   String get certificateReturnedMessage;
+
+  /// No description provided for @dateRangeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select dates'**
+  String get dateRangeTitle;
+
+  /// No description provided for @dateRangeStartLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get dateRangeStartLabel;
+
+  /// No description provided for @dateRangeEndLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'End'**
+  String get dateRangeEndLabel;
+
+  /// No description provided for @dateRangeSelectHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a start date.'**
+  String get dateRangeSelectHint;
+
+  /// No description provided for @dateRangePickEndHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap an end date, or confirm for a single day.'**
+  String get dateRangePickEndHint;
+
+  /// No description provided for @dateRangeReadyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready to confirm.'**
+  String get dateRangeReadyHint;
+
+  /// No description provided for @previousMonthTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous month'**
+  String get previousMonthTooltip;
+
+  /// No description provided for @nextMonthTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Next month'**
+  String get nextMonthTooltip;
+
+  /// No description provided for @confirmAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get confirmAction;
 }
 
 class _AppLocalizationsDelegate
