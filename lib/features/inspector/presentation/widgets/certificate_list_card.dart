@@ -306,9 +306,8 @@ class _SentCard extends StatelessWidget {
       MToast.showError(message: t.certificateNotFound);
       return;
     }
-    final locale = Localizations.localeOf(context).languageCode;
     await Printing.layoutPdf(
-      onLayout: (_) => buildCertificatePdf(t: t, request: request, certificate: certificate, locale: locale),
+      onLayout: (_) => buildCertificatePdf(request: request, certificate: certificate),
     );
   }
 

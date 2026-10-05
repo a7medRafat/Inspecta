@@ -31,9 +31,9 @@ extension ChecklistAnswerLabel on ChecklistAnswer {
   };
 }
 
-/// Photo upload isn't built yet (Feature 05, scope-cut #2) — every photo
-/// affordance on this screen shows this instead, same treatment as
-/// Call/Chat elsewhere in the app.
+/// Previewing the certificate before submitting isn't built yet — that
+/// button shows this instead, same treatment as Call/Chat elsewhere in the
+/// app.
 void showCertificateComingSoon(BuildContext context) {
   final t = AppLocalizations.of(context)!;
   ScaffoldMessenger.of(context).showSnackBar(

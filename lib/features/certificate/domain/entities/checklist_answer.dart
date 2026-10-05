@@ -1,5 +1,5 @@
-/// One checklist item's answer on a [Certificate] (Feature 05's inspection
-/// certificate).
+/// A Pass / Fail / N/A answer on a [Certificate] (Feature 05) — today just
+/// the item's "Function check".
 enum ChecklistAnswer {
   unanswered('unanswered'),
   pass('pass'),

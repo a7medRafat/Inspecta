@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../core/consts/app_colors.dart';
 import '../../../../core/consts/app_text_styles.dart';
@@ -8,13 +9,12 @@ import '../../../../injection.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../requests/domain/entities/inspection_request.dart';
 import '../../../requests/presentation/widgets/status_chip.dart';
+import '../../domain/certificate_number.dart';
 import '../../domain/certificate_template.dart';
 import '../../domain/entities/certificate.dart';
-import '../../domain/entities/checklist_answer.dart';
 import '../../domain/usecases/watch_certificate.dart';
 import '../widgets/certificate_labels.dart';
 import '../widgets/certificate_section_card.dart';
-import '../widgets/equipment_details_section.dart';
 
 /// A read-only view of a submitted/approved certificate (Feature 05) —
 /// the Certificates list's "View". Unlike [CertificatePage], nothing
@@ -45,18 +45,7 @@ class CertificateViewPage extends StatelessWidget {
                   if (certificate == null) {
                     return Center(child: Text(t.certificateNotFound, style: AppTextStyles.subtitle));
                   }
-                  return ListView(
-                    padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
-                    children: [
-                      EquipmentDetailsSection(request: request),
-                      const SizedBox(height: 14),
-                      _ReadOnlyChecklist(certificate: certificate),
-                      const SizedBox(height: 14),
-                      _ReadOnlyLoadTest(certificate: certificate),
-                      const SizedBox(height: 14),
-                      _ReadOnlyFinalResult(certificate: certificate),
-                    ],
-                  );
+                  return _ReadOnlyReport(request: request, certificate: certificate);
                 },
               ),
             ),
@@ -99,14 +88,8 @@ class _ViewHeader extends StatelessWidget {
           ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-            decoration: BoxDecoration(
-              color: request.status.chipBackground,
-              borderRadius: BorderRadius.circular(999),
-            ),
-            child: Text(
-              request.status.label(t),
-              style: AppTextStyles.badge.copyWith(color: request.status.chipText),
-            ),
+            decoration: BoxDecoration(color: request.status.chipBackground, borderRadius: BorderRadius.circular(999)),
+            child: Text(request.status.label(t), style: AppTextStyles.badge.copyWith(color: request.status.chipText)),
           ),
         ],
       ),
@@ -114,78 +97,126 @@ class _ViewHeader extends StatelessWidget {
   }
 }
 
-class _ReadOnlyChecklist extends StatelessWidget {
+class _ReadOnlyReport extends StatelessWidget {
+  final InspectionRequest request;
   final Certificate certificate;
 
-  const _ReadOnlyChecklist({required this.certificate});
+  const _ReadOnlyReport({required this.request, required this.certificate});
 
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context)!;
-    return CertificateSectionCard(
-      stepNumber: 2,
-      highlighted: false,
-      done: true,
-      title: t.inspectionChecklistTitle,
-      child: Column(
-        children: [
-          for (var i = 0; i < CertificateTemplate.items.length; i++) ...[
-            if (i > 0) const SizedBox(height: 10),
-            _ReadOnlyChecklistRow(
-              label: CertificateTemplate.items[i].label,
-              answer: certificate.answerFor(CertificateTemplate.items[i].id),
-              defectNote: certificate.defectNoteFor(CertificateTemplate.items[i].id),
-            ),
+    final locale = Localizations.localeOf(context).languageCode;
+    final dateFormat = DateFormat('d MMM yyyy', locale);
+
+    String text(String key) => certificate.text(key) ?? '—';
+    String date(String key) {
+      final value = certificate.dateOf(key);
+      return value == null ? '—' : dateFormat.format(value);
+    }
+
+    String yesNo(String key) => switch (certificate.answerOf(key)) {
+      true => t.yesOption,
+      false => t.noOption,
+      null => '—',
+    };
+
+    final item = request.items.isEmpty ? null : request.items.first;
+    final conclusion = certificate.finalResult.label(t);
+
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+      children: [
+        _ReadOnlySection(
+          stepNumber: 1,
+          title: t.examinationDetailsTitle,
+          rows: [
+            (t.clientAndLocationLabel, [request.clientName, request.location].where((s) => s.isNotEmpty).join(' · ')),
+            (t.certificateNumberLabel, certNumberFor(request)),
+            (t.clientRepresentativeLabel, text(CertText.clientRepresentative)),
+            (t.examinationDateLabel, date(CertDate.examination)),
+            (t.lastExaminationDateLabel, date(CertDate.lastExamination)),
+            (t.nextExaminationDateLabel, date(CertDate.nextExamination)),
+            (t.standardOfInspectionLabel, text(CertText.standardOfInspection)),
+            (t.testTypeLabel, text(CertText.testType)),
           ],
-        ],
-      ),
+        ),
+        const SizedBox(height: 14),
+        _ReadOnlySection(
+          stepNumber: 2,
+          title: t.itemInformationTitle,
+          rows: [
+            (t.inspectedItemLabel, item?.type ?? request.equipmentTitle),
+            (t.manufacturerLabel, text(CertText.manufacturer)),
+            (t.modelYearLabel, text(CertText.modelYear)),
+            (t.maxWorkingRateLabel, text(CertText.maxWorkingRate)),
+            (t.serialNumberLabel, text(CertText.serialNumber)),
+            (t.ownerIdLabel, text(CertText.ownerId)),
+            (t.functionCheckLabel, certificate.functionCheck.label(t)),
+            (t.ndtLabel, text(CertText.ndt)),
+          ],
+        ),
+        const SizedBox(height: 14),
+        _ReadOnlySection(
+          stepNumber: 3,
+          title: t.examinationQuestionsTitle,
+          rows: [
+            (t.questionFirstExamination, yesNo(CertQuestion.firstExamination)),
+            if (certificate.answerOf(CertQuestion.firstExamination) == true)
+              (t.questionInstalledCorrectly, yesNo(CertQuestion.installedCorrectly)),
+            (t.questionWithin6Months, yesNo(CertQuestion.within6Months)),
+            (t.questionWithin12Months, yesNo(CertQuestion.within12Months)),
+            (t.questionExaminationScheme, yesNo(CertQuestion.examinationScheme)),
+            (t.questionExceptionalCircumstances, yesNo(CertQuestion.exceptionalCircumstances)),
+          ],
+        ),
+        const SizedBox(height: 14),
+        _ReadOnlySection(
+          stepNumber: 4,
+          title: t.defectsTitle,
+          rows: [
+            (t.defectDescriptionLabel, text(CertText.defectDescription)),
+            (t.existingDangerLabel, yesNo(CertQuestion.existingDanger)),
+            (t.futureDangerLabel, yesNo(CertQuestion.futureDanger)),
+            if (certificate.answerOf(CertQuestion.futureDanger) == true)
+              (t.futureDangerByLabel, date(CertDate.futureDangerBy)),
+            (t.repairsRequiredLabel, text(CertText.repairsRequired)),
+            (t.testsCarriedOutLabel, text(CertText.testsCarriedOut)),
+          ],
+        ),
+        const SizedBox(height: 14),
+        _ReadOnlySection(
+          stepNumber: 5,
+          title: t.conclusionTitle,
+          rows: [('', conclusion.isEmpty ? '—' : conclusion), (t.noteLabel, text(CertText.note))],
+        ),
+      ],
     );
   }
 }
 
-class _ReadOnlyChecklistRow extends StatelessWidget {
-  final String label;
-  final ChecklistAnswer answer;
-  final String? defectNote;
+/// One section of the report as label/value rows, in the same card shape
+/// as the editable form.
+class _ReadOnlySection extends StatelessWidget {
+  final int stepNumber;
+  final String title;
+  final List<(String, String)> rows;
 
-  const _ReadOnlyChecklistRow({required this.label, required this.answer, this.defectNote});
-
-  Color get _badgeBackground => switch (answer) {
-    ChecklistAnswer.pass => AppColours.chipGreenBackground,
-    ChecklistAnswer.fail => AppColours.chipRedBackground,
-    ChecklistAnswer.na || ChecklistAnswer.unanswered => AppColours.chipGreyBackground,
-  };
-
-  Color get _badgeText => switch (answer) {
-    ChecklistAnswer.pass => AppColours.chipGreenText,
-    ChecklistAnswer.fail => AppColours.chipRedText,
-    ChecklistAnswer.na || ChecklistAnswer.unanswered => AppColours.chipGreyText,
-  };
+  const _ReadOnlySection({required this.stepNumber, required this.title, required this.rows});
 
   @override
   Widget build(BuildContext context) {
-    final t = AppLocalizations.of(context)!;
-    return Container(
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(color: AppColours.surfaceMuted, borderRadius: BorderRadius.circular(14)),
+    return CertificateSectionCard(
+      stepNumber: stepNumber,
+      highlighted: false,
+      done: true,
+      title: title,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(child: Text(label, style: AppTextStyles.cardTitle.copyWith(fontSize: 14))),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                decoration: BoxDecoration(color: _badgeBackground, borderRadius: BorderRadius.circular(999)),
-                child: Text(answer.label(t), style: AppTextStyles.badge.copyWith(color: _badgeText)),
-              ),
-            ],
-          ),
-          if (answer == ChecklistAnswer.fail && (defectNote ?? '').isNotEmpty) ...[
-            const SizedBox(height: 8),
-            Text(defectNote!, style: AppTextStyles.subtitle.copyWith(fontSize: 13)),
+          for (var i = 0; i < rows.length; i++) ...[
+            if (i > 0) const SizedBox(height: 12),
+            _ValueRow(label: rows[i].$1, value: rows[i].$2),
           ],
         ],
       ),
@@ -193,35 +224,11 @@ class _ReadOnlyChecklistRow extends StatelessWidget {
   }
 }
 
-class _ReadOnlyLoadTest extends StatelessWidget {
-  final Certificate certificate;
-
-  const _ReadOnlyLoadTest({required this.certificate});
-
-  @override
-  Widget build(BuildContext context) {
-    final t = AppLocalizations.of(context)!;
-    return CertificateSectionCard(
-      stepNumber: 3,
-      highlighted: false,
-      done: true,
-      title: t.loadTestTitle,
-      child: Row(
-        children: [
-          Expanded(child: _ValueBlock(label: t.testLoadKgLabel, value: certificate.testLoadKg?.toStringAsFixed(0) ?? '—')),
-          const SizedBox(width: 14),
-          Expanded(child: _ValueBlock(label: t.durationMinLabel, value: certificate.durationMinutes?.toString() ?? '—')),
-        ],
-      ),
-    );
-  }
-}
-
-class _ValueBlock extends StatelessWidget {
+class _ValueRow extends StatelessWidget {
   final String label;
   final String value;
 
-  const _ValueBlock({required this.label, required this.value});
+  const _ValueRow({required this.label, required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -229,38 +236,9 @@ class _ValueBlock extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(label, style: AppTextStyles.caption),
-        const SizedBox(height: 4),
-        Text(value, style: AppTextStyles.cardTitle.copyWith(fontSize: 18)),
+        if (label.isNotEmpty) ...[Text(label, style: AppTextStyles.caption), const SizedBox(height: 2)],
+        Text(value, style: AppTextStyles.cardTitle.copyWith(fontSize: 14)),
       ],
-    );
-  }
-}
-
-class _ReadOnlyFinalResult extends StatelessWidget {
-  final Certificate certificate;
-
-  const _ReadOnlyFinalResult({required this.certificate});
-
-  @override
-  Widget build(BuildContext context) {
-    final t = AppLocalizations.of(context)!;
-    final label = certificate.finalResult.label(t);
-    return CertificateSectionCard(
-      stepNumber: 5,
-      highlighted: false,
-      done: true,
-      title: t.finalResultTitle,
-      child: Row(
-        children: [
-          const Icon(Icons.check_circle, size: 20, color: AppColours.successIcon),
-          const SizedBox(width: 10),
-          Text(
-            label.isEmpty ? '—' : label,
-            style: AppTextStyles.cardTitle.copyWith(fontSize: 15, color: AppColours.primaryDark),
-          ),
-        ],
-      ),
     );
   }
 }

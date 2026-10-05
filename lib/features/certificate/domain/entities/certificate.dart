@@ -7,20 +7,28 @@ import 'checklist_answer.dart';
 /// A `certificates/{requestId}` document (Feature 05): one per job, owned
 /// by the inspector it's assigned to. Autosaved as the inspector fills it
 /// in, locked once the job's [JobStatus] moves past `inProgress`.
+///
+/// It's TÜV's "Report of Thorough Examination" (see [CertificateTemplate]):
+/// the free-text, date and yes/no fields live in maps keyed by
+/// [CertText] / [CertDate] / [CertQuestion], so the form and the PDF can
+/// both walk the same keys.
 class Certificate extends Equatable {
   final String requestId;
   final String inspectorId;
   final String templateId;
-  final Map<String, ChecklistAnswer> checklistAnswers;
-  final Map<String, String> defectNotes;
-  final double? testLoadKg;
-  final int? durationMinutes;
+
+  final Map<String, String> texts;
+  final Map<String, DateTime> dates;
+  final Map<String, bool> answers;
+
+  /// The item's "Function check" row.
+  final ChecklistAnswer functionCheck;
+
+  /// The "Conclusion / remarks" row.
   final CertificateResult? finalResult;
 
-  /// Set by a technical manager sending a certificate back for changes
-  /// (not built yet — there's no reviewer UI in the app today, so this
-  /// stays null in practice; the Certificates list already knows how to
-  /// display it once one exists).
+  /// Set by a technical manager sending a certificate back for changes;
+  /// the Certificates list displays it, and the form shows it as a banner.
   final String? reviewNote;
 
   /// Server-stamped the moment the inspector submits (or resubmits) —
@@ -28,67 +36,167 @@ class Certificate extends Equatable {
   /// "Submitted N ago".
   final DateTime? submittedAt;
 
+  /// The technical manager's review (Feature 06) — filled in when they
+  /// approve a submitted certificate. All empty until then; cleared again
+  /// when the inspector resubmits after a return.
+  final String? reviewerComments;
+  final String? reviewerName;
+  final String? reviewerLicense;
+
+  /// Where the signed PDF was addressed when approved.
+  final String? sentTo;
+  final DateTime? reviewedAt;
+
+  /// The reviewer's drawn signature: one flat `[x0, y0, x1, y1, ...]` list
+  /// per pen stroke, each coordinate normalised to 0..1 of the pad so it
+  /// redraws at any size.
+  final List<List<double>> signatureStrokes;
+
   const Certificate({
     required this.requestId,
     required this.inspectorId,
     this.templateId = CertificateTemplate.id,
-    this.checklistAnswers = const {},
-    this.defectNotes = const {},
-    this.testLoadKg,
-    this.durationMinutes,
+    this.texts = const {},
+    this.dates = const {},
+    this.answers = const {},
+    this.functionCheck = ChecklistAnswer.unanswered,
     this.finalResult,
     this.reviewNote,
     this.submittedAt,
+    this.reviewerComments,
+    this.reviewerName,
+    this.reviewerLicense,
+    this.sentTo,
+    this.reviewedAt,
+    this.signatureStrokes = const [],
   });
 
-  ChecklistAnswer answerFor(String itemId) =>
-      checklistAnswers[itemId] ?? ChecklistAnswer.unanswered;
+  bool get isSigned => signatureStrokes.any((stroke) => stroke.length >= 4);
 
-  String? defectNoteFor(String itemId) => defectNotes[itemId];
+  /// The trimmed text of [key], or null when it's empty.
+  String? text(String key) {
+    final value = texts[key]?.trim();
+    return value == null || value.isEmpty ? null : value;
+  }
 
-  int get answeredCount =>
-      CertificateTemplate.items.where((item) => answerFor(item.id) != ChecklistAnswer.unanswered).length;
+  DateTime? dateOf(String key) => dates[key];
 
-  /// Every item answered, and every "fail" has a defect note (BR-05's
-  /// checklist can't be submitted with an unexplained failure).
-  bool get isChecklistComplete => CertificateTemplate.items.every((item) {
-    final answer = answerFor(item.id);
-    if (answer == ChecklistAnswer.unanswered) return false;
-    if (answer == ChecklistAnswer.fail) return (defectNoteFor(item.id) ?? '').trim().isNotEmpty;
+  /// `null` until the inspector has answered that question.
+  bool? answerOf(String key) => answers[key];
+
+  /// A defect that is, or could become, a danger to persons was recorded.
+  bool get hasDefect => answerOf(CertQuestion.existingDanger) == true || answerOf(CertQuestion.futureDanger) == true;
+
+  /// The recorded defect, for the reviewer's result banner.
+  String? get defectSummary => text(CertText.defectDescription);
+
+  bool get isDetailsComplete =>
+      dateOf(CertDate.examination) != null &&
+      dateOf(CertDate.nextExamination) != null &&
+      text(CertText.standardOfInspection) != null &&
+      text(CertText.testType) != null;
+
+  bool get isItemComplete => functionCheck != ChecklistAnswer.unanswered;
+
+  /// Every yes/no question answered — "installed correctly" only counts
+  /// when this was a first examination, since the paper form only asks it
+  /// then.
+  bool get isQuestionsComplete {
+    final first = answerOf(CertQuestion.firstExamination);
+    if (first == null) return false;
+    if (first && answerOf(CertQuestion.installedCorrectly) == null) return false;
+    return CertQuestion.carriedOut.every((key) => answerOf(key) != null);
+  }
+
+  /// Both danger questions answered, a date when the defect isn't a danger
+  /// yet, and a description whenever there's a defect at all.
+  bool get isDefectsComplete {
+    final existing = answerOf(CertQuestion.existingDanger);
+    final future = answerOf(CertQuestion.futureDanger);
+    if (existing == null || future == null) return false;
+    if (future && dateOf(CertDate.futureDangerBy) == null) return false;
+    if ((existing || future) && defectSummary == null) return false;
     return true;
-  });
+  }
 
-  bool get isLoadTestComplete => testLoadKg != null && durationMinutes != null;
+  bool get isConclusionComplete => finalResult != null;
 
-  bool get isFinalResultComplete => finalResult != null;
-
-  /// Photos are optional (Feature 05, scope-cut #2 — no upload yet), so
-  /// they never block submission.
-  bool get isReadyToSubmit => isChecklistComplete && isLoadTestComplete && isFinalResultComplete;
+  bool get isReadyToSubmit =>
+      isDetailsComplete && isItemComplete && isQuestionsComplete && isDefectsComplete && isConclusionComplete;
 
   Certificate copyWith({
-    Map<String, ChecklistAnswer>? checklistAnswers,
-    Map<String, String>? defectNotes,
-    double? testLoadKg,
-    bool clearTestLoadKg = false,
-    int? durationMinutes,
-    bool clearDurationMinutes = false,
+    String? templateId,
+    Map<String, String>? texts,
+    Map<String, DateTime>? dates,
+    Map<String, bool>? answers,
+    ChecklistAnswer? functionCheck,
     CertificateResult? finalResult,
   }) {
     return Certificate(
       requestId: requestId,
       inspectorId: inspectorId,
-      templateId: templateId,
-      checklistAnswers: checklistAnswers ?? this.checklistAnswers,
-      defectNotes: defectNotes ?? this.defectNotes,
-      testLoadKg: clearTestLoadKg ? null : (testLoadKg ?? this.testLoadKg),
-      durationMinutes: clearDurationMinutes ? null : (durationMinutes ?? this.durationMinutes),
+      templateId: templateId ?? this.templateId,
+      texts: texts ?? this.texts,
+      dates: dates ?? this.dates,
+      answers: answers ?? this.answers,
+      functionCheck: functionCheck ?? this.functionCheck,
       finalResult: finalResult ?? this.finalResult,
       // Not settable here — reviewNote is a technical manager's, and
       // submittedAt is server-stamped on submit; every field this
       // copyWith touches is the inspector's own draft data.
       reviewNote: reviewNote,
       submittedAt: submittedAt,
+      reviewerComments: reviewerComments,
+      reviewerName: reviewerName,
+      reviewerLicense: reviewerLicense,
+      sentTo: sentTo,
+      reviewedAt: reviewedAt,
+      signatureStrokes: signatureStrokes,
+    );
+  }
+
+  Certificate withText(String key, String value) => copyWith(texts: {...texts, key: value});
+
+  /// A null [value] clears the date.
+  Certificate withDate(String key, DateTime? value) {
+    final next = {...dates};
+    if (value == null) {
+      next.remove(key);
+    } else {
+      next[key] = value;
+    }
+    return copyWith(dates: next);
+  }
+
+  Certificate withAnswer(String key, bool value) => copyWith(answers: {...answers, key: value});
+
+  /// The certificate as the technical manager leaves it — only the review
+  /// fields change; everything the inspector filled in stays as is.
+  Certificate withReview({
+    String? reviewNote,
+    String? reviewerComments,
+    String? reviewerName,
+    String? reviewerLicense,
+    String? sentTo,
+    List<List<double>>? signatureStrokes,
+  }) {
+    return Certificate(
+      requestId: requestId,
+      inspectorId: inspectorId,
+      templateId: templateId,
+      texts: texts,
+      dates: dates,
+      answers: answers,
+      functionCheck: functionCheck,
+      finalResult: finalResult,
+      reviewNote: reviewNote,
+      submittedAt: submittedAt,
+      reviewerComments: reviewerComments,
+      reviewerName: reviewerName,
+      reviewerLicense: reviewerLicense,
+      sentTo: sentTo,
+      reviewedAt: reviewedAt,
+      signatureStrokes: signatureStrokes ?? const [],
     );
   }
 
@@ -97,12 +205,18 @@ class Certificate extends Equatable {
     requestId,
     inspectorId,
     templateId,
-    checklistAnswers,
-    defectNotes,
-    testLoadKg,
-    durationMinutes,
+    texts,
+    dates,
+    answers,
+    functionCheck,
     finalResult,
     reviewNote,
     submittedAt,
+    reviewerComments,
+    reviewerName,
+    reviewerLicense,
+    sentTo,
+    reviewedAt,
+    signatureStrokes,
   ];
 }

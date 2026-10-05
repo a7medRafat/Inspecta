@@ -5,13 +5,17 @@ import '../../../../core/consts/app_colors.dart';
 import '../../../../core/consts/app_text_styles.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/certificate_progress.dart';
+import '../../domain/certificate_template.dart';
 import '../../domain/entities/certificate_result.dart';
 import '../bloc/certificate_cubit.dart';
+import 'certificate_form_fields.dart';
+import 'certificate_labels.dart';
 import 'certificate_section_card.dart';
 
-/// Step 5 of the certificate (Feature 05): the inspector's verdict.
-class FinalResultSection extends StatelessWidget {
-  const FinalResultSection({super.key});
+/// Step 5 of the certificate (Feature 05): the inspector's verdict (the
+/// "Conclusion / remarks" row) and a free-form note.
+class ConclusionSection extends StatelessWidget {
+  const ConclusionSection({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,23 +31,22 @@ class FinalResultSection extends StatelessWidget {
 
         return CertificateSectionCard(
           stepNumber: 5,
-          highlighted: state.currentStep == CertificateStep.finalResult,
-          done: certificate.isFinalResultComplete,
-          title: t.finalResultTitle,
+          highlighted: state.currentStep == CertificateStep.conclusion,
+          done: certificate.isConclusionComplete,
+          title: t.conclusionTitle,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               for (var i = 0; i < CertificateResult.values.length; i++) ...[
                 if (i > 0) const SizedBox(height: 10),
                 _ResultOption(
-                  label: switch (CertificateResult.values[i]) {
-                    CertificateResult.safeToOperate => t.safeToOperateOption,
-                    CertificateResult.safeWithConditions => t.safeWithConditionsOption,
-                    CertificateResult.notSafe => t.notSafeOption,
-                  },
+                  label: CertificateResult.values[i].label(t),
                   selected: certificate.finalResult == CertificateResult.values[i],
                   onTap: () => cubit.setFinalResult(CertificateResult.values[i]),
                 ),
               ],
+              certificateFieldGap,
+              CertificateTextInput(textKey: CertText.note, label: t.noteLabel, multiline: true),
             ],
           ),
         );

@@ -13,14 +13,15 @@ import '../bloc/certificate_cubit.dart';
 import '../widgets/certificate_footer.dart';
 import '../widgets/certificate_header.dart';
 import '../widgets/certificate_labels.dart';
-import '../widgets/checklist_section.dart';
-import '../widgets/equipment_details_section.dart';
-import '../widgets/final_result_section.dart';
-import '../widgets/load_test_section.dart';
-import '../widgets/photos_section.dart';
+import '../widgets/conclusion_section.dart';
+import '../widgets/defects_section.dart';
+import '../widgets/examination_details_section.dart';
+import '../widgets/examination_questions_section.dart';
+import '../widgets/item_information_section.dart';
 
-/// Feature 05's inspection certificate screen: equipment details (read
-/// only), the checklist, load test, photos (stubbed) and final result —
+/// Feature 05's inspection certificate screen: TÜV's report of thorough
+/// examination, filled in section by section — examination details, item
+/// information, the yes/no questions, defects and the conclusion —
 /// autosaved, then submitted to the technical manager.
 class CertificatePage extends StatelessWidget {
   final InspectionRequest request;
@@ -77,15 +78,15 @@ class _Body extends StatelessWidget {
               _ReviewNoteBanner(note: reviewNote),
               const SizedBox(height: 14),
             ],
-            EquipmentDetailsSection(request: request),
+            ExaminationDetailsSection(request: request),
             const SizedBox(height: 14),
-            const ChecklistSection(),
+            ItemInformationSection(request: request),
             const SizedBox(height: 14),
-            const LoadTestSection(),
+            const ExaminationQuestionsSection(),
             const SizedBox(height: 14),
-            const PhotosSection(),
+            const DefectsSection(),
             const SizedBox(height: 14),
-            const FinalResultSection(),
+            const ConclusionSection(),
           ],
         );
       },

@@ -29,6 +29,8 @@ import 'features/auth/domain/entities/user.dart';
 import 'features/certificate/data/datasources/certificate_remote_datasource.dart';
 import 'features/certificate/data/repositories/certificate_repository_impl.dart';
 import 'features/certificate/domain/repositories/certificate_repository.dart';
+import 'features/certificate/domain/usecases/approve_certificate.dart';
+import 'features/certificate/domain/usecases/return_certificate.dart';
 import 'features/certificate/domain/usecases/save_certificate_draft.dart';
 import 'features/certificate/domain/usecases/submit_certificate.dart';
 import 'features/certificate/domain/usecases/watch_certificate.dart';
@@ -71,6 +73,8 @@ import 'features/requests/domain/usecases/get_request_detail.dart';
 import 'features/requests/domain/usecases/get_requests.dart';
 import 'features/requests/domain/usecases/start_inspection.dart';
 import 'features/requests/presentation/bloc/requests_list_cubit.dart';
+import 'features/technical_manager/presentation/bloc/review_detail_cubit.dart';
+import 'features/technical_manager/presentation/bloc/review_queue_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -92,6 +96,7 @@ Future<void> setupDependencies() async {
   _registerProfile();
   _registerInspector();
   _registerCertificate();
+  _registerTechnicalManager();
 }
 
 void _registerAuth(FlutterSecureStorage storage) {
@@ -236,12 +241,30 @@ void _registerCertificate() {
     ..registerLazySingleton(() => WatchCertificate(getIt()))
     ..registerLazySingleton(() => SaveCertificateDraft(getIt()))
     ..registerLazySingleton(() => SubmitCertificate(getIt()))
+    ..registerLazySingleton(() => ApproveCertificate(getIt()))
+    ..registerLazySingleton(() => ReturnCertificate(getIt()))
     ..registerFactoryParam<CertificateCubit, InspectionRequest, void>(
       (request, _) => CertificateCubit(
         request: request,
+        inspector: getIt<AuthCubit>().user,
         watchCertificate: getIt(),
         saveDraft: getIt(),
         submitCertificate: getIt(),
+      ),
+    );
+}
+
+void _registerTechnicalManager() {
+  getIt
+    ..registerFactory(() => ReviewQueueCubit(getIt(), getIt()))
+    ..registerFactoryParam<ReviewDetailCubit, InspectionRequest, String>(
+      (request, reviewerName) => ReviewDetailCubit(
+        request: request,
+        reviewerName: reviewerName,
+        watchCertificate: getIt(),
+        getClientDetail: getIt(),
+        approveCertificate: getIt(),
+        returnCertificate: getIt(),
       ),
     );
 }

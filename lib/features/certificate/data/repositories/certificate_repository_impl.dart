@@ -45,14 +45,43 @@ class CertificateRepositoryImpl implements CertificateRepository {
         requestId: certificate.requestId,
         inspectorId: certificate.inspectorId,
         templateId: certificate.templateId,
-        checklistAnswers: certificate.checklistAnswers,
-        defectNotes: certificate.defectNotes,
-        testLoadKg: certificate.testLoadKg,
-        durationMinutes: certificate.durationMinutes,
+        texts: certificate.texts,
+        dates: certificate.dates,
+        answers: certificate.answers,
+        functionCheck: certificate.functionCheck,
         finalResult: certificate.finalResult,
       );
       await _remote.submit(CertificateModel.fromEntity(toSubmit));
       await _requestsRepository.updateStatus(certificate.requestId, JobStatus.certificateSubmitted);
+    } catch (e) {
+      throw _mapError(e);
+    }
+  }
+
+  @override
+  Future<void> approve(Certificate certificate) async {
+    try {
+      await _remote.saveReview(CertificateModel.fromEntity(certificate));
+      await _requestsRepository.updateStatus(
+        certificate.requestId,
+        JobStatus.sentToClient,
+        note: 'Approved by ${certificate.reviewerName} — signed PDF for ${certificate.sentTo}',
+      );
+    } catch (e) {
+      throw _mapError(e);
+    }
+  }
+
+  @override
+  Future<void> sendBack(Certificate certificate, {required String note}) async {
+    try {
+      final returned = certificate.withReview(reviewNote: note);
+      await _remote.saveReview(CertificateModel.fromEntity(returned));
+      await _requestsRepository.updateStatus(
+        certificate.requestId,
+        JobStatus.certificateReturned,
+        note: note,
+      );
     } catch (e) {
       throw _mapError(e);
     }

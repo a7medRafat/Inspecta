@@ -15,11 +15,11 @@ class CertificateHeader extends StatelessWidget {
   const CertificateHeader({super.key});
 
   static String _stepTitle(AppLocalizations t, CertificateStep step) => switch (step) {
-    CertificateStep.equipment => t.equipmentDetailsTitle,
-    CertificateStep.checklist => t.inspectionChecklistTitle,
-    CertificateStep.loadTest => t.loadTestTitle,
-    CertificateStep.photos => t.photosTitle,
-    CertificateStep.finalResult => t.finalResultTitle,
+    CertificateStep.details => t.examinationDetailsTitle,
+    CertificateStep.item => t.itemInformationTitle,
+    CertificateStep.questions => t.examinationQuestionsTitle,
+    CertificateStep.defects => t.defectsTitle,
+    CertificateStep.conclusion => t.conclusionTitle,
   };
 
   @override
@@ -69,10 +69,14 @@ class CertificateHeader extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        '${t.stepOfTotalLabel(state.currentStepNumber, state.totalSteps)} · ${_stepTitle(t, state.currentStep)}',
-                        style: AppTextStyles.subtitle.copyWith(fontWeight: FontWeight.w700, fontSize: 13),
+                      Expanded(
+                        child: Text(
+                          '${t.stepOfTotalLabel(state.currentStepNumber, state.totalSteps)} · ${_stepTitle(t, state.currentStep)}',
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.subtitle.copyWith(fontWeight: FontWeight.w700, fontSize: 13),
+                        ),
                       ),
+                      const SizedBox(width: 8),
                       Text('$percent%', style: AppTextStyles.subtitle.copyWith(fontSize: 13)),
                     ],
                   ),

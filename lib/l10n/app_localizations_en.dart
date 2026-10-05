@@ -1402,7 +1402,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get emptyTasksForDay => 'No tasks on this day.';
 
   @override
-  String get certificateTitle => 'Inspection certificate';
+  String get certificateTitle => 'Report of thorough examination';
 
   @override
   String templateLabel(String id) {
@@ -1421,15 +1421,70 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get equipmentDetailsTitle => 'Equipment details';
+  String get examinationDetailsTitle => 'Examination details';
 
   @override
-  String get inspectionChecklistTitle => 'Inspection checklist';
+  String get itemInformationTitle => 'Item information';
 
   @override
-  String itemsAnsweredLabel(int answered, int total) {
-    return '$answered of $total items answered';
-  }
+  String get examinationQuestionsTitle => 'Examination questions';
+
+  @override
+  String get defectsTitle => 'Defects & remedial action';
+
+  @override
+  String get conclusionTitle => 'Conclusion';
+
+  @override
+  String get certificateNumberLabel => 'Certificate number';
+
+  @override
+  String get clientAndLocationLabel => 'Client and location';
+
+  @override
+  String get clientRepresentativeLabel => 'Client representative';
+
+  @override
+  String get examinationDateLabel => 'Examination date';
+
+  @override
+  String get lastExaminationDateLabel => 'Last examination date';
+
+  @override
+  String get nextExaminationDateLabel => 'Next examination date';
+
+  @override
+  String get standardOfInspectionLabel => 'Standard of inspection';
+
+  @override
+  String get testTypeLabel => 'Test type';
+
+  @override
+  String get selectDateHint => 'Select date';
+
+  @override
+  String get inspectedItemLabel => 'Inspected item';
+
+  @override
+  String get manufacturerLabel => 'Manufacturer';
+
+  @override
+  String get modelYearLabel => 'Model / year of manufacture';
+
+  @override
+  String get maxWorkingRateLabel => 'Max. working rate';
+
+  @override
+  String get serialNumberLabel => 'Serial / chassis number';
+
+  @override
+  String get ownerIdLabel => 'Owner ID';
+
+  @override
+  String get functionCheckLabel => 'Function check';
+
+  @override
+  String get ndtLabel => 'NDT';
 
   @override
   String get passOption => 'Pass';
@@ -1441,28 +1496,70 @@ class AppLocalizationsEn extends AppLocalizations {
   String get naOption => 'N/A';
 
   @override
+  String get yesOption => 'Yes';
+
+  @override
+  String get noOption => 'No';
+
+  @override
+  String get questionFirstExamination =>
+      'Is this the first examination after installation or assembly at a new site or location?';
+
+  @override
+  String get questionInstalledCorrectly =>
+      'Has the equipment been installed correctly?';
+
+  @override
+  String get examinationCarriedOutLabel => 'Was the examination carried out:';
+
+  @override
+  String get questionWithin6Months => 'Within an interval of 6 months?';
+
+  @override
+  String get questionWithin12Months => 'Within an interval of 12 months?';
+
+  @override
+  String get questionExaminationScheme =>
+      'In accordance with an examination scheme?';
+
+  @override
+  String get questionExceptionalCircumstances =>
+      'After the occurrence of exceptional circumstances?';
+
+  @override
+  String get defectDescriptionLabel =>
+      'Any part found to have a defect which is or could become a danger to persons, and a description of the defect';
+
+  @override
+  String get defectDescriptionHint => 'Leave empty if there is none';
+
+  @override
   String get describeDefectRequired => 'Describe the defect (required)';
 
   @override
-  String get addPhotoOfDefectAction => 'Add photo of defect';
+  String get existingDangerLabel =>
+      'Is the above an existing or imminent danger to persons? (a reportable defect)';
 
   @override
-  String get loadTestTitle => 'Load test';
+  String get futureDangerLabel =>
+      'Is the above a defect which is not yet, but could become, a danger to persons?';
 
   @override
-  String get testLoadKgLabel => 'Test load (kg)';
+  String get futureDangerByLabel => 'If yes, the date by when';
 
   @override
-  String get durationMinLabel => 'Duration (min)';
+  String get repairsRequiredLabel =>
+      'Repair, renewal or alteration required to remedy the defect';
 
   @override
-  String get photosTitle => 'Photos';
+  String get testsCarriedOutLabel =>
+      'Tests carried out as part of the examination';
 
   @override
-  String get addAction => 'Add';
+  String get existingDangerShortLabel => 'Existing danger';
 
   @override
-  String get finalResultTitle => 'Final result';
+  String get potentialDangerShortLabel => 'Potential danger';
 
   @override
   String get safeToOperateOption => 'Safe to operate';
@@ -1562,4 +1659,168 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get certificateNotFound => 'Certificate details aren\'t available.';
+
+  @override
+  String get reviewNavReview => 'Review';
+
+  @override
+  String get reviewNavSent => 'Sent';
+
+  @override
+  String get reviewQueueTitle => 'Certificates to review';
+
+  @override
+  String get statToReview => 'To review';
+
+  @override
+  String get statReturned => 'Returned';
+
+  @override
+  String get waitingForSignatureTitle => 'Waiting for your signature';
+
+  @override
+  String get reviewAndSignAction => 'Review & sign';
+
+  @override
+  String byInspectorWhenLabel(String name, String when) {
+    return 'By $name · $when';
+  }
+
+  @override
+  String todayAtTime(String time) {
+    return 'today $time';
+  }
+
+  @override
+  String get yesterdayLabel => 'yesterday';
+
+  @override
+  String get returnedToInspector => 'Returned to inspector';
+
+  @override
+  String returnedToInspectorNote(String note) {
+    return 'Returned to inspector — $note';
+  }
+
+  @override
+  String get emptyReviewQueue => 'Nothing is waiting for your signature.';
+
+  @override
+  String get sentCertificatesTitle => 'Sent certificates';
+
+  @override
+  String get emptySentCertificates => 'No certificates have been sent yet.';
+
+  @override
+  String sentToLabel(String email) {
+    return 'Sent to $email';
+  }
+
+  @override
+  String get reviewBadgeSafe => 'Safe';
+
+  @override
+  String get reviewBadgeConditions => 'With conditions';
+
+  @override
+  String get reviewBadgeNotSafe => 'Not safe';
+
+  @override
+  String get reviewResultSafe => 'Safe to operate';
+
+  @override
+  String get reviewResultConditions => 'Safe with conditions';
+
+  @override
+  String get reviewResultNotSafe => 'Not safe — out of service';
+
+  @override
+  String get reviewCertificateTitle => 'Review certificate';
+
+  @override
+  String get awaitingYouBadge => 'Awaiting you';
+
+  @override
+  String get reviewSummaryTitle => 'Summary';
+
+  @override
+  String get viewFullPdfAction => 'View full PDF';
+
+  @override
+  String get inspectedLabel => 'Inspected';
+
+  @override
+  String get nextDueLabel => 'Next due';
+
+  @override
+  String get yourCommentsLabel => 'Your comments';
+
+  @override
+  String get reviewCommentsHint => 'Add a note for the record (optional)';
+
+  @override
+  String get signHereTitle => 'Sign here';
+
+  @override
+  String get clearAction => 'Clear';
+
+  @override
+  String get fullNameLabel => 'Full name';
+
+  @override
+  String get fullNameHint => 'Eng. Your name';
+
+  @override
+  String get licenseNoLabel => 'License no.';
+
+  @override
+  String get licenseNoHint => 'License number';
+
+  @override
+  String get sendSignedPdfToLabel => 'Send signed PDF to';
+
+  @override
+  String get returnAction => 'Return';
+
+  @override
+  String get approveAndSendAction => 'Approve & send to client';
+
+  @override
+  String get approveRequirementsHint =>
+      'Sign above and fill in your name, license and a valid email to approve.';
+
+  @override
+  String get confirmApproveTitle => 'Approve this certificate?';
+
+  @override
+  String confirmApproveMessage(String name, String email) {
+    return 'It will be signed as $name and marked as sent to $email.';
+  }
+
+  @override
+  String get approveConfirmAction => 'Approve';
+
+  @override
+  String get returnToInspectorTitle => 'Return to inspector';
+
+  @override
+  String get returnReasonLabel => 'What needs to change?';
+
+  @override
+  String get returnReasonHint =>
+      'e.g. Add photos of the landing door interlock';
+
+  @override
+  String get returnReasonRequired =>
+      'Add a reason so the inspector knows what to fix.';
+
+  @override
+  String get returnConfirmAction => 'Return';
+
+  @override
+  String get certificateApprovedMessage => 'Certificate approved and signed.';
+
+  @override
+  String get certificateReturnedMessage =>
+      'Certificate returned to the inspector.';
 }

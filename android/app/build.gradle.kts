@@ -10,7 +10,7 @@ plugins {
 
 android {
     namespace = "com.example.inspecta"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
@@ -21,13 +21,8 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId = "com.example.inspecta"
-        // Pinned explicitly (Android 11 = API 30) instead of tracking
-        // flutter.minSdkVersion, which the Flutter template has bumped
-        // upward release over release and could push past what's needed
-        // here. 23 is the effective floor the Firebase Android SDKs in
-        // pubspec.yaml already require.
-        minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
+        minSdk = 24
+        targetSdk = 34
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }

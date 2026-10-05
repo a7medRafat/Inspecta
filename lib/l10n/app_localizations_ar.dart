@@ -1398,7 +1398,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get emptyTasksForDay => 'لا توجد مهام في هذا اليوم.';
 
   @override
-  String get certificateTitle => 'شهادة الفحص';
+  String get certificateTitle => 'تقرير الفحص الشامل';
 
   @override
   String templateLabel(String id) {
@@ -1417,15 +1417,70 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get equipmentDetailsTitle => 'تفاصيل المعدة';
+  String get examinationDetailsTitle => 'تفاصيل الفحص';
 
   @override
-  String get inspectionChecklistTitle => 'قائمة الفحص';
+  String get itemInformationTitle => 'بيانات المعدة';
 
   @override
-  String itemsAnsweredLabel(int answered, int total) {
-    return 'تمت الإجابة عن $answered من $total';
-  }
+  String get examinationQuestionsTitle => 'أسئلة الفحص';
+
+  @override
+  String get defectsTitle => 'العيوب والإجراءات التصحيحية';
+
+  @override
+  String get conclusionTitle => 'الخلاصة';
+
+  @override
+  String get certificateNumberLabel => 'رقم الشهادة';
+
+  @override
+  String get clientAndLocationLabel => 'العميل والموقع';
+
+  @override
+  String get clientRepresentativeLabel => 'ممثل العميل';
+
+  @override
+  String get examinationDateLabel => 'تاريخ الفحص';
+
+  @override
+  String get lastExaminationDateLabel => 'تاريخ آخر فحص';
+
+  @override
+  String get nextExaminationDateLabel => 'تاريخ الفحص القادم';
+
+  @override
+  String get standardOfInspectionLabel => 'معيار الفحص';
+
+  @override
+  String get testTypeLabel => 'نوع الاختبار';
+
+  @override
+  String get selectDateHint => 'اختر التاريخ';
+
+  @override
+  String get inspectedItemLabel => 'المعدة المفحوصة';
+
+  @override
+  String get manufacturerLabel => 'الشركة المصنعة';
+
+  @override
+  String get modelYearLabel => 'الطراز / سنة الصنع';
+
+  @override
+  String get maxWorkingRateLabel => 'أقصى معدل تشغيل';
+
+  @override
+  String get serialNumberLabel => 'الرقم التسلسلي / رقم الشاسيه';
+
+  @override
+  String get ownerIdLabel => 'رقم المالك';
+
+  @override
+  String get functionCheckLabel => 'فحص الأداء';
+
+  @override
+  String get ndtLabel => 'الفحص غير الإتلافي (NDT)';
 
   @override
   String get passOption => 'ناجح';
@@ -1437,28 +1492,66 @@ class AppLocalizationsAr extends AppLocalizations {
   String get naOption => 'غير منطبق';
 
   @override
-  String get describeDefectRequired => 'صف العطل (مطلوب)';
+  String get yesOption => 'نعم';
 
   @override
-  String get addPhotoOfDefectAction => 'إضافة صورة للعطل';
+  String get noOption => 'لا';
 
   @override
-  String get loadTestTitle => 'اختبار الحمل';
+  String get questionFirstExamination =>
+      'هل هذا هو الفحص الأول بعد التركيب أو التجميع في موقع أو مكان جديد؟';
 
   @override
-  String get testLoadKgLabel => 'حمل الاختبار (كجم)';
+  String get questionInstalledCorrectly => 'هل تم تركيب المعدة بشكل صحيح؟';
 
   @override
-  String get durationMinLabel => 'المدة (دقيقة)';
+  String get examinationCarriedOutLabel => 'هل أُجري الفحص:';
 
   @override
-  String get photosTitle => 'الصور';
+  String get questionWithin6Months => 'خلال فترة 6 أشهر؟';
 
   @override
-  String get addAction => 'إضافة';
+  String get questionWithin12Months => 'خلال فترة 12 شهرًا؟';
 
   @override
-  String get finalResultTitle => 'النتيجة النهائية';
+  String get questionExaminationScheme => 'وفقًا لبرنامج فحص؟';
+
+  @override
+  String get questionExceptionalCircumstances => 'بعد حدوث ظروف استثنائية؟';
+
+  @override
+  String get defectDescriptionLabel =>
+      'أي جزء وُجد به عيب يشكّل أو قد يشكّل خطرًا على الأشخاص، ووصف العيب';
+
+  @override
+  String get defectDescriptionHint => 'اتركه فارغًا إن لم يوجد';
+
+  @override
+  String get describeDefectRequired => 'صف العيب (مطلوب)';
+
+  @override
+  String get existingDangerLabel =>
+      'هل ما سبق يشكّل خطرًا قائمًا أو وشيكًا على الأشخاص؟ (عيب يجب الإبلاغ عنه)';
+
+  @override
+  String get futureDangerLabel =>
+      'هل ما سبق عيب لا يشكّل خطرًا حاليًا لكنه قد يصبح خطرًا على الأشخاص؟';
+
+  @override
+  String get futureDangerByLabel => 'إن كانت الإجابة نعم، التاريخ المحدد';
+
+  @override
+  String get repairsRequiredLabel =>
+      'الإصلاح أو الاستبدال أو التعديل المطلوب لمعالجة العيب';
+
+  @override
+  String get testsCarriedOutLabel => 'الاختبارات التي أُجريت ضمن الفحص';
+
+  @override
+  String get existingDangerShortLabel => 'خطر قائم';
+
+  @override
+  String get potentialDangerShortLabel => 'خطر محتمل';
 
   @override
   String get safeToOperateOption => 'آمن للتشغيل';
@@ -1557,4 +1650,165 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get certificateNotFound => 'تفاصيل الشهادة غير متوفرة.';
+
+  @override
+  String get reviewNavReview => 'المراجعة';
+
+  @override
+  String get reviewNavSent => 'المرسلة';
+
+  @override
+  String get reviewQueueTitle => 'شهادات بانتظار المراجعة';
+
+  @override
+  String get statToReview => 'للمراجعة';
+
+  @override
+  String get statReturned => 'المُعادة';
+
+  @override
+  String get waitingForSignatureTitle => 'بانتظار توقيعك';
+
+  @override
+  String get reviewAndSignAction => 'مراجعة وتوقيع';
+
+  @override
+  String byInspectorWhenLabel(String name, String when) {
+    return 'بواسطة $name · $when';
+  }
+
+  @override
+  String todayAtTime(String time) {
+    return 'اليوم $time';
+  }
+
+  @override
+  String get yesterdayLabel => 'أمس';
+
+  @override
+  String get returnedToInspector => 'أُعيدت إلى المفتش';
+
+  @override
+  String returnedToInspectorNote(String note) {
+    return 'أُعيدت إلى المفتش — $note';
+  }
+
+  @override
+  String get emptyReviewQueue => 'لا شيء بانتظار توقيعك.';
+
+  @override
+  String get sentCertificatesTitle => 'الشهادات المرسلة';
+
+  @override
+  String get emptySentCertificates => 'لم تُرسل أي شهادات بعد.';
+
+  @override
+  String sentToLabel(String email) {
+    return 'أُرسلت إلى $email';
+  }
+
+  @override
+  String get reviewBadgeSafe => 'آمنة';
+
+  @override
+  String get reviewBadgeConditions => 'بشروط';
+
+  @override
+  String get reviewBadgeNotSafe => 'غير آمنة';
+
+  @override
+  String get reviewResultSafe => 'آمنة للتشغيل';
+
+  @override
+  String get reviewResultConditions => 'آمنة بشروط';
+
+  @override
+  String get reviewResultNotSafe => 'غير آمنة — خارج الخدمة';
+
+  @override
+  String get reviewCertificateTitle => 'مراجعة الشهادة';
+
+  @override
+  String get awaitingYouBadge => 'بانتظارك';
+
+  @override
+  String get reviewSummaryTitle => 'الملخص';
+
+  @override
+  String get viewFullPdfAction => 'عرض ملف PDF كاملاً';
+
+  @override
+  String get inspectedLabel => 'تاريخ الفحص';
+
+  @override
+  String get nextDueLabel => 'الاستحقاق التالي';
+
+  @override
+  String get yourCommentsLabel => 'تعليقاتك';
+
+  @override
+  String get reviewCommentsHint => 'أضف ملاحظة للسجل (اختياري)';
+
+  @override
+  String get signHereTitle => 'وقّع هنا';
+
+  @override
+  String get clearAction => 'مسح';
+
+  @override
+  String get fullNameLabel => 'الاسم الكامل';
+
+  @override
+  String get fullNameHint => 'م. اسمك';
+
+  @override
+  String get licenseNoLabel => 'رقم الترخيص';
+
+  @override
+  String get licenseNoHint => 'رقم الترخيص';
+
+  @override
+  String get sendSignedPdfToLabel => 'إرسال ملف PDF الموقّع إلى';
+
+  @override
+  String get returnAction => 'إعادة';
+
+  @override
+  String get approveAndSendAction => 'اعتماد وإرسال للعميل';
+
+  @override
+  String get approveRequirementsHint =>
+      'وقّع أعلاه واملأ اسمك ورقم الترخيص وبريدًا صالحًا للاعتماد.';
+
+  @override
+  String get confirmApproveTitle => 'اعتماد هذه الشهادة؟';
+
+  @override
+  String confirmApproveMessage(String name, String email) {
+    return 'سيتم توقيعها باسم $name وتسجيلها كمرسلة إلى $email.';
+  }
+
+  @override
+  String get approveConfirmAction => 'اعتماد';
+
+  @override
+  String get returnToInspectorTitle => 'إعادة إلى المفتش';
+
+  @override
+  String get returnReasonLabel => 'ما الذي يجب تغييره؟';
+
+  @override
+  String get returnReasonHint => 'مثال: أضف صورًا لقفل باب الطابق';
+
+  @override
+  String get returnReasonRequired => 'أضف سببًا ليعرف المفتش ما يجب إصلاحه.';
+
+  @override
+  String get returnConfirmAction => 'إعادة';
+
+  @override
+  String get certificateApprovedMessage => 'تم اعتماد الشهادة وتوقيعها.';
+
+  @override
+  String get certificateReturnedMessage => 'أُعيدت الشهادة إلى المفتش.';
 }

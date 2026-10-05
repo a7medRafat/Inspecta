@@ -33,4 +33,12 @@ class CertificateRemoteDataSource {
     ...model.toJson(),
     'submittedAt': FieldValue.serverTimestamp(),
   }, SetOptions(merge: true));
+
+  /// Feature 06: a technical manager's review — only the review fields,
+  /// plus a server-stamped `reviewedAt`, matching the paired
+  /// firestore.rules check.
+  Future<void> saveReview(CertificateModel model) => _doc(model.requestId).set({
+    ...model.toReviewJson(),
+    'reviewedAt': FieldValue.serverTimestamp(),
+  }, SetOptions(merge: true));
 }

@@ -1,0 +1,199 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:printing/printing.dart';
+
+import '../../../../core/consts/app_colors.dart';
+import '../../../../core/consts/app_text_styles.dart';
+import '../../../../core/framework/mtoast.dart';
+import '../../../../core/shared/loading.dart';
+import '../../../../core/shared/m_notice.dart';
+import '../../../../core/shared/m_text_field.dart';
+import '../../../../injection.dart';
+import '../../../../l10n/app_localizations.dart';
+import '../../../auth/presentation/bloc/auth_cubit.dart';
+import '../../../certificate/domain/entities/certificate.dart';
+import '../../../certificate/presentation/pdf/certificate_pdf_builder.dart';
+import '../../../certificate/presentation/widgets/certificate_labels.dart';
+import '../../../requests/domain/entities/inspection_request.dart';
+import '../bloc/review_detail_cubit.dart';
+import '../widgets/review_comments_field.dart';
+import '../widgets/review_detail_header.dart';
+import '../widgets/review_footer.dart';
+import '../widgets/review_summary_card.dart';
+import '../widgets/signature_card.dart';
+
+/// Feature 06's review screen: the reviewer reads the summary, adds
+/// comments, signs, and either approves (sending the signed PDF to the
+/// client) or returns the certificate to its inspector.
+class CertificateReviewPage extends StatelessWidget {
+  final InspectionRequest request;
+  final String? inspectorName;
+
+  const CertificateReviewPage({super.key, required this.request, this.inspectorName});
+
+  @override
+  Widget build(BuildContext context) {
+    final reviewer = context.read<AuthCubit>().user;
+    return BlocProvider(
+      create: (_) => getIt<ReviewDetailCubit>(param1: request, param2: reviewer?.name ?? '')..start(),
+      child: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle.light,
+        child: _ReviewView(request: request, inspectorName: inspectorName),
+      ),
+    );
+  }
+}
+
+class _ReviewView extends StatefulWidget {
+  final InspectionRequest request;
+  final String? inspectorName;
+
+  const _ReviewView({required this.request, this.inspectorName});
+
+  @override
+  State<_ReviewView> createState() => _ReviewViewState();
+}
+
+class _ReviewViewState extends State<_ReviewView> {
+  final _comments = TextEditingController();
+  final _name = TextEditingController();
+  final _license = TextEditingController();
+  final _email = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _name.text = context.read<ReviewDetailCubit>().state.reviewerName;
+  }
+
+  @override
+  void dispose() {
+    _comments.dispose();
+    _name.dispose();
+    _license.dispose();
+    _email.dispose();
+    super.dispose();
+  }
+
+  Future<void> _viewPdf(Certificate certificate) async {
+    await Printing.layoutPdf(
+      onLayout: (_) => buildCertificatePdf(request: widget.request, certificate: certificate),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+    final cubit = context.read<ReviewDetailCubit>();
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<ReviewDetailCubit, ReviewDetailState>(
+          listenWhen: (previous, current) => previous.suggestedEmail != current.suggestedEmail,
+          listener: (context, state) {
+            if (_email.text.isEmpty && state.suggestedEmail != null) _email.text = state.suggestedEmail!;
+          },
+        ),
+        BlocListener<ReviewDetailCubit, ReviewDetailState>(
+          listenWhen: (previous, current) => previous.actionSeq != current.actionSeq,
+          listener: (context, state) {
+            if (state.lastActionSuccess) {
+              MToast.showSuccess(
+                message: state.lastActionApproved ? t.certificateApprovedMessage : t.certificateReturnedMessage,
+              );
+              Navigator.of(context).pop();
+            } else if (state.lastActionFailure != null) {
+              MToast.showError(message: state.lastActionFailure!.message(t));
+            }
+          },
+        ),
+      ],
+      child: Scaffold(
+        backgroundColor: AppColours.background,
+        body: Column(
+          children: [
+            BlocSelector<ReviewDetailCubit, ReviewDetailState, DateTime?>(
+              selector: (state) => state.certificate?.submittedAt,
+              builder: (context, submittedAt) => ReviewDetailHeader(
+                request: widget.request,
+                inspectorName: widget.inspectorName,
+                submittedAt: submittedAt,
+              ),
+            ),
+            Expanded(
+              child: BlocBuilder<ReviewDetailCubit, ReviewDetailState>(
+                buildWhen: (previous, current) =>
+                    previous.status != current.status ||
+                    previous.certificate != current.certificate ||
+                    previous.strokes != current.strokes ||
+                    previous.isBusy != current.isBusy ||
+                    previous.canApprove != current.canApprove,
+                builder: (context, state) {
+                  final certificate = state.certificate;
+                  switch (state.status) {
+                    case ReviewDetailStatus.loading:
+                      return Loading.loader(context);
+                    case ReviewDetailStatus.error:
+                    case ReviewDetailStatus.notFound:
+                      return Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(24),
+                          child: MNotice(type: MNoticeType.error, message: t.certificateNotFound),
+                        ),
+                      );
+                    case ReviewDetailStatus.ready:
+                      break;
+                  }
+                  if (certificate == null) return const SizedBox.shrink();
+                  return ListView(
+                    padding: const EdgeInsets.fromLTRB(20, 18, 20, 24),
+                    children: [
+                      ReviewSummaryCard(
+                        request: widget.request,
+                        certificate: certificate,
+                        onViewPdf: () => _viewPdf(certificate),
+                      ),
+                      const SizedBox(height: 18),
+                      ReviewCommentsField(
+                        controller: _comments,
+                        onChanged: cubit.setComments,
+                        enabled: !state.isBusy,
+                      ),
+                      const SizedBox(height: 18),
+                      SignatureCard(
+                        strokes: state.strokes,
+                        onStrokesChanged: cubit.setStrokes,
+                        onClear: cubit.clearSignature,
+                        nameController: _name,
+                        licenseController: _license,
+                        onNameChanged: cubit.setReviewerName,
+                        onLicenseChanged: cubit.setLicense,
+                        enabled: !state.isBusy,
+                      ),
+                      const SizedBox(height: 18),
+                      Text(t.sendSignedPdfToLabel, style: AppTextStyles.cardTitle.copyWith(fontSize: 16)),
+                      const SizedBox(height: 8),
+                      MTextField(
+                        controller: _email,
+                        onChanged: cubit.setEmail,
+                        enabled: !state.isBusy,
+                        prefixIcon: Icons.mail_outline_rounded,
+                        keyboardType: TextInputType.emailAddress,
+                        hintText: t.emailHint,
+                      ),
+                      if (!state.canApprove) ...[
+                        const SizedBox(height: 12),
+                        Text(t.approveRequirementsHint, style: AppTextStyles.caption),
+                      ],
+                    ],
+                  );
+                },
+              ),
+            ),
+            const ReviewFooter(),
+          ],
+        ),
+      ),
+    );
+  }
+}

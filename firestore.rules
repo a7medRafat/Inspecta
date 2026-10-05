@@ -30,7 +30,7 @@ service cloud.firestore {
       // assign jobs; admins read everyone.
       allow read: if (signedIn() && request.auth.uid == uid)
         || hasRole('admin')
-        || (hasRole('coordinator') && resource.data.role == 'inspector');
+        || ((hasRole('coordinator') || hasRole('technical_manager')) && resource.data.role == 'inspector');
 
       // A user may only stamp their own lastLogin with the server time.
       // Feature 04: a coordinator may mark/clear an inspector's leave —
@@ -99,7 +99,14 @@ service cloud.firestore {
                  || (resource.data.status == 'certificate_returned'
                    && request.resource.data.status == 'certificate_submitted'
                    && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status']))
-               ));
+               ))
+        // Feature 06: a technical manager approves (sending it to the
+        // client) or returns a submitted certificate — status only.
+        || (hasRole('technical_manager')
+            && resource.data.status == 'certificate_submitted'
+            && (request.resource.data.status == 'sent_to_client'
+                || request.resource.data.status == 'certificate_returned')
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status']));
     }
 
     match /certificates/{id} {
@@ -131,6 +138,15 @@ service cloud.firestore {
         && (get(/databases/$(database)/documents/requests/$(id)).data.status == 'in_progress'
             || get(/databases/$(database)/documents/requests/$(id)).data.status == 'certificate_returned');
 
+      // Feature 06: a technical manager reviews a submitted certificate —
+      // only the review fields, and only while it's awaiting review.
+      allow update: if hasRole('technical_manager')
+        && get(/databases/$(database)/documents/requests/$(id)).data.status == 'certificate_submitted'
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+             'reviewNote', 'reviewerComments', 'reviewerName', 'reviewerLicense',
+             'sentTo', 'signature', 'reviewedAt',
+           ]);
+
       allow delete: if false;
     }
 
@@ -144,7 +160,7 @@ service cloud.firestore {
       // A coordinator's assignment write, or an inspector's own
       // accept/decline/start write, logs an event alongside it (see
       // requests/{id}'s update rule above).
-      allow create: if hasRole('supervisor') || hasRole('coordinator') || hasRole('inspector');
+      allow create: if hasRole('supervisor') || hasRole('coordinator') || hasRole('inspector') || hasRole('technical_manager');
       allow update, delete: if false;
     }
 

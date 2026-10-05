@@ -10,8 +10,7 @@ import '../bloc/certificate_cubit.dart';
 import 'certificate_labels.dart';
 
 /// "Preview" (stubbed) and "Submit to technical manager" — enabled only
-/// once the checklist, load test and final result are all filled in
-/// (photos stay optional).
+/// once every section of the report is filled in.
 class CertificateFooter extends StatelessWidget {
   const CertificateFooter({super.key});
 

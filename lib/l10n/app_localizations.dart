@@ -2585,7 +2585,7 @@ abstract class AppLocalizations {
   /// No description provided for @certificateTitle.
   ///
   /// In en, this message translates to:
-  /// **'Inspection certificate'**
+  /// **'Report of thorough examination'**
   String get certificateTitle;
 
   /// No description provided for @templateLabel.
@@ -2612,23 +2612,137 @@ abstract class AppLocalizations {
   /// **'Step {step} of {total}'**
   String stepOfTotalLabel(int step, int total);
 
-  /// No description provided for @equipmentDetailsTitle.
+  /// No description provided for @examinationDetailsTitle.
   ///
   /// In en, this message translates to:
-  /// **'Equipment details'**
-  String get equipmentDetailsTitle;
+  /// **'Examination details'**
+  String get examinationDetailsTitle;
 
-  /// No description provided for @inspectionChecklistTitle.
+  /// No description provided for @itemInformationTitle.
   ///
   /// In en, this message translates to:
-  /// **'Inspection checklist'**
-  String get inspectionChecklistTitle;
+  /// **'Item information'**
+  String get itemInformationTitle;
 
-  /// No description provided for @itemsAnsweredLabel.
+  /// No description provided for @examinationQuestionsTitle.
   ///
   /// In en, this message translates to:
-  /// **'{answered} of {total} items answered'**
-  String itemsAnsweredLabel(int answered, int total);
+  /// **'Examination questions'**
+  String get examinationQuestionsTitle;
+
+  /// No description provided for @defectsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Defects & remedial action'**
+  String get defectsTitle;
+
+  /// No description provided for @conclusionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Conclusion'**
+  String get conclusionTitle;
+
+  /// No description provided for @certificateNumberLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Certificate number'**
+  String get certificateNumberLabel;
+
+  /// No description provided for @clientAndLocationLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Client and location'**
+  String get clientAndLocationLabel;
+
+  /// No description provided for @clientRepresentativeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Client representative'**
+  String get clientRepresentativeLabel;
+
+  /// No description provided for @examinationDateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Examination date'**
+  String get examinationDateLabel;
+
+  /// No description provided for @lastExaminationDateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Last examination date'**
+  String get lastExaminationDateLabel;
+
+  /// No description provided for @nextExaminationDateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Next examination date'**
+  String get nextExaminationDateLabel;
+
+  /// No description provided for @standardOfInspectionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Standard of inspection'**
+  String get standardOfInspectionLabel;
+
+  /// No description provided for @testTypeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Test type'**
+  String get testTypeLabel;
+
+  /// No description provided for @selectDateHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select date'**
+  String get selectDateHint;
+
+  /// No description provided for @inspectedItemLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Inspected item'**
+  String get inspectedItemLabel;
+
+  /// No description provided for @manufacturerLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Manufacturer'**
+  String get manufacturerLabel;
+
+  /// No description provided for @modelYearLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Model / year of manufacture'**
+  String get modelYearLabel;
+
+  /// No description provided for @maxWorkingRateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Max. working rate'**
+  String get maxWorkingRateLabel;
+
+  /// No description provided for @serialNumberLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Serial / chassis number'**
+  String get serialNumberLabel;
+
+  /// No description provided for @ownerIdLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Owner ID'**
+  String get ownerIdLabel;
+
+  /// No description provided for @functionCheckLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Function check'**
+  String get functionCheckLabel;
+
+  /// No description provided for @ndtLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'NDT'**
+  String get ndtLabel;
 
   /// No description provided for @passOption.
   ///
@@ -2648,53 +2762,119 @@ abstract class AppLocalizations {
   /// **'N/A'**
   String get naOption;
 
+  /// No description provided for @yesOption.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get yesOption;
+
+  /// No description provided for @noOption.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get noOption;
+
+  /// No description provided for @questionFirstExamination.
+  ///
+  /// In en, this message translates to:
+  /// **'Is this the first examination after installation or assembly at a new site or location?'**
+  String get questionFirstExamination;
+
+  /// No description provided for @questionInstalledCorrectly.
+  ///
+  /// In en, this message translates to:
+  /// **'Has the equipment been installed correctly?'**
+  String get questionInstalledCorrectly;
+
+  /// No description provided for @examinationCarriedOutLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Was the examination carried out:'**
+  String get examinationCarriedOutLabel;
+
+  /// No description provided for @questionWithin6Months.
+  ///
+  /// In en, this message translates to:
+  /// **'Within an interval of 6 months?'**
+  String get questionWithin6Months;
+
+  /// No description provided for @questionWithin12Months.
+  ///
+  /// In en, this message translates to:
+  /// **'Within an interval of 12 months?'**
+  String get questionWithin12Months;
+
+  /// No description provided for @questionExaminationScheme.
+  ///
+  /// In en, this message translates to:
+  /// **'In accordance with an examination scheme?'**
+  String get questionExaminationScheme;
+
+  /// No description provided for @questionExceptionalCircumstances.
+  ///
+  /// In en, this message translates to:
+  /// **'After the occurrence of exceptional circumstances?'**
+  String get questionExceptionalCircumstances;
+
+  /// No description provided for @defectDescriptionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Any part found to have a defect which is or could become a danger to persons, and a description of the defect'**
+  String get defectDescriptionLabel;
+
+  /// No description provided for @defectDescriptionHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave empty if there is none'**
+  String get defectDescriptionHint;
+
   /// No description provided for @describeDefectRequired.
   ///
   /// In en, this message translates to:
   /// **'Describe the defect (required)'**
   String get describeDefectRequired;
 
-  /// No description provided for @addPhotoOfDefectAction.
+  /// No description provided for @existingDangerLabel.
   ///
   /// In en, this message translates to:
-  /// **'Add photo of defect'**
-  String get addPhotoOfDefectAction;
+  /// **'Is the above an existing or imminent danger to persons? (a reportable defect)'**
+  String get existingDangerLabel;
 
-  /// No description provided for @loadTestTitle.
+  /// No description provided for @futureDangerLabel.
   ///
   /// In en, this message translates to:
-  /// **'Load test'**
-  String get loadTestTitle;
+  /// **'Is the above a defect which is not yet, but could become, a danger to persons?'**
+  String get futureDangerLabel;
 
-  /// No description provided for @testLoadKgLabel.
+  /// No description provided for @futureDangerByLabel.
   ///
   /// In en, this message translates to:
-  /// **'Test load (kg)'**
-  String get testLoadKgLabel;
+  /// **'If yes, the date by when'**
+  String get futureDangerByLabel;
 
-  /// No description provided for @durationMinLabel.
+  /// No description provided for @repairsRequiredLabel.
   ///
   /// In en, this message translates to:
-  /// **'Duration (min)'**
-  String get durationMinLabel;
+  /// **'Repair, renewal or alteration required to remedy the defect'**
+  String get repairsRequiredLabel;
 
-  /// No description provided for @photosTitle.
+  /// No description provided for @testsCarriedOutLabel.
   ///
   /// In en, this message translates to:
-  /// **'Photos'**
-  String get photosTitle;
+  /// **'Tests carried out as part of the examination'**
+  String get testsCarriedOutLabel;
 
-  /// No description provided for @addAction.
+  /// No description provided for @existingDangerShortLabel.
   ///
   /// In en, this message translates to:
-  /// **'Add'**
-  String get addAction;
+  /// **'Existing danger'**
+  String get existingDangerShortLabel;
 
-  /// No description provided for @finalResultTitle.
+  /// No description provided for @potentialDangerShortLabel.
   ///
   /// In en, this message translates to:
-  /// **'Final result'**
-  String get finalResultTitle;
+  /// **'Potential danger'**
+  String get potentialDangerShortLabel;
 
   /// No description provided for @safeToOperateOption.
   ///
@@ -2875,6 +3055,306 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Certificate details aren\'t available.'**
   String get certificateNotFound;
+
+  /// No description provided for @reviewNavReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Review'**
+  String get reviewNavReview;
+
+  /// No description provided for @reviewNavSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent'**
+  String get reviewNavSent;
+
+  /// No description provided for @reviewQueueTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Certificates to review'**
+  String get reviewQueueTitle;
+
+  /// No description provided for @statToReview.
+  ///
+  /// In en, this message translates to:
+  /// **'To review'**
+  String get statToReview;
+
+  /// No description provided for @statReturned.
+  ///
+  /// In en, this message translates to:
+  /// **'Returned'**
+  String get statReturned;
+
+  /// No description provided for @waitingForSignatureTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for your signature'**
+  String get waitingForSignatureTitle;
+
+  /// No description provided for @reviewAndSignAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Review & sign'**
+  String get reviewAndSignAction;
+
+  /// No description provided for @byInspectorWhenLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'By {name} · {when}'**
+  String byInspectorWhenLabel(String name, String when);
+
+  /// No description provided for @todayAtTime.
+  ///
+  /// In en, this message translates to:
+  /// **'today {time}'**
+  String todayAtTime(String time);
+
+  /// No description provided for @yesterdayLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'yesterday'**
+  String get yesterdayLabel;
+
+  /// No description provided for @returnedToInspector.
+  ///
+  /// In en, this message translates to:
+  /// **'Returned to inspector'**
+  String get returnedToInspector;
+
+  /// No description provided for @returnedToInspectorNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Returned to inspector — {note}'**
+  String returnedToInspectorNote(String note);
+
+  /// No description provided for @emptyReviewQueue.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing is waiting for your signature.'**
+  String get emptyReviewQueue;
+
+  /// No description provided for @sentCertificatesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent certificates'**
+  String get sentCertificatesTitle;
+
+  /// No description provided for @emptySentCertificates.
+  ///
+  /// In en, this message translates to:
+  /// **'No certificates have been sent yet.'**
+  String get emptySentCertificates;
+
+  /// No description provided for @sentToLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent to {email}'**
+  String sentToLabel(String email);
+
+  /// No description provided for @reviewBadgeSafe.
+  ///
+  /// In en, this message translates to:
+  /// **'Safe'**
+  String get reviewBadgeSafe;
+
+  /// No description provided for @reviewBadgeConditions.
+  ///
+  /// In en, this message translates to:
+  /// **'With conditions'**
+  String get reviewBadgeConditions;
+
+  /// No description provided for @reviewBadgeNotSafe.
+  ///
+  /// In en, this message translates to:
+  /// **'Not safe'**
+  String get reviewBadgeNotSafe;
+
+  /// No description provided for @reviewResultSafe.
+  ///
+  /// In en, this message translates to:
+  /// **'Safe to operate'**
+  String get reviewResultSafe;
+
+  /// No description provided for @reviewResultConditions.
+  ///
+  /// In en, this message translates to:
+  /// **'Safe with conditions'**
+  String get reviewResultConditions;
+
+  /// No description provided for @reviewResultNotSafe.
+  ///
+  /// In en, this message translates to:
+  /// **'Not safe — out of service'**
+  String get reviewResultNotSafe;
+
+  /// No description provided for @reviewCertificateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Review certificate'**
+  String get reviewCertificateTitle;
+
+  /// No description provided for @awaitingYouBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting you'**
+  String get awaitingYouBadge;
+
+  /// No description provided for @reviewSummaryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Summary'**
+  String get reviewSummaryTitle;
+
+  /// No description provided for @viewFullPdfAction.
+  ///
+  /// In en, this message translates to:
+  /// **'View full PDF'**
+  String get viewFullPdfAction;
+
+  /// No description provided for @inspectedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Inspected'**
+  String get inspectedLabel;
+
+  /// No description provided for @nextDueLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Next due'**
+  String get nextDueLabel;
+
+  /// No description provided for @yourCommentsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Your comments'**
+  String get yourCommentsLabel;
+
+  /// No description provided for @reviewCommentsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a note for the record (optional)'**
+  String get reviewCommentsHint;
+
+  /// No description provided for @signHereTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign here'**
+  String get signHereTitle;
+
+  /// No description provided for @clearAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get clearAction;
+
+  /// No description provided for @fullNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Full name'**
+  String get fullNameLabel;
+
+  /// No description provided for @fullNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Eng. Your name'**
+  String get fullNameHint;
+
+  /// No description provided for @licenseNoLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'License no.'**
+  String get licenseNoLabel;
+
+  /// No description provided for @licenseNoHint.
+  ///
+  /// In en, this message translates to:
+  /// **'License number'**
+  String get licenseNoHint;
+
+  /// No description provided for @sendSignedPdfToLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Send signed PDF to'**
+  String get sendSignedPdfToLabel;
+
+  /// No description provided for @returnAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Return'**
+  String get returnAction;
+
+  /// No description provided for @approveAndSendAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve & send to client'**
+  String get approveAndSendAction;
+
+  /// No description provided for @approveRequirementsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign above and fill in your name, license and a valid email to approve.'**
+  String get approveRequirementsHint;
+
+  /// No description provided for @confirmApproveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve this certificate?'**
+  String get confirmApproveTitle;
+
+  /// No description provided for @confirmApproveMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'It will be signed as {name} and marked as sent to {email}.'**
+  String confirmApproveMessage(String name, String email);
+
+  /// No description provided for @approveConfirmAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve'**
+  String get approveConfirmAction;
+
+  /// No description provided for @returnToInspectorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Return to inspector'**
+  String get returnToInspectorTitle;
+
+  /// No description provided for @returnReasonLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'What needs to change?'**
+  String get returnReasonLabel;
+
+  /// No description provided for @returnReasonHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Add photos of the landing door interlock'**
+  String get returnReasonHint;
+
+  /// No description provided for @returnReasonRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a reason so the inspector knows what to fix.'**
+  String get returnReasonRequired;
+
+  /// No description provided for @returnConfirmAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Return'**
+  String get returnConfirmAction;
+
+  /// No description provided for @certificateApprovedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Certificate approved and signed.'**
+  String get certificateApprovedMessage;
+
+  /// No description provided for @certificateReturnedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Certificate returned to the inspector.'**
+  String get certificateReturnedMessage;
 }
 
 class _AppLocalizationsDelegate

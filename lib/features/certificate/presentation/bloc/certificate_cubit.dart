@@ -3,8 +3,11 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../auth/domain/entities/user.dart';
 import '../../../requests/domain/entities/inspection_request.dart';
+import '../../domain/certificate_defaults.dart';
 import '../../domain/certificate_progress.dart';
+import '../../domain/certificate_template.dart';
 import '../../domain/entities/certificate.dart';
 import '../../domain/entities/certificate_failure.dart';
 import '../../domain/entities/certificate_result.dart';
@@ -15,11 +18,12 @@ import '../../domain/usecases/watch_certificate.dart';
 
 part 'certificate_state.dart';
 
-/// Backs Feature 05's inspection certificate screen: one job's checklist,
-/// load test, photos (stubbed) and final result — autosaved on every
-/// discrete change, submitted once everything but photos is filled in.
+/// Backs Feature 05's inspection certificate screen: one job's report of
+/// thorough examination — autosaved on every discrete change, submitted
+/// once every section is filled in.
 class CertificateCubit extends Cubit<CertificateState> {
   final InspectionRequest request;
+  final AppUser? _inspector;
   final WatchCertificate _watchCertificate;
   final SaveCertificateDraft _saveDraft;
   final SubmitCertificate _submitCertificate;
@@ -28,10 +32,12 @@ class CertificateCubit extends Cubit<CertificateState> {
 
   CertificateCubit({
     required this.request,
+    required AppUser? inspector,
     required WatchCertificate watchCertificate,
     required SaveCertificateDraft saveDraft,
     required SubmitCertificate submitCertificate,
-  }) : _watchCertificate = watchCertificate,
+  }) : _inspector = inspector,
+       _watchCertificate = watchCertificate,
        _saveDraft = saveDraft,
        _submitCertificate = submitCertificate,
        super(const CertificateState());
@@ -40,13 +46,21 @@ class CertificateCubit extends Cubit<CertificateState> {
     if (_subscription != null) return;
     _subscription = _watchCertificate(request.id).listen(
       (certificate) {
-        final resolved =
-            certificate ?? Certificate(requestId: request.id, inspectorId: request.inspectorId ?? '');
+        // First time this job is opened there's no document yet — and one
+        // started on an older template has nothing the new form can use.
+        // Either way, seed it with what the job already tells us and save
+        // it, so the rest of the app (and this inspector, reopening later)
+        // has something to read.
+        final needsSeed = certificate == null || certificate.templateId != CertificateTemplate.id;
+        final resolved = needsSeed
+            ? seedCertificate(
+                certificate ?? Certificate(requestId: request.id, inspectorId: request.inspectorId ?? ''),
+                request: request,
+                inspector: _inspector,
+              )
+            : certificate;
         emit(state.copyWith(status: CertificateStatus.ready, certificate: resolved, clearFailure: true));
-        // First time this job is opened, there's no document yet — create it
-        // so the rest of the app (and this inspector, reopening later) has
-        // something to read.
-        if (certificate == null) _saveDraft(resolved);
+        if (needsSeed) _saveDraft(resolved);
       },
       onError: (Object error) => emit(
         state.copyWith(
@@ -64,38 +78,44 @@ class CertificateCubit extends Cubit<CertificateState> {
     start();
   }
 
-  /// Pass/Fail/N/A is a discrete choice — persist right away.
-  void setAnswer(String itemId, ChecklistAnswer answer) {
-    final current = state.certificate;
-    if (current == null) return;
-    _persist(current.copyWith(checklistAnswers: {...current.checklistAnswers, itemId: answer}));
-  }
-
   /// Text fields update local state on every keystroke (so completeness
   /// and the step indicator react live) but only autosave on blur, via
   /// [persist] — otherwise every keystroke would be its own write.
-  void updateDefectNoteLocal(String itemId, String note) {
+  void setText(String key, String value) {
     final current = state.certificate;
     if (current == null) return;
-    emit(state.copyWith(certificate: current.copyWith(defectNotes: {...current.defectNotes, itemId: note})));
+    emit(state.copyWith(certificate: current.withText(key, value)));
   }
 
-  void updateTestLoadLocal(double? kg) {
+  /// A date is a discrete choice — persist right away. Moving the
+  /// examination date also moves the next-examination date along, as long
+  /// as the inspector hasn't picked a different one themselves.
+  void setDate(String key, DateTime? value) {
     final current = state.certificate;
     if (current == null) return;
-    emit(
-      state.copyWith(certificate: current.copyWith(testLoadKg: kg, clearTestLoadKg: kg == null)),
-    );
+    var updated = current.withDate(key, value);
+    if (key == CertDate.examination && value != null) {
+      final previous = current.dateOf(CertDate.examination);
+      final next = current.dateOf(CertDate.nextExamination);
+      final followsSuggestion =
+          next == null || (previous != null && next == CertificateTemplate.suggestedNextExamination(previous));
+      if (followsSuggestion) {
+        updated = updated.withDate(CertDate.nextExamination, CertificateTemplate.suggestedNextExamination(value));
+      }
+    }
+    _persist(updated);
   }
 
-  void updateDurationLocal(int? minutes) {
+  void setAnswer(String question, bool answer) {
     final current = state.certificate;
     if (current == null) return;
-    emit(
-      state.copyWith(
-        certificate: current.copyWith(durationMinutes: minutes, clearDurationMinutes: minutes == null),
-      ),
-    );
+    _persist(current.withAnswer(question, answer));
+  }
+
+  void setFunctionCheck(ChecklistAnswer answer) {
+    final current = state.certificate;
+    if (current == null) return;
+    _persist(current.copyWith(functionCheck: answer));
   }
 
   void setFinalResult(CertificateResult result) {
@@ -105,8 +125,7 @@ class CertificateCubit extends Cubit<CertificateState> {
   }
 
   /// Writes whatever's currently in [CertificateState.certificate] — call
-  /// after a batch of [updateDefectNoteLocal]/[updateLoadTestLocal] calls
-  /// (i.e. on blur).
+  /// after a batch of [setText] calls (i.e. on blur).
   Future<void> persist() async {
     final current = state.certificate;
     if (current == null) return;
@@ -130,7 +149,7 @@ class CertificateCubit extends Cubit<CertificateState> {
     if (certificate == null || !certificate.isReadyToSubmit || state.isSubmitting) return;
     emit(state.copyWith(isSubmitting: true));
     try {
-      await _submitCertificate(certificate);
+      await _submitCertificate(withPreparedBy(certificate, _inspector));
       if (isClosed) return;
       emit(state.copyWith(isSubmitting: false, actionSeq: state.actionSeq + 1, lastActionSuccess: true));
     } catch (e) {
