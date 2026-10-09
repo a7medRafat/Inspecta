@@ -5,8 +5,9 @@ import '../../../coordinator/presentation/pages/coordinator_queue_page.dart';
 import '../../../coordinator/presentation/pages/coordinator_schedule_page.dart';
 import '../../../coordinator/presentation/pages/inspectors_list_page.dart';
 import '../../../coordinator/presentation/widgets/coordinator_bottom_nav.dart';
+import '../../../timesheet/presentation/pages/coordinator_timesheets_page.dart';
 
-/// The coordinator's shell: Queue, Schedule, Inspectors and Profile —
+/// The coordinator's shell: Queue, Schedule, Inspectors, Timesheets and Profile —
 /// same in-place-swap shape as `SupervisorRootPage`.
 class CoordinatorRootPage extends StatefulWidget {
   const CoordinatorRootPage({super.key});
@@ -27,6 +28,7 @@ class _CoordinatorRootPageState extends State<CoordinatorRootPage> {
           CoordinatorQueuePage(onOpenProfile: () => setState(() => _tab = CoordinatorTab.profile)),
           const CoordinatorSchedulePage(),
           const InspectorsListPage(),
+          const CoordinatorTimesheetsPage(),
           const ProfilePage(),
         ],
       ),

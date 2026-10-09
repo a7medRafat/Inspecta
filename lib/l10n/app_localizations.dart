@@ -2486,11 +2486,11 @@ abstract class AppLocalizations {
   /// **'Certificates'**
   String get navCertificates;
 
-  /// No description provided for @navMap.
+  /// No description provided for @navTimesheet.
   ///
   /// In en, this message translates to:
-  /// **'Map'**
-  String get navMap;
+  /// **'Timesheet'**
+  String get navTimesheet;
 
   /// No description provided for @tasksTodayTitle.
   ///
@@ -2947,24 +2947,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Returned'**
   String get returnedBadge;
-
-  /// No description provided for @directionsAction.
-  ///
-  /// In en, this message translates to:
-  /// **'Directions'**
-  String get directionsAction;
-
-  /// No description provided for @routeSummaryLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'{km} km · ~{minutes} min drive'**
-  String routeSummaryLabel(String km, int minutes);
-
-  /// No description provided for @routeEstimateCaption.
-  ///
-  /// In en, this message translates to:
-  /// **'Straight-line estimate — not real traffic or roads'**
-  String get routeEstimateCaption;
 
   /// No description provided for @myCertificatesTitle.
   ///
@@ -3433,6 +3415,389 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Couldn\'t download the PDF. Try again.'**
   String get pdfDownloadFailedMessage;
+
+  /// No description provided for @timesheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Timesheet'**
+  String get timesheetTitle;
+
+  /// No description provided for @timesheetTotalPriceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get timesheetTotalPriceLabel;
+
+  /// No description provided for @timesheetTimeLoggedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Time logged'**
+  String get timesheetTimeLoggedLabel;
+
+  /// No description provided for @timesheetLoggedProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'{logged} of {total} tasks logged'**
+  String timesheetLoggedProgress(int logged, int total);
+
+  /// No description provided for @timesheetEmptyMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'No accepted tasks this month.'**
+  String get timesheetEmptyMonth;
+
+  /// No description provided for @timeSpentLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Time spent'**
+  String get timeSpentLabel;
+
+  /// No description provided for @priceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get priceLabel;
+
+  /// No description provided for @addTimeAndPriceAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Log time & costs'**
+  String get addTimeAndPriceAction;
+
+  /// No description provided for @timesheetSheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Time & costs'**
+  String get timesheetSheetTitle;
+
+  /// No description provided for @hoursLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Hours'**
+  String get hoursLabel;
+
+  /// No description provided for @minutesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Minutes'**
+  String get minutesLabel;
+
+  /// No description provided for @errorMinutesRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Minutes must be between 0 and 59.'**
+  String get errorMinutesRange;
+
+  /// No description provided for @errorTimeOrPriceRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the time spent or a transportation cost.'**
+  String get errorTimeOrPriceRequired;
+
+  /// No description provided for @timesheetSavedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved to your timesheet.'**
+  String get timesheetSavedMessage;
+
+  /// No description provided for @timesheetPermissionDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'You don\'t have access to this timesheet.'**
+  String get timesheetPermissionDenied;
+
+  /// No description provided for @durationHoursMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h {minutes}m'**
+  String durationHoursMinutes(int hours, int minutes);
+
+  /// No description provided for @durationHours.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h'**
+  String durationHours(int hours);
+
+  /// No description provided for @durationMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes}m'**
+  String durationMinutes(int minutes);
+
+  /// No description provided for @navTimesheets.
+  ///
+  /// In en, this message translates to:
+  /// **'Timesheets'**
+  String get navTimesheets;
+
+  /// No description provided for @timesheetReviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Timesheets'**
+  String get timesheetReviewTitle;
+
+  /// No description provided for @timesheetAwaitingApprovalLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting approval'**
+  String get timesheetAwaitingApprovalLabel;
+
+  /// No description provided for @timesheetPendingValueLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending value'**
+  String get timesheetPendingValueLabel;
+
+  /// No description provided for @timesheetFilterPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get timesheetFilterPending;
+
+  /// No description provided for @timesheetStatusPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting approval'**
+  String get timesheetStatusPending;
+
+  /// No description provided for @timesheetStatusApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get timesheetStatusApproved;
+
+  /// No description provided for @timesheetStatusReturned.
+  ///
+  /// In en, this message translates to:
+  /// **'Returned'**
+  String get timesheetStatusReturned;
+
+  /// No description provided for @timesheetApprovedBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved by {name}'**
+  String timesheetApprovedBy(String name);
+
+  /// No description provided for @timesheetReturnedBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Returned by {name}'**
+  String timesheetReturnedBy(String name);
+
+  /// No description provided for @timesheetLockedTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved — can\'t be changed'**
+  String get timesheetLockedTooltip;
+
+  /// No description provided for @timesheetApproveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve this entry?'**
+  String get timesheetApproveTitle;
+
+  /// No description provided for @timesheetApproveMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} logged {time} at {price}. Once approved it can\'t be changed.'**
+  String timesheetApproveMessage(String name, String time, String price);
+
+  /// No description provided for @timesheetApprovedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Entry approved.'**
+  String get timesheetApprovedMessage;
+
+  /// No description provided for @timesheetReturnedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Returned to the inspector.'**
+  String get timesheetReturnedMessage;
+
+  /// No description provided for @timesheetReturnReasonHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. This price is too high for a half-day job'**
+  String get timesheetReturnReasonHint;
+
+  /// No description provided for @timesheetReviewEmptyPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing is waiting for approval.'**
+  String get timesheetReviewEmptyPending;
+
+  /// No description provided for @timesheetReviewEmptyOther.
+  ///
+  /// In en, this message translates to:
+  /// **'No entries here yet.'**
+  String get timesheetReviewEmptyOther;
+
+  /// No description provided for @timesheetActivitiesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'How the time was spent'**
+  String get timesheetActivitiesLabel;
+
+  /// No description provided for @timesheetActivityInspection.
+  ///
+  /// In en, this message translates to:
+  /// **'Inspection & load testing'**
+  String get timesheetActivityInspection;
+
+  /// No description provided for @timesheetExpensesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Transportation costs'**
+  String get timesheetExpensesLabel;
+
+  /// No description provided for @timesheetExpenseInternalTransport.
+  ///
+  /// In en, this message translates to:
+  /// **'Internal transportation'**
+  String get timesheetExpenseInternalTransport;
+
+  /// No description provided for @timesheetExpenseExternalTransport.
+  ///
+  /// In en, this message translates to:
+  /// **'External transportation'**
+  String get timesheetExpenseExternalTransport;
+
+  /// No description provided for @timesheetTransportationLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Transportation'**
+  String get timesheetTransportationLabel;
+
+  /// No description provided for @timesheetIncludingTransportation.
+  ///
+  /// In en, this message translates to:
+  /// **'Incl. {amount} transportation'**
+  String timesheetIncludingTransportation(String amount);
+
+  /// No description provided for @timesheetApproveMessageWithTransport.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} logged {time} at {price}, plus {transport} transportation. Once approved it can\'t be changed.'**
+  String timesheetApproveMessageWithTransport(
+    String name,
+    String time,
+    String price,
+    String transport,
+  );
+
+  /// No description provided for @timesheetActivityReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Report preparation'**
+  String get timesheetActivityReport;
+
+  /// No description provided for @timesheetActivityWaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting'**
+  String get timesheetActivityWaiting;
+
+  /// No description provided for @timesheetActivityUnpaidBreak.
+  ///
+  /// In en, this message translates to:
+  /// **'Unpaid break'**
+  String get timesheetActivityUnpaidBreak;
+
+  /// No description provided for @timesheetElapsedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Total elapsed'**
+  String get timesheetElapsedLabel;
+
+  /// No description provided for @timesheetNetTimeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Net working time'**
+  String get timesheetNetTimeLabel;
+
+  /// No description provided for @hourlyRateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Hourly rate'**
+  String get hourlyRateLabel;
+
+  /// No description provided for @hourlyRatePerHour.
+  ///
+  /// In en, this message translates to:
+  /// **'{rate} / hour'**
+  String hourlyRatePerHour(String rate);
+
+  /// No description provided for @hourlyRateSetPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Set your hourly rate'**
+  String get hourlyRateSetPrompt;
+
+  /// No description provided for @hourlyRateSheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Hourly rate'**
+  String get hourlyRateSheetTitle;
+
+  /// No description provided for @hourlyRateSheetHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Your price on each task is worked out from this: the net working time × your hourly rate. It applies to entries you save from now on — entries already logged keep the rate they were saved with.'**
+  String get hourlyRateSheetHint;
+
+  /// No description provided for @errorHourlyRateRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter an hourly rate.'**
+  String get errorHourlyRateRequired;
+
+  /// No description provided for @hourlyRateSavedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Hourly rate saved.'**
+  String get hourlyRateSavedMessage;
+
+  /// No description provided for @timesheetPriceFormula.
+  ///
+  /// In en, this message translates to:
+  /// **'{time} × {rate} per hour'**
+  String timesheetPriceFormula(String time, String rate);
+
+  /// No description provided for @timesheetRateMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'Set your hourly rate on the Timesheet tab to price this entry.'**
+  String get timesheetRateMissing;
+
+  /// No description provided for @timesheetShowDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get timesheetShowDetails;
+
+  /// No description provided for @timesheetHideDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide details'**
+  String get timesheetHideDetails;
+
+  /// No description provided for @timesheetLockedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Locked'**
+  String get timesheetLockedLabel;
+
+  /// No description provided for @timesheetExcludingBreak.
+  ///
+  /// In en, this message translates to:
+  /// **'Excl. {duration} break'**
+  String timesheetExcludingBreak(String duration);
+
+  /// No description provided for @timesheetPricePlusTransport.
+  ///
+  /// In en, this message translates to:
+  /// **'Price {price}\n+ {transport} transport'**
+  String timesheetPricePlusTransport(String price, String transport);
 }
 
 class _AppLocalizationsDelegate

@@ -150,6 +150,127 @@ service cloud.firestore {
       allow delete: if false;
     }
 
+    match /timesheets/{id} {
+      // One entry per job (doc id == the request's id): the time the
+      // inspector spent and the price they set, reviewed by a coordinator.
+      // An inspector reads only their own (the app always queries
+      // `where inspectorId == uid` to match); coordinators and admins read
+      // all of them. Ownership of the *job* is checked against the request
+      // doc, as for certificates, since the entry doesn't exist yet the
+      // first time it's written.
+      function ownsJob() {
+        return get(/databases/$(database)/documents/requests/$(id)).data.inspectorId == request.auth.uid;
+      }
+
+      // The rate this inspector has set — 0 until they've set one. An
+      // entry's price is calculated from it, so the server holds the rate
+      // rather than trusting the one the client sends.
+      function currentRate() {
+        let settings = /databases/$(database)/documents/timesheetSettings/$(request.auth.uid);
+        return exists(settings) ? get(settings).data.hourlyRatePiastres : 0;
+      }
+
+      // A time or money field, if present, is a whole number >= 0 — minutes
+      // for the activities, piastres for the costs.
+      function validAmount(field) {
+        let value = request.resource.data.get(field, 0);
+        return value is int && value >= 0;
+      }
+
+      // What an inspector's save must look like: their own uid, whole
+      // numbers >= 0, the server time, and always `pending` — every save
+      // (re)submits the entry for review. `minutes` is the net working
+      // time, so it must equal the paid activities; the unpaid break is
+      // deducted, never added. The price is never the client's to choose:
+      // it must be those minutes at the inspector's own current hourly
+      // rate, rounded half up to the piastre (the same formula as
+      // TimesheetPricing in the app).
+      function validSubmission() {
+        let entry = request.resource.data;
+        return entry.inspectorId == request.auth.uid
+          && validAmount('inspectionMinutes')
+          && validAmount('reportMinutes')
+          && validAmount('waitingMinutes')
+          && validAmount('unpaidBreakMinutes')
+          && validAmount('internalTransportPiastres')
+          && validAmount('externalTransportPiastres')
+          && entry.minutes is int && entry.minutes >= 0
+          && entry.minutes == entry.get('inspectionMinutes', 0)
+                            + entry.get('reportMinutes', 0)
+                            + entry.get('waitingMinutes', 0)
+          && entry.hourlyRatePiastres is int && entry.hourlyRatePiastres == currentRate()
+          && entry.pricePiastres is int
+          && entry.pricePiastres == math.floor((entry.minutes * entry.hourlyRatePiastres + 30) / 60)
+          && entry.status == 'pending'
+          && entry.updatedAt == request.time;
+      }
+
+      allow read: if hasRole('admin')
+        || hasRole('coordinator')
+        || (hasRole('inspector') && resource.data.inspectorId == request.auth.uid);
+
+      allow create: if hasRole('inspector')
+        && ownsJob()
+        && validSubmission()
+        && request.resource.data.keys().hasOnly([
+             'inspectorId', 'minutes', 'inspectionMinutes', 'reportMinutes', 'waitingMinutes',
+             'unpaidBreakMinutes', 'internalTransportPiastres', 'externalTransportPiastres',
+             'hourlyRatePiastres', 'pricePiastres', 'status', 'updatedAt',
+           ]);
+
+      // An inspector may change an entry until a coordinator approves it —
+      // then it's locked — and only their own fields (the time, price and
+      // status): the review fields stay a coordinator's. An entry logged
+      // before review existed has no `status`; it counts as pending.
+      allow update: if hasRole('inspector')
+        && ownsJob()
+        && resource.data.inspectorId == request.auth.uid
+        && resource.data.get('status', 'pending') != 'approved'
+        && validSubmission()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+             'minutes', 'inspectionMinutes', 'reportMinutes', 'waitingMinutes', 'unpaidBreakMinutes',
+             'internalTransportPiastres', 'externalTransportPiastres',
+             'hourlyRatePiastres', 'pricePiastres', 'status', 'updatedAt',
+           ]);
+
+      // A coordinator decides a pending entry: approve it, or return it
+      // with a reason. Only the status and review fields may change — never
+      // the time or price — and the review is stamped with their own uid
+      // and the server time. A return needs a note; an approval carries
+      // none.
+      allow update: if hasRole('coordinator')
+        && resource.data.get('status', 'pending') == 'pending'
+        && request.resource.data.status in ['approved', 'returned']
+        && request.resource.data.reviewedBy == request.auth.uid
+        && request.resource.data.reviewedAt == request.time
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+             'status', 'reviewNote', 'reviewedBy', 'reviewerName', 'reviewedAt',
+           ])
+        && (request.resource.data.status == 'approved'
+            ? !('reviewNote' in request.resource.data)
+            : request.resource.data.reviewNote is string && request.resource.data.reviewNote.size() > 0);
+
+      allow delete: if false;
+    }
+
+    match /timesheetSettings/{uid} {
+      // An inspector's hourly rate, one doc per inspector (doc id == uid).
+      // It's pay data, so only its owner reads or sets it — admins can read
+      // it. Coordinators don't need it: an entry carries the rate it was
+      // priced with.
+      allow read: if hasRole('admin')
+        || (hasRole('inspector') && request.auth.uid == uid);
+
+      allow create, update: if hasRole('inspector')
+        && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['hourlyRatePiastres', 'updatedAt'])
+        && request.resource.data.hourlyRatePiastres is int
+        && request.resource.data.hourlyRatePiastres >= 0
+        && request.resource.data.updatedAt == request.time;
+
+      allow delete: if false;
+    }
+
     match /requests/{id}/events/{eventId} {
       // 00-overview.md §8: every status change is logged and can't be
       // edited — append-only, same readers as the request itself.

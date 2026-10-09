@@ -14,5 +14,14 @@ void main() {
       expect(Currency.parsePiastres(''), isNull);
       expect(Currency.parsePiastres('not a number'), isNull);
     });
+
+    test('toInputText gives an editable amount that parses back unchanged', () {
+      expect(Currency.toInputText(450000), '4500');
+      expect(Currency.toInputText(450050), '4500.50');
+      expect(Currency.toInputText(5), '0.05');
+      for (final piastres in [450000, 450050, 5, 100, 99, 1234567]) {
+        expect(Currency.parsePiastres(Currency.toInputText(piastres)), piastres);
+      }
+    });
   });
 }

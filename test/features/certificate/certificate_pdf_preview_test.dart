@@ -8,8 +8,9 @@ import 'package:inspecta/features/certificate/presentation/pdf/certificate_pdf_p
 import 'package:inspecta/l10n/app_localizations.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
-import '../features/certificate/certificate_pdf_test.dart' show airCompressorCertificate, airCompressorRequest;
+import 'certificate_pdf_test.dart' show airCompressorCertificate, airCompressorRequest;
 
+/// Only `user` matters to the preview helper; the rest keeps BlocProvider happy.
 class _FakeAuthCubit extends Fake implements AuthCubit {
   _FakeAuthCubit(this._user);
   final AppUser? _user;
@@ -24,6 +25,8 @@ class _FakeAuthCubit extends Fake implements AuthCubit {
   Future<void> close() async {}
 }
 
+/// Only a technical manager may download a certificate's PDF; everyone else
+/// (inspectors included) gets a view-only preview.
 void main() {
   setUpAll(() => initializeDateFormatting('en'));
 
@@ -45,6 +48,9 @@ void main() {
       ),
     ));
     await tester.tap(find.text('open'));
+    // One frame to start the route's slide-in, one to finish it — until then
+    // the page is offstage and the finders can't see it.
+    await tester.pump(const Duration(milliseconds: 600));
     await tester.pump(const Duration(milliseconds: 600));
   }
 

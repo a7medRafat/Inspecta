@@ -5,9 +5,9 @@ import '../../../../core/consts/app_text_styles.dart';
 import '../../../../l10n/app_localizations.dart';
 
 /// The four tabs on the inspector's shell.
-enum InspectorTab { tasks, certificates, map, profile }
+enum InspectorTab { tasks, certificates, timesheet, profile }
 
-/// Tasks / Certificates / Map / Profile — same shape as the coordinator's
+/// Tasks / Certificates / Timesheet / Profile — same shape as the coordinator's
 /// `CoordinatorBottomNav`.
 class InspectorBottomNav extends StatelessWidget {
   final InspectorTab selected;
@@ -48,10 +48,10 @@ class InspectorBottomNav extends StatelessWidget {
               ),
               Expanded(
                 child: _NavItem(
-                  icon: Icons.location_on_outlined,
-                  label: t.navMap,
-                  selected: selected == InspectorTab.map,
-                  onTap: () => onSelectTab(InspectorTab.map),
+                  icon: Icons.schedule_rounded,
+                  label: t.navTimesheet,
+                  selected: selected == InspectorTab.timesheet,
+                  onTap: () => onSelectTab(InspectorTab.timesheet),
                 ),
               ),
               Expanded(

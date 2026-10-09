@@ -4,10 +4,10 @@ import '../../../../core/consts/app_colors.dart';
 import '../../../../core/consts/app_text_styles.dart';
 import '../../../../l10n/app_localizations.dart';
 
-/// The four tabs on the coordinator's shell.
-enum CoordinatorTab { queue, schedule, inspectors, profile }
+/// The five tabs on the coordinator's shell.
+enum CoordinatorTab { queue, schedule, inspectors, timesheets, profile }
 
-/// Queue / Schedule / Inspectors / Profile — same shape as the
+/// Queue / Schedule / Inspectors / Timesheets / Profile — same shape as the
 /// supervisor's `RequestsBottomNav`.
 class CoordinatorBottomNav extends StatelessWidget {
   final CoordinatorTab selected;
@@ -52,6 +52,14 @@ class CoordinatorBottomNav extends StatelessWidget {
                   label: t.navInspectors,
                   selected: selected == CoordinatorTab.inspectors,
                   onTap: () => onSelectTab(CoordinatorTab.inspectors),
+                ),
+              ),
+              Expanded(
+                child: _NavItem(
+                  icon: Icons.schedule_rounded,
+                  label: t.navTimesheets,
+                  selected: selected == CoordinatorTab.timesheets,
+                  onTap: () => onSelectTab(CoordinatorTab.timesheets),
                 ),
               ),
               Expanded(

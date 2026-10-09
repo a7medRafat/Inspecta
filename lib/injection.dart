@@ -45,7 +45,6 @@ import 'features/coordinator/presentation/bloc/coordinator_queue_cubit.dart';
 import 'features/coordinator/presentation/bloc/inspector_detail_cubit.dart';
 import 'features/coordinator/presentation/bloc/inspectors_list_cubit.dart';
 import 'features/coordinator/presentation/bloc/schedule_cubit.dart';
-import 'features/inspector/domain/geocoding_service.dart';
 import 'features/inspector/presentation/bloc/certificates_list_cubit.dart';
 import 'features/inspector/presentation/bloc/inspector_tasks_cubit.dart';
 import 'features/quotation/data/datasources/quotation_remote_datasource.dart';
@@ -75,6 +74,18 @@ import 'features/requests/domain/usecases/start_inspection.dart';
 import 'features/requests/presentation/bloc/requests_list_cubit.dart';
 import 'features/technical_manager/presentation/bloc/review_detail_cubit.dart';
 import 'features/technical_manager/presentation/bloc/review_queue_cubit.dart';
+import 'features/timesheet/data/datasources/timesheet_remote_datasource.dart';
+import 'features/timesheet/data/repositories/timesheet_repository_impl.dart';
+import 'features/timesheet/domain/repositories/timesheet_repository.dart';
+import 'features/timesheet/domain/usecases/approve_timesheet_entry.dart';
+import 'features/timesheet/domain/usecases/return_timesheet_entry.dart';
+import 'features/timesheet/domain/usecases/save_hourly_rate.dart';
+import 'features/timesheet/domain/usecases/save_timesheet_entry.dart';
+import 'features/timesheet/domain/usecases/watch_all_timesheets.dart';
+import 'features/timesheet/domain/usecases/watch_hourly_rate.dart';
+import 'features/timesheet/domain/usecases/watch_timesheet.dart';
+import 'features/timesheet/presentation/bloc/timesheet_cubit.dart';
+import 'features/timesheet/presentation/bloc/timesheet_review_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -97,6 +108,7 @@ Future<void> setupDependencies() async {
   _registerInspector();
   _registerCertificate();
   _registerTechnicalManager();
+  _registerTimesheet();
 }
 
 void _registerAuth(FlutterSecureStorage storage) {
@@ -217,7 +229,6 @@ void _registerProfile() {
 
 void _registerInspector() {
   getIt
-    ..registerLazySingleton(GeocodingService.new)
     ..registerFactory(
       () => InspectorTasksCubit(
         inspectorId: getIt<AuthCubit>().user!.id,
@@ -265,6 +276,40 @@ void _registerTechnicalManager() {
         getClientDetail: getIt(),
         approveCertificate: getIt(),
         returnCertificate: getIt(),
+      ),
+    );
+}
+
+void _registerTimesheet() {
+  getIt
+    ..registerLazySingleton(TimesheetRemoteDataSource.new)
+    ..registerLazySingleton<TimesheetRepository>(() => TimesheetRepositoryImpl(getIt()))
+    ..registerLazySingleton(() => WatchTimesheet(getIt()))
+    ..registerLazySingleton(() => SaveTimesheetEntry(getIt()))
+    ..registerLazySingleton(() => WatchHourlyRate(getIt()))
+    ..registerLazySingleton(() => SaveHourlyRate(getIt()))
+    ..registerLazySingleton(() => WatchAllTimesheets(getIt()))
+    ..registerLazySingleton(() => ApproveTimesheetEntry(getIt()))
+    ..registerLazySingleton(() => ReturnTimesheetEntry(getIt()))
+    ..registerFactory(
+      () => TimesheetCubit(
+        inspectorId: getIt<AuthCubit>().user!.id,
+        getMyTasks: getIt(),
+        watchTimesheet: getIt(),
+        watchHourlyRate: getIt(),
+        saveEntry: getIt(),
+        saveHourlyRate: getIt(),
+      ),
+    )
+    ..registerFactory(
+      () => TimesheetReviewCubit(
+        reviewerId: getIt<AuthCubit>().user!.id,
+        reviewerName: getIt<AuthCubit>().user!.name,
+        watchAllTimesheets: getIt(),
+        getRequests: getIt(),
+        getInspectors: getIt(),
+        approveEntry: getIt(),
+        returnEntry: getIt(),
       ),
     );
 }

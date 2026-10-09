@@ -498,7 +498,7 @@
 
   "navTasks": "Tasks",
   "navCertificates": "Certificates",
-  "navMap": "Map",
+  "navTimesheet": "Timesheet",
   "tasksTodayTitle": "{count} tasks today",
   "@tasksTodayTitle": { "placeholders": { "count": { "type": "int" } } },
   "tasksOnDayTitle": "{count} tasks on {day}",
@@ -585,12 +585,6 @@
   "upcomingBadge": "Upcoming",
   "doneBadge": "Done",
   "returnedBadge": "Returned",
-  "directionsAction": "Directions",
-  "routeSummaryLabel": "{km} km · ~{minutes} min drive",
-  "@routeSummaryLabel": {
-    "placeholders": { "km": { "type": "String" }, "minutes": { "type": "int" } }
-  },
-  "routeEstimateCaption": "Straight-line estimate — not real traffic or roads",
 
   "myCertificatesTitle": "My certificates",
   "statNeedsAction": "Needs action",
@@ -677,5 +671,107 @@
   "downloadPdfAction": "Download PDF",
   "preparingPdfMessage": "Preparing your PDF…",
   "pdfPreviewFailedMessage": "Couldn't prepare the PDF.",
-  "pdfDownloadFailedMessage": "Couldn't download the PDF. Try again."
+  "pdfDownloadFailedMessage": "Couldn't download the PDF. Try again.",
+
+  "timesheetTitle": "Timesheet",
+  "timesheetTotalPriceLabel": "Total",
+  "timesheetTimeLoggedLabel": "Time logged",
+  "timesheetLoggedProgress": "{logged} of {total} tasks logged",
+  "@timesheetLoggedProgress": {
+    "placeholders": { "logged": { "type": "int" }, "total": { "type": "int" } }
+  },
+  "timesheetEmptyMonth": "No accepted tasks this month.",
+  "timeSpentLabel": "Time spent",
+  "priceLabel": "Price",
+  "addTimeAndPriceAction": "Log time & costs",
+  "timesheetSheetTitle": "Time & costs",
+  "hoursLabel": "Hours",
+  "minutesLabel": "Minutes",
+  "errorMinutesRange": "Minutes must be between 0 and 59.",
+  "errorTimeOrPriceRequired": "Enter the time spent or a transportation cost.",
+  "timesheetSavedMessage": "Saved to your timesheet.",
+  "timesheetPermissionDenied": "You don't have access to this timesheet.",
+  "durationHoursMinutes": "{hours}h {minutes}m",
+  "@durationHoursMinutes": {
+    "placeholders": { "hours": { "type": "int" }, "minutes": { "type": "int" } }
+  },
+  "durationHours": "{hours}h",
+  "@durationHours": { "placeholders": { "hours": { "type": "int" } } },
+  "durationMinutes": "{minutes}m",
+  "@durationMinutes": { "placeholders": { "minutes": { "type": "int" } } },
+
+  "navTimesheets": "Timesheets",
+  "timesheetReviewTitle": "Timesheets",
+  "timesheetAwaitingApprovalLabel": "Awaiting approval",
+  "timesheetPendingValueLabel": "Pending value",
+  "timesheetFilterPending": "Pending",
+  "timesheetStatusPending": "Awaiting approval",
+  "timesheetStatusApproved": "Approved",
+  "timesheetStatusReturned": "Returned",
+  "timesheetApprovedBy": "Approved by {name}",
+  "@timesheetApprovedBy": { "placeholders": { "name": { "type": "String" } } },
+  "timesheetReturnedBy": "Returned by {name}",
+  "@timesheetReturnedBy": { "placeholders": { "name": { "type": "String" } } },
+  "timesheetLockedTooltip": "Approved — can't be changed",
+  "timesheetApproveTitle": "Approve this entry?",
+  "timesheetApproveMessage": "{name} logged {time} at {price}. Once approved it can't be changed.",
+  "@timesheetApproveMessage": {
+    "placeholders": {
+      "name": { "type": "String" },
+      "time": { "type": "String" },
+      "price": { "type": "String" }
+    }
+  },
+  "timesheetApprovedMessage": "Entry approved.",
+  "timesheetReturnedMessage": "Returned to the inspector.",
+  "timesheetReturnReasonHint": "e.g. This price is too high for a half-day job",
+  "timesheetReviewEmptyPending": "Nothing is waiting for approval.",
+  "timesheetReviewEmptyOther": "No entries here yet.",
+
+  "timesheetActivitiesLabel": "How the time was spent",
+  "timesheetActivityInspection": "Inspection & load testing",
+  "timesheetExpensesLabel": "Transportation costs",
+  "timesheetExpenseInternalTransport": "Internal transportation",
+  "timesheetExpenseExternalTransport": "External transportation",
+  "timesheetTransportationLabel": "Transportation",
+  "timesheetIncludingTransportation": "Incl. {amount} transportation",
+  "@timesheetIncludingTransportation": { "placeholders": { "amount": { "type": "String" } } },
+  "timesheetApproveMessageWithTransport": "{name} logged {time} at {price}, plus {transport} transportation. Once approved it can't be changed.",
+  "@timesheetApproveMessageWithTransport": {
+    "placeholders": {
+      "name": { "type": "String" },
+      "time": { "type": "String" },
+      "price": { "type": "String" },
+      "transport": { "type": "String" }
+    }
+  },
+  "timesheetActivityReport": "Report preparation",
+  "timesheetActivityWaiting": "Waiting",
+  "timesheetActivityUnpaidBreak": "Unpaid break",
+  "timesheetElapsedLabel": "Total elapsed",
+  "timesheetNetTimeLabel": "Net working time",
+
+  "hourlyRateLabel": "Hourly rate",
+  "hourlyRatePerHour": "{rate} / hour",
+  "@hourlyRatePerHour": { "placeholders": { "rate": { "type": "String" } } },
+  "hourlyRateSetPrompt": "Set your hourly rate",
+  "hourlyRateSheetTitle": "Hourly rate",
+  "hourlyRateSheetHint": "Your price on each task is worked out from this: the net working time × your hourly rate. It applies to entries you save from now on — entries already logged keep the rate they were saved with.",
+  "errorHourlyRateRequired": "Enter an hourly rate.",
+  "hourlyRateSavedMessage": "Hourly rate saved.",
+  "timesheetPriceFormula": "{time} × {rate} per hour",
+  "@timesheetPriceFormula": {
+    "placeholders": { "time": { "type": "String" }, "rate": { "type": "String" } }
+  },
+  "timesheetRateMissing": "Set your hourly rate on the Timesheet tab to price this entry.",
+
+  "timesheetShowDetails": "Details",
+  "timesheetHideDetails": "Hide details",
+  "timesheetLockedLabel": "Locked",
+  "timesheetExcludingBreak": "Excl. {duration} break",
+  "@timesheetExcludingBreak": { "placeholders": { "duration": { "type": "String" } } },
+  "timesheetPricePlusTransport": "Price {price}\n+ {transport} transport",
+  "@timesheetPricePlusTransport": {
+    "placeholders": { "price": { "type": "String" }, "transport": { "type": "String" } }
+  }
 }

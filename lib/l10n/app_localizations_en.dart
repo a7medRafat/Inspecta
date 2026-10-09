@@ -1350,7 +1350,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navCertificates => 'Certificates';
 
   @override
-  String get navMap => 'Map';
+  String get navTimesheet => 'Timesheet';
 
   @override
   String tasksTodayTitle(int count) {
@@ -1598,18 +1598,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get returnedBadge => 'Returned';
-
-  @override
-  String get directionsAction => 'Directions';
-
-  @override
-  String routeSummaryLabel(String km, int minutes) {
-    return '$km km · ~$minutes min drive';
-  }
-
-  @override
-  String get routeEstimateCaption =>
-      'Straight-line estimate — not real traffic or roads';
 
   @override
   String get myCertificatesTitle => 'My certificates';
@@ -1864,4 +1852,229 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get pdfDownloadFailedMessage =>
       'Couldn\'t download the PDF. Try again.';
+
+  @override
+  String get timesheetTitle => 'Timesheet';
+
+  @override
+  String get timesheetTotalPriceLabel => 'Total';
+
+  @override
+  String get timesheetTimeLoggedLabel => 'Time logged';
+
+  @override
+  String timesheetLoggedProgress(int logged, int total) {
+    return '$logged of $total tasks logged';
+  }
+
+  @override
+  String get timesheetEmptyMonth => 'No accepted tasks this month.';
+
+  @override
+  String get timeSpentLabel => 'Time spent';
+
+  @override
+  String get priceLabel => 'Price';
+
+  @override
+  String get addTimeAndPriceAction => 'Log time & costs';
+
+  @override
+  String get timesheetSheetTitle => 'Time & costs';
+
+  @override
+  String get hoursLabel => 'Hours';
+
+  @override
+  String get minutesLabel => 'Minutes';
+
+  @override
+  String get errorMinutesRange => 'Minutes must be between 0 and 59.';
+
+  @override
+  String get errorTimeOrPriceRequired =>
+      'Enter the time spent or a transportation cost.';
+
+  @override
+  String get timesheetSavedMessage => 'Saved to your timesheet.';
+
+  @override
+  String get timesheetPermissionDenied =>
+      'You don\'t have access to this timesheet.';
+
+  @override
+  String durationHoursMinutes(int hours, int minutes) {
+    return '${hours}h ${minutes}m';
+  }
+
+  @override
+  String durationHours(int hours) {
+    return '${hours}h';
+  }
+
+  @override
+  String durationMinutes(int minutes) {
+    return '${minutes}m';
+  }
+
+  @override
+  String get navTimesheets => 'Timesheets';
+
+  @override
+  String get timesheetReviewTitle => 'Timesheets';
+
+  @override
+  String get timesheetAwaitingApprovalLabel => 'Awaiting approval';
+
+  @override
+  String get timesheetPendingValueLabel => 'Pending value';
+
+  @override
+  String get timesheetFilterPending => 'Pending';
+
+  @override
+  String get timesheetStatusPending => 'Awaiting approval';
+
+  @override
+  String get timesheetStatusApproved => 'Approved';
+
+  @override
+  String get timesheetStatusReturned => 'Returned';
+
+  @override
+  String timesheetApprovedBy(String name) {
+    return 'Approved by $name';
+  }
+
+  @override
+  String timesheetReturnedBy(String name) {
+    return 'Returned by $name';
+  }
+
+  @override
+  String get timesheetLockedTooltip => 'Approved — can\'t be changed';
+
+  @override
+  String get timesheetApproveTitle => 'Approve this entry?';
+
+  @override
+  String timesheetApproveMessage(String name, String time, String price) {
+    return '$name logged $time at $price. Once approved it can\'t be changed.';
+  }
+
+  @override
+  String get timesheetApprovedMessage => 'Entry approved.';
+
+  @override
+  String get timesheetReturnedMessage => 'Returned to the inspector.';
+
+  @override
+  String get timesheetReturnReasonHint =>
+      'e.g. This price is too high for a half-day job';
+
+  @override
+  String get timesheetReviewEmptyPending => 'Nothing is waiting for approval.';
+
+  @override
+  String get timesheetReviewEmptyOther => 'No entries here yet.';
+
+  @override
+  String get timesheetActivitiesLabel => 'How the time was spent';
+
+  @override
+  String get timesheetActivityInspection => 'Inspection & load testing';
+
+  @override
+  String get timesheetExpensesLabel => 'Transportation costs';
+
+  @override
+  String get timesheetExpenseInternalTransport => 'Internal transportation';
+
+  @override
+  String get timesheetExpenseExternalTransport => 'External transportation';
+
+  @override
+  String get timesheetTransportationLabel => 'Transportation';
+
+  @override
+  String timesheetIncludingTransportation(String amount) {
+    return 'Incl. $amount transportation';
+  }
+
+  @override
+  String timesheetApproveMessageWithTransport(
+    String name,
+    String time,
+    String price,
+    String transport,
+  ) {
+    return '$name logged $time at $price, plus $transport transportation. Once approved it can\'t be changed.';
+  }
+
+  @override
+  String get timesheetActivityReport => 'Report preparation';
+
+  @override
+  String get timesheetActivityWaiting => 'Waiting';
+
+  @override
+  String get timesheetActivityUnpaidBreak => 'Unpaid break';
+
+  @override
+  String get timesheetElapsedLabel => 'Total elapsed';
+
+  @override
+  String get timesheetNetTimeLabel => 'Net working time';
+
+  @override
+  String get hourlyRateLabel => 'Hourly rate';
+
+  @override
+  String hourlyRatePerHour(String rate) {
+    return '$rate / hour';
+  }
+
+  @override
+  String get hourlyRateSetPrompt => 'Set your hourly rate';
+
+  @override
+  String get hourlyRateSheetTitle => 'Hourly rate';
+
+  @override
+  String get hourlyRateSheetHint =>
+      'Your price on each task is worked out from this: the net working time × your hourly rate. It applies to entries you save from now on — entries already logged keep the rate they were saved with.';
+
+  @override
+  String get errorHourlyRateRequired => 'Enter an hourly rate.';
+
+  @override
+  String get hourlyRateSavedMessage => 'Hourly rate saved.';
+
+  @override
+  String timesheetPriceFormula(String time, String rate) {
+    return '$time × $rate per hour';
+  }
+
+  @override
+  String get timesheetRateMissing =>
+      'Set your hourly rate on the Timesheet tab to price this entry.';
+
+  @override
+  String get timesheetShowDetails => 'Details';
+
+  @override
+  String get timesheetHideDetails => 'Hide details';
+
+  @override
+  String get timesheetLockedLabel => 'Locked';
+
+  @override
+  String timesheetExcludingBreak(String duration) {
+    return 'Excl. $duration break';
+  }
+
+  @override
+  String timesheetPricePlusTransport(String price, String transport) {
+    return 'Price $price\n+ $transport transport';
+  }
 }

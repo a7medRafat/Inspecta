@@ -8,11 +8,15 @@ import '../../../../l10n/app_localizations.dart';
 /// trimmed reason, or `null` when cancelled; a reason is required so the
 /// inspector isn't left guessing what to fix.
 class ReturnNoteDialog extends StatefulWidget {
-  const ReturnNoteDialog({super.key});
+  /// An example of a good reason, shown inside the field; defaults to the
+  /// certificate one.
+  final String? hint;
 
-  static Future<String?> show(BuildContext context) => showDialog<String>(
+  const ReturnNoteDialog({super.key, this.hint});
+
+  static Future<String?> show(BuildContext context, {String? hint}) => showDialog<String>(
     context: context,
-    builder: (_) => const ReturnNoteDialog(),
+    builder: (_) => ReturnNoteDialog(hint: hint),
   );
 
   @override
@@ -59,7 +63,7 @@ class _ReturnNoteDialogState extends State<ReturnNoteDialog> {
               if (_showError) setState(() => _showError = false);
             },
             decoration: InputDecoration(
-              hintText: t.returnReasonHint,
+              hintText: widget.hint ?? t.returnReasonHint,
               errorText: _showError ? t.returnReasonRequired : null,
               border: OutlineInputBorder(borderRadius: BorderRadius.circular(14)),
               focusedBorder: OutlineInputBorder(

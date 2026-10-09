@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../../../auth/presentation/pages/profile_page.dart';
 import '../../../inspector/presentation/pages/inspector_certificates_page.dart';
-import '../../../inspector/presentation/pages/inspector_map_page.dart';
 import '../../../inspector/presentation/pages/inspector_tasks_page.dart';
 import '../../../inspector/presentation/widgets/inspector_bottom_nav.dart';
+import '../../../timesheet/presentation/pages/inspector_timesheet_page.dart';
 
-/// The inspector's shell: Tasks, Certificates and Map are real tabs —
+/// The inspector's shell: Tasks, Certificates and Timesheet are real tabs —
 /// same in-place-swap shape as `CoordinatorRootPage`.
 class InspectorRootPage extends StatefulWidget {
   const InspectorRootPage({super.key});
@@ -26,7 +26,7 @@ class _InspectorRootPageState extends State<InspectorRootPage> {
         children: [
           const InspectorTasksPage(),
           const InspectorCertificatesPage(),
-          const InspectorMapPage(),
+          const InspectorTimesheetPage(),
           const ProfilePage(),
         ],
       ),

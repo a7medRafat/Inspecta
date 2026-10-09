@@ -18,4 +18,10 @@ class Currency {
     if (pounds == null) return null;
     return (pounds * 100).round();
   }
+
+  /// The text a price field should start with for a saved amount — "4500"
+  /// or "4500.50", no separators or trailing ".00" — so it reads back
+  /// through [parsePiastres] unchanged.
+  static String toInputText(int piastres) =>
+      piastres % 100 == 0 ? '${piastres ~/ 100}' : (piastres / 100).toStringAsFixed(2);
 }

@@ -15,6 +15,7 @@ InspectionRequest sampleRequest({
   DateTime? receivedAt,
   bool hasUnreadClientReply = false,
   List<RequestItem>? items,
+  DateTime? scheduledAt,
 }) {
   return InspectionRequest(
     id: id,
@@ -35,11 +36,15 @@ InspectionRequest sampleRequest({
           ),
         ],
     hasUnreadClientReply: hasUnreadClientReply,
+    scheduledAt: scheduledAt,
   );
 }
 
 class FakeRequestsRepository implements RequestsRepository {
   final controller = StreamController<List<InspectionRequest>>.broadcast();
+
+  /// What `watchAssignedRequests` (an inspector's own jobs) emits.
+  final assignedController = StreamController<List<InspectionRequest>>.broadcast();
 
   InspectionRequest? requestToReturn;
   RequestsFailure? rejectFailure;
@@ -105,8 +110,5 @@ class FakeRequestsRepository implements RequestsRepository {
   }
 
   @override
-  Stream<List<InspectionRequest>> watchAssignedRequests(String inspectorId) {
-    // TODO: implement watchAssignedRequests
-    throw UnimplementedError();
-  }
+  Stream<List<InspectionRequest>> watchAssignedRequests(String inspectorId) => assignedController.stream;
 }

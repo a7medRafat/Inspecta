@@ -1346,7 +1346,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navCertificates => 'الشهادات';
 
   @override
-  String get navMap => 'الخريطة';
+  String get navTimesheet => 'سجل الساعات';
 
   @override
   String tasksTodayTitle(int count) {
@@ -1589,18 +1589,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get returnedBadge => 'معاد';
-
-  @override
-  String get directionsAction => 'الاتجاهات';
-
-  @override
-  String routeSummaryLabel(String km, int minutes) {
-    return '$km كم · ~$minutes دقيقة قيادة';
-  }
-
-  @override
-  String get routeEstimateCaption =>
-      'تقدير بخط مستقيم — وليس حركة المرور أو الطرق الفعلية';
 
   @override
   String get myCertificatesTitle => 'شهاداتي';
@@ -1851,4 +1839,227 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get pdfDownloadFailedMessage => 'تعذّر تحميل ملف PDF. حاول مرة أخرى.';
+
+  @override
+  String get timesheetTitle => 'سجل الساعات';
+
+  @override
+  String get timesheetTotalPriceLabel => 'الإجمالي';
+
+  @override
+  String get timesheetTimeLoggedLabel => 'الوقت المسجّل';
+
+  @override
+  String timesheetLoggedProgress(int logged, int total) {
+    return 'تم تسجيل $logged من $total مهام';
+  }
+
+  @override
+  String get timesheetEmptyMonth => 'لا توجد مهام مقبولة هذا الشهر.';
+
+  @override
+  String get timeSpentLabel => 'الوقت المستغرق';
+
+  @override
+  String get priceLabel => 'السعر';
+
+  @override
+  String get addTimeAndPriceAction => 'تسجيل الوقت والتكاليف';
+
+  @override
+  String get timesheetSheetTitle => 'الوقت والتكاليف';
+
+  @override
+  String get hoursLabel => 'الساعات';
+
+  @override
+  String get minutesLabel => 'الدقائق';
+
+  @override
+  String get errorMinutesRange => 'يجب أن تكون الدقائق بين 0 و59.';
+
+  @override
+  String get errorTimeOrPriceRequired => 'أدخل الوقت المستغرق أو تكلفة النقل.';
+
+  @override
+  String get timesheetSavedMessage => 'تم الحفظ في سجل الساعات.';
+
+  @override
+  String get timesheetPermissionDenied =>
+      'ليس لديك صلاحية الوصول إلى سجل الساعات هذا.';
+
+  @override
+  String durationHoursMinutes(int hours, int minutes) {
+    return '$hours س $minutes د';
+  }
+
+  @override
+  String durationHours(int hours) {
+    return '$hours س';
+  }
+
+  @override
+  String durationMinutes(int minutes) {
+    return '$minutes د';
+  }
+
+  @override
+  String get navTimesheets => 'سجلات الساعات';
+
+  @override
+  String get timesheetReviewTitle => 'سجلات الساعات';
+
+  @override
+  String get timesheetAwaitingApprovalLabel => 'بانتظار الموافقة';
+
+  @override
+  String get timesheetPendingValueLabel => 'القيمة المعلّقة';
+
+  @override
+  String get timesheetFilterPending => 'المعلّقة';
+
+  @override
+  String get timesheetStatusPending => 'بانتظار الموافقة';
+
+  @override
+  String get timesheetStatusApproved => 'تمت الموافقة';
+
+  @override
+  String get timesheetStatusReturned => 'معاد';
+
+  @override
+  String timesheetApprovedBy(String name) {
+    return 'وافق عليها $name';
+  }
+
+  @override
+  String timesheetReturnedBy(String name) {
+    return 'أعادها $name';
+  }
+
+  @override
+  String get timesheetLockedTooltip => 'تمت الموافقة — لا يمكن تعديلها';
+
+  @override
+  String get timesheetApproveTitle => 'الموافقة على هذا السجل؟';
+
+  @override
+  String timesheetApproveMessage(String name, String time, String price) {
+    return 'سجّل $name $time بسعر $price. بعد الموافقة لا يمكن تعديله.';
+  }
+
+  @override
+  String get timesheetApprovedMessage => 'تمت الموافقة على السجل.';
+
+  @override
+  String get timesheetReturnedMessage => 'تمت إعادته إلى المفتش.';
+
+  @override
+  String get timesheetReturnReasonHint => 'مثال: هذا السعر مرتفع لمهمة نصف يوم';
+
+  @override
+  String get timesheetReviewEmptyPending => 'لا يوجد شيء بانتظار الموافقة.';
+
+  @override
+  String get timesheetReviewEmptyOther => 'لا توجد سجلات هنا بعد.';
+
+  @override
+  String get timesheetActivitiesLabel => 'كيف قُضي الوقت';
+
+  @override
+  String get timesheetActivityInspection => 'الفحص واختبار الحمل';
+
+  @override
+  String get timesheetExpensesLabel => 'تكاليف النقل';
+
+  @override
+  String get timesheetExpenseInternalTransport => 'النقل الداخلي';
+
+  @override
+  String get timesheetExpenseExternalTransport => 'النقل الخارجي';
+
+  @override
+  String get timesheetTransportationLabel => 'النقل';
+
+  @override
+  String timesheetIncludingTransportation(String amount) {
+    return 'يشمل $amount نقل';
+  }
+
+  @override
+  String timesheetApproveMessageWithTransport(
+    String name,
+    String time,
+    String price,
+    String transport,
+  ) {
+    return 'سجّل $name $time بسعر $price، بالإضافة إلى $transport نقل. بعد الموافقة لا يمكن تعديله.';
+  }
+
+  @override
+  String get timesheetActivityReport => 'إعداد التقرير';
+
+  @override
+  String get timesheetActivityWaiting => 'الانتظار';
+
+  @override
+  String get timesheetActivityUnpaidBreak => 'استراحة غير مدفوعة';
+
+  @override
+  String get timesheetElapsedLabel => 'إجمالي المدة';
+
+  @override
+  String get timesheetNetTimeLabel => 'صافي وقت العمل';
+
+  @override
+  String get hourlyRateLabel => 'أجر الساعة';
+
+  @override
+  String hourlyRatePerHour(String rate) {
+    return '$rate / ساعة';
+  }
+
+  @override
+  String get hourlyRateSetPrompt => 'حدّد أجر الساعة';
+
+  @override
+  String get hourlyRateSheetTitle => 'أجر الساعة';
+
+  @override
+  String get hourlyRateSheetHint =>
+      'يُحسب سعر كل مهمة من هذا الأجر: صافي وقت العمل × أجر الساعة. ويسري على السجلات التي تحفظها من الآن، أما السجلات المحفوظة سابقًا فتبقى بالأجر الذي حُفظت به.';
+
+  @override
+  String get errorHourlyRateRequired => 'أدخل أجر الساعة.';
+
+  @override
+  String get hourlyRateSavedMessage => 'تم حفظ أجر الساعة.';
+
+  @override
+  String timesheetPriceFormula(String time, String rate) {
+    return '$time × $rate للساعة';
+  }
+
+  @override
+  String get timesheetRateMissing =>
+      'حدّد أجر الساعة في تبويب سجل الساعات لحساب سعر هذا السجل.';
+
+  @override
+  String get timesheetShowDetails => 'التفاصيل';
+
+  @override
+  String get timesheetHideDetails => 'إخفاء التفاصيل';
+
+  @override
+  String get timesheetLockedLabel => 'مقفل';
+
+  @override
+  String timesheetExcludingBreak(String duration) {
+    return 'دون استراحة $duration';
+  }
+
+  @override
+  String timesheetPricePlusTransport(String price, String transport) {
+    return 'السعر $price\n+ $transport نقل';
+  }
 }
